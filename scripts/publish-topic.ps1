@@ -35,25 +35,14 @@ $outputRootPath = if ([System.IO.Path]::IsPathRooted($OutputRoot)) {
 
 $target = Join-Path $outputRootPath $Topic
 
-& (Join-Path $PSScriptRoot "export-topic.ps1") -Topic $Topic -OutputRoot $OutputRootPath
-
-git -C $target init | Out-Host
-git -C $target branch -M main | Out-Host
-git -C $target remote add origin "https://github.com/$repository.git" | Out-Host
-
-git -C $target fetch origin main | Out-Host
+$description = $topicConfig.Value.description
+gh repo view $repository *> $null
 if ($LASTEXITCODE -ne 0) {
-    $description = $topicConfig.Value.description
-    gh repo view $repository *> $null
-    if ($LASTEXITCODE -ne 0) {
-        gh repo create $repository --public --description $description | Out-Host
-        git -C $target fetch origin main | Out-Host
-    }
+    gh repo create $repository --public --description $description | Out-Host
 }
 
-if ($LASTEXITCODE -eq 0) {
-    git -C $target reset --soft origin/main | Out-Host
-}
+& (Join-Path $PSScriptRoot "sync-topics.ps1") -Topic $Topic -OutputRoot $OutputRootPath
+& (Join-Path $PSScriptRoot "export-topic.ps1") -Topic $Topic -OutputRoot $OutputRootPath -PreserveGit
 
 git -C $target add . | Out-Host
 

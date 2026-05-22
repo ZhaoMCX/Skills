@@ -2,7 +2,9 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$Topic,
 
-    [string]$OutputRoot = "dist\topics"
+    [string]$OutputRoot = "dist\topics",
+
+    [switch]$PreserveGit
 )
 
 $ErrorActionPreference = "Stop"
@@ -39,7 +41,13 @@ $targetSkills = Join-Path $target "skills"
 $targetScripts = Join-Path $target "scripts"
 
 if (Test-Path -LiteralPath $target) {
-    Remove-Item -LiteralPath $target -Recurse -Force
+    if ($PreserveGit -and (Test-Path -LiteralPath (Join-Path $target ".git"))) {
+        Get-ChildItem -LiteralPath $target -Force | Where-Object { $_.Name -ne ".git" } | ForEach-Object {
+            Remove-Item -LiteralPath $_.FullName -Recurse -Force
+        }
+    } else {
+        Remove-Item -LiteralPath $target -Recurse -Force
+    }
 }
 
 New-Item -ItemType Directory -Force -Path $targetSkills | Out-Null

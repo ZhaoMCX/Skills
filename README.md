@@ -59,6 +59,12 @@ Generate a topic repository workspace:
 .\scripts\export-topic.ps1 -Topic UniAppSkills
 ```
 
+Clone or update all topic repository workspaces on a machine:
+
+```powershell
+.\scripts\sync-topics.ps1
+```
+
 Publish one topic repository from this source repository:
 
 ```powershell
@@ -71,7 +77,7 @@ Publish every topic repository:
 .\scripts\publish-all-topics.ps1
 ```
 
-Generated topic workspaces live under `dist/topics/`. The directory is intentionally ignored because it is a local publish workspace, not source content. Re-run the publish scripts from a fresh clone of `AgentSkills` to recreate the workspace and push updates to the GitHub topic repositories.
+Generated and synced topic workspaces live under `dist/topics/`. The directory is intentionally ignored because it is a local publish workspace, not source content. Re-run the sync or publish scripts from a fresh clone of `AgentSkills` to clone the topic repositories and push updates.
 
 Single-skill mirrors can still be generated from `skills/<skill-name>` when a skill needs independent distribution.
 
