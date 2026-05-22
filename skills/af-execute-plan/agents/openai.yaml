@@ -1,0 +1,4 @@
+interface:
+  display_name: "AF Execute Plan"
+  short_description: "Execute approved AF plans with TDD and scoped delegation."
+  default_prompt: "Execute this AF feature plan with TDD and scoped subagent delegation where safe."

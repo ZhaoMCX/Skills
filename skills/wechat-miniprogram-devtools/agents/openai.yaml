@@ -1,0 +1,4 @@
+interface:
+  display_name: "WeChat Mini Program DevTools"
+  short_description: "Use official WeChat DevTools CLI and miniprogram-automator."
+  default_prompt: "Use the WeChat Mini Program DevTools workflow for this project."

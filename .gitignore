@@ -1,0 +1,13 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+
+# Unity asset metadata is intentionally excluded from skill packages.
+*.meta
+
+# Local generated mirrors
+dist/
+mirrors/
+
+# Logs
+*.log

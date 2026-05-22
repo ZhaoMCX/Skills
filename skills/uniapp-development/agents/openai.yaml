@@ -1,0 +1,7 @@
+interface:
+  display_name: "UniApp Development"
+  short_description: "Official-doc-guided uni-app and uni-app x development workflow."
+  default_prompt: "Use $uniapp-development to make this uni-app change with official DCloud docs and project-specific verification."
+
+policy:
+  allow_implicit_invocation: true

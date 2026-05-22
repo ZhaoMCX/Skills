@@ -1,0 +1,4 @@
+interface:
+  display_name: "AF Create Framework"
+  short_description: "Create stack AF profiles plus project Binding and ModuleMap files."
+  default_prompt: "Create a technology-stack AgentFramework profile with project Binding and ModuleMap files."

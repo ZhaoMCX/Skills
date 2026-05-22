@@ -1,0 +1,4 @@
+interface:
+  display_name: "AF Plan Feature"
+  short_description: "Plan AF features with grilling, BDD, TDD, and delegation strategy."
+  default_prompt: "Plan this feature with AgentFramework grilling, BDD, TDD, and subagent delegation strategy."

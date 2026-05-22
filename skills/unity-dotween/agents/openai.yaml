@@ -1,0 +1,4 @@
+interface:
+  display_name: "DOTween"
+  short_description: "Use DOTween for Unity tween animation."
+  default_prompt: "Use $dotween to implement or review a Unity tween animation safely."

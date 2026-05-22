@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dispatch Agents"
+  short_description: "Coordinate safe subagent delegation."
+  default_prompt: "Decide whether to dispatch subagents."

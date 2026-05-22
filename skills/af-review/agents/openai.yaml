@@ -1,0 +1,4 @@
+interface:
+  display_name: "AF Review"
+  short_description: "Review code against AF boundaries."
+  default_prompt: "Review this change against AgentFramework."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "AF Verify Completion"
+  short_description: "Verify AF work before completion."
+  default_prompt: "Verify this AF work is complete."

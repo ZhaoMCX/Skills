@@ -1,0 +1,4 @@
+interface:
+  display_name: "Using AgentFramework"
+  short_description: "Route and coordinate AgentFramework skills."
+  default_prompt: "Use AgentFramework to choose the right AF workflow."

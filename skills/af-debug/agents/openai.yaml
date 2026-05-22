@@ -1,0 +1,4 @@
+interface:
+  display_name: "AF Debug"
+  short_description: "Debug with AF ownership, findings checkpoints, and regression tests."
+  default_prompt: "Debug this issue using AgentFramework: reproduce it, report findings, then fix with regression evidence when safe."

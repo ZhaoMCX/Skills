@@ -1,0 +1,4 @@
+interface:
+  display_name: "AF Save Plan"
+  short_description: "Persist approved AF feature plans."
+  default_prompt: "Save this approved AF feature plan."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Framework"
+  short_description: "Create Agent-friendly framework guides."
+  default_prompt: "Use $agent-framework to create a project-specific AgentFramework guide for this codebase."
