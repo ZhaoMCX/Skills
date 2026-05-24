@@ -27,6 +27,14 @@ Only `SKILL.md` is required. Categories organize source files only; installed sk
 - [Unity Steamworks.NET](skills/unity/unity-steamworks-net) - Integrate and debug Steamworks.NET in Unity.
 - [Unity TapTap SDK](skills/unity/unity-taptap-sdk) - Integrate and debug TapTap SDK in Unity.
 
+### UniApp
+
+- [UniApp Development](skills/uniapp/uniapp-development) - Work on uni-app, uni-app x, DCloud, H5, app, and mini-program projects.
+
+### WeChat
+
+- [WeChat Mini Program DevTools](skills/wechat/wechat-miniprogram-devtools) - Use official WeChat DevTools CLI and miniprogram-automator workflows.
+
 ## Install
 
 Install all skills into the local Codex skills directory:
