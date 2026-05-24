@@ -7,18 +7,16 @@ param(
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$topicsFile = Join-Path $repoRoot "topics.json"
+$skillsRoot = Join-Path $repoRoot "skills"
 
-if (-not (Test-Path -LiteralPath $topicsFile)) {
-    throw "Missing topics manifest: $topicsFile"
-}
+$topics = Get-ChildItem -LiteralPath $skillsRoot -Directory | Where-Object {
+    Test-Path -LiteralPath (Join-Path $_.FullName "topic.toml")
+} | Sort-Object Name
 
-$topics = Get-Content -Raw -LiteralPath $topicsFile | ConvertFrom-Json
-
-foreach ($topic in ($topics.PSObject.Properties.Name | Sort-Object)) {
-    Write-Host "Publishing $topic..."
+foreach ($topic in $topics) {
+    Write-Host "Publishing $($topic.Name)..."
     $args = @{
-        Topic = $topic
+        Topic = $topic.Name
         OutputRoot = $OutputRoot
     }
 

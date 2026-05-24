@@ -1,0 +1,4 @@
+interface:
+  display_name: "AF Handoff"
+  short_description: "Create concise AgentFramework continuation handoffs."
+  default_prompt: "Create an AgentFramework handoff for the next agent."

@@ -10,11 +10,22 @@ param(
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$source = Join-Path $repoRoot "skills\$Skill"
+$skillsRoot = Join-Path $repoRoot "skills"
+$matches = @(Get-ChildItem -LiteralPath $skillsRoot -Directory | ForEach-Object {
+    Get-ChildItem -LiteralPath $_.FullName -Directory | Where-Object {
+        $_.Name -eq $Skill -and (Test-Path (Join-Path $_.FullName "SKILL.md"))
+    }
+})
 
-if (-not (Test-Path (Join-Path $source "SKILL.md"))) {
+if ($matches.Count -eq 0) {
     throw "Unknown skill or missing SKILL.md: $Skill"
 }
+
+if ($matches.Count -gt 1) {
+    throw "Skill '$Skill' exists in multiple topics."
+}
+
+$source = $matches[0].FullName
 
 $outputRootPath = if ([System.IO.Path]::IsPathRooted($OutputRoot)) {
     $OutputRoot

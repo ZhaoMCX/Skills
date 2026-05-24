@@ -1,4 +1,0 @@
-interface:
-  display_name: "Handoff"
-  short_description: "Create concise continuation handoffs."
-  default_prompt: "Create a handoff for the next agent."

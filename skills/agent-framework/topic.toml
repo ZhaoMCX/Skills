@@ -1,0 +1,5 @@
+name = "AgentFramework"
+slug = "agent-framework"
+repository = "ZhaoMCX/AgentFramework"
+description = "AgentFramework workflow skills for planning, execution, debugging, review, verification, AF subagent dispatch, and AF handoff."
+aliases = ["AgentFramework"]

@@ -11,23 +11,53 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $skillsRoot = Join-Path $repoRoot "skills"
-$topicsFile = Join-Path $repoRoot "topics.json"
 
-if (-not (Test-Path -LiteralPath $topicsFile)) {
-    throw "Missing topics manifest: $topicsFile"
+function Read-TopicToml([string]$Path) {
+    $result = @{}
+    foreach ($line in Get-Content -Encoding UTF8 -LiteralPath $Path) {
+        $trimmed = $line.Trim()
+        if (-not $trimmed -or $trimmed.StartsWith("#")) { continue }
+        if ($trimmed -match '^([A-Za-z0-9_-]+)\s*=\s*"(.*)"\s*$') {
+            $result[$matches[1]] = $matches[2]
+        } elseif ($trimmed -match '^([A-Za-z0-9_-]+)\s*=\s*\[(.*)\]\s*$') {
+            $items = @()
+            $rawItems = $matches[2].Split(",")
+            foreach ($item in $rawItems) {
+                $value = $item.Trim().Trim('"')
+                if ($value) { $items += $value }
+            }
+            $result[$matches[1]] = $items
+        }
+    }
+    [pscustomobject]$result
 }
 
-$topics = Get-Content -Raw -LiteralPath $topicsFile | ConvertFrom-Json
-$topicProperty = $topics.PSObject.Properties[$Topic]
+function Get-TopicDirectories {
+    Get-ChildItem -LiteralPath $skillsRoot -Directory | Where-Object {
+        Test-Path -LiteralPath (Join-Path $_.FullName "topic.toml")
+    }
+}
+
+function Resolve-TopicDirectory([string]$Name) {
+    $topics = @(Get-TopicDirectories)
+    foreach ($topic in $topics) {
+        $config = Read-TopicToml (Join-Path $topic.FullName "topic.toml")
+        $aliases = @($config.aliases)
+        if ($topic.Name -eq $Name -or $config.slug -eq $Name -or $config.name -eq $Name -or $aliases -contains $Name) {
+            return $topic
+        }
+    }
+
+    $available = ($topics | ForEach-Object { $_.Name } | Sort-Object) -join ", "
+    throw "Unknown topic '$Name'. Available topics: $available"
+}
 
 if (-not (Test-Path -LiteralPath $skillsRoot)) {
     throw "Missing skills directory: $skillsRoot"
 }
 
-if ($null -eq $topicProperty) {
-    $available = ($topics.PSObject.Properties.Name | Sort-Object) -join ", "
-    throw "Unknown topic '$Topic'. Available topics: $available"
-}
+$topicDir = Resolve-TopicDirectory $Topic
+$topicConfig = Read-TopicToml (Join-Path $topicDir.FullName "topic.toml")
 
 $outputRootPath = if ([System.IO.Path]::IsPathRooted($OutputRoot)) {
     $OutputRoot
@@ -35,8 +65,7 @@ $outputRootPath = if ([System.IO.Path]::IsPathRooted($OutputRoot)) {
     Join-Path $repoRoot $OutputRoot
 }
 
-$topicConfig = $topicProperty.Value
-$target = Join-Path $outputRootPath $Topic
+$target = Join-Path $outputRootPath $topicConfig.name
 $targetSkills = Join-Path $target "skills"
 $targetScripts = Join-Path $target "scripts"
 
@@ -53,17 +82,16 @@ if (Test-Path -LiteralPath $target) {
 New-Item -ItemType Directory -Force -Path $targetSkills | Out-Null
 New-Item -ItemType Directory -Force -Path $targetScripts | Out-Null
 
-foreach ($skill in $topicConfig.skills) {
-    $source = Join-Path $skillsRoot $skill
-    $destination = Join-Path $targetSkills $skill
+$skillDirs = @(Get-ChildItem -LiteralPath $topicDir.FullName -Directory | Where-Object {
+    Test-Path -LiteralPath (Join-Path $_.FullName "SKILL.md")
+} | Sort-Object Name)
 
-    if (-not (Test-Path -LiteralPath (Join-Path $source "SKILL.md"))) {
-        throw "Topic $Topic references missing skill: $skill"
-    }
+foreach ($skill in $skillDirs) {
+    $destination = Join-Path $targetSkills $skill.Name
 
-    robocopy $source $destination /E /XF *.meta | Out-Null
+    robocopy $skill.FullName $destination /E /XF *.meta | Out-Null
     if ($LASTEXITCODE -ge 8) {
-        throw "Failed to export $skill. robocopy exit code: $LASTEXITCODE"
+        throw "Failed to export $($skill.Name). robocopy exit code: $LASTEXITCODE"
     }
 }
 
@@ -71,7 +99,7 @@ Copy-Item -LiteralPath (Join-Path $repoRoot ".gitignore") -Destination (Join-Pat
 Copy-Item -LiteralPath (Join-Path $repoRoot "scripts\install.ps1") -Destination (Join-Path $targetScripts "install.ps1")
 Copy-Item -LiteralPath (Join-Path $repoRoot "scripts\validate-skills.ps1") -Destination (Join-Path $targetScripts "validate-skills.ps1")
 
-$skillList = ($topicConfig.skills | ForEach-Object { "- ``$_``" }) -join [Environment]::NewLine
+$skillList = ($skillDirs | ForEach-Object { "- ``$($_.Name)``" }) -join [Environment]::NewLine
 
 $readmeTemplate = @'
 # {{TOPIC}}
@@ -106,10 +134,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate-skills.ps
 '@
 
 $readme = $readmeTemplate.
-    Replace("{{TOPIC}}", $Topic).
+    Replace("{{TOPIC}}", $topicConfig.name).
     Replace("{{DESCRIPTION}}", $topicConfig.description).
     Replace("{{SKILL_LIST}}", $skillList)
 
 $readme | Set-Content -LiteralPath (Join-Path $target "README.md") -Encoding UTF8
 
-Write-Host "Exported $Topic -> $target"
+Write-Host "Exported $($topicConfig.name) -> $target"

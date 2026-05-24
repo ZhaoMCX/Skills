@@ -1,0 +1,4 @@
+interface:
+  display_name: "FishNet"
+  short_description: "FishNet networking workflow for Unity."
+  default_prompt: "Use $unity-fishnet to implement or review FishNet networking in this Unity project."

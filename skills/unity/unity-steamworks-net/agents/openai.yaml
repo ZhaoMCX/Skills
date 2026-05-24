@@ -1,0 +1,4 @@
+interface:
+  display_name: "Steamworks.NET"
+  short_description: "Plan and debug Unity Steamworks.NET integration."
+  default_prompt: "Use $unity-steamworks-net to plan, implement, review, or debug Unity Steamworks.NET with FishNet/FishySteamworks, lobbies, auth, cloud saves, achievements, stats, and build issues."

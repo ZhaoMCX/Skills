@@ -1,0 +1,5 @@
+name = "UniAppSkills"
+slug = "uniapp"
+repository = "ZhaoMCX/UniAppSkills"
+description = "uni-app Agent skills for App, H5, mini-program, and DCloud workflows."
+aliases = ["UniAppSkills"]

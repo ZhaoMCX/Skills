@@ -1,37 +1,42 @@
 # AgentSkills
 
-Personal Agent skill collection maintained as a source monorepo with optional topic repositories and single-skill mirrors.
-
-## Skills
-
-- [AF Create Framework](skills/af-create-framework) - Create or restructure technology-stack AgentFramework profiles and project bindings.
-- [AF Debug](skills/af-debug) - Reproduce, investigate, and fix defects in AgentFramework projects.
-- [AF Execute Plan](skills/af-execute-plan) - Implement approved AF Feature Plans with TDD slices and ownership constraints.
-- [AF Plan Feature](skills/af-plan-feature) - Scope features and produce AF Feature Plans before implementation.
-- [AF Review](skills/af-review) - Review changes against AF boundaries, plans, and module ownership.
-- [AF Save Plan](skills/af-save-plan) - Persist approved AF Feature Plans after Plan Mode ends.
-- [AF Update Framework](skills/af-update-framework) - Update existing AgentFramework documents after project learning or feature work.
-- [AF Verify Completion](skills/af-verify-completion) - Verify AF work before claiming it is complete or ready.
-- [AgentFramework](skills/agent-framework) - Create, adapt, and review project-specific AgentFramework guides.
-- [Dispatch Agents](skills/dispatch-agents) - Delegate independent work to subagents when scopes do not overlap.
-- [Handoff](skills/handoff) - Prepare continuation notes for another session or agent.
-- [UniApp Development](skills/uniapp-development) - Work with uni-app, uni-app x, DCloud, HBuilderX, and mini-program targets.
-- [Using AgentFramework](skills/using-agent-framework) - Route AgentFramework work to the right AF workflow skill.
-- [WeChat MiniProgram DevTools](skills/wechat-miniprogram-devtools) - Use official WeChat DevTools CLI and miniprogram-automator workflows.
-- [Unity DOTween](skills/unity-dotween) - Implement, review, and debug DOTween animation workflows in Unity.
-- [Unity Odin](skills/unity-odin) - Use Odin Inspector and Sirenix Serializer workflows in Unity.
+Personal Agent skill collection maintained as a source monorepo with folder-based topic packages and optional single-skill mirrors.
 
 ## Layout
 
 ```text
-skills/<skill-name>/
-  SKILL.md
-  agents/
-  references/
-  scripts/
+skills/<topic>/
+  topic.toml
+  AGENTS.md
+  <skill-name>/
+    SKILL.md
+    agents/
+    references/
+    scripts/
 ```
 
-Only `SKILL.md` is required. Other folders are included when a skill needs them.
+Only `SKILL.md` is required for a skill. `topic.toml` is required for every topic folder.
+
+## Topics
+
+- [AgentFramework](skills/agent-framework) - AF workflow skills for planning, execution, debugging, review, verification, AF subagent dispatch, and AF handoff.
+- [UnitySkills](skills/unity) - Unity-focused Agent skills for common Unity development workflows.
+- [UniAppSkills](skills/uniapp) - uni-app Agent skills for App, H5, mini-program, and DCloud workflows.
+
+## AgentFramework Skills
+
+- [Using AgentFramework](skills/agent-framework/using-agent-framework) - Route AF work to the right workflow skill.
+- [AgentFramework](skills/agent-framework/agent-framework) - Create, adapt, and review project-specific AgentFramework guides.
+- [AF Create Framework](skills/agent-framework/af-create-framework) - Create or restructure technology-stack AgentFramework profiles and project bindings.
+- [AF Update Framework](skills/agent-framework/af-update-framework) - Update existing AgentFramework documents after project learning or feature work.
+- [AF Plan Feature](skills/agent-framework/af-plan-feature) - Scope features and produce AF Feature Plans before implementation.
+- [AF Save Plan](skills/agent-framework/af-save-plan) - Persist approved AF Feature Plans after Plan Mode ends.
+- [AF Execute Plan](skills/agent-framework/af-execute-plan) - Implement approved AF Feature Plans with TDD slices and ownership constraints.
+- [AF Debug](skills/agent-framework/af-debug) - Reproduce, investigate, and fix defects in AF projects.
+- [AF Review](skills/agent-framework/af-review) - Review changes against AF boundaries, plans, and module ownership.
+- [AF Verify Completion](skills/agent-framework/af-verify-completion) - Verify AF work before claiming it is complete or ready.
+- [AF Dispatch Agents](skills/agent-framework/af-dispatch-agents) - Delegate AF-scoped work to subagents.
+- [AF Handoff](skills/agent-framework/af-handoff) - Prepare AF continuation notes for another session or agent.
 
 ## Install
 
@@ -41,23 +46,31 @@ Install all skills into the local Codex skills directory:
 .\scripts\install.ps1
 ```
 
+Install one topic:
+
+```powershell
+.\scripts\install.ps1 -Topic agent-framework
+```
+
 Install one skill:
 
 ```powershell
-.\scripts\install.ps1 -Skill agent-framework
+.\scripts\install.ps1 -Skill af-plan-feature
 ```
 
 ## Topic Repositories
 
-The source of truth is this repository. Topic repositories are generated from groups of skills for easier discovery and sharing. Topic membership and repository targets are managed in `topics.json`.
+The source of truth is this repository. Topic repositories are generated from `skills/<topic>` folders. Topic membership and repository targets are managed by each topic's `topic.toml`; there is no root `topics.json`.
 
 Generate a topic repository workspace:
 
 ```powershell
-.\scripts\export-topic.ps1 -Topic AgentFramework
-.\scripts\export-topic.ps1 -Topic UnitySkills
-.\scripts\export-topic.ps1 -Topic UniAppSkills
+.\scripts\export-topic.ps1 -Topic agent-framework
+.\scripts\export-topic.ps1 -Topic unity
+.\scripts\export-topic.ps1 -Topic uniapp
 ```
+
+Legacy aliases such as `AgentFramework`, `UnitySkills`, and `UniAppSkills` remain accepted by scripts.
 
 Clone or update all topic repository workspaces on a machine:
 
@@ -68,7 +81,7 @@ Clone or update all topic repository workspaces on a machine:
 Publish one topic repository from this source repository:
 
 ```powershell
-.\scripts\publish-topic.ps1 -Topic UnitySkills
+.\scripts\publish-topic.ps1 -Topic unity
 ```
 
 Publish every topic repository:
@@ -77,9 +90,7 @@ Publish every topic repository:
 .\scripts\publish-all-topics.ps1
 ```
 
-Generated and synced topic workspaces live under `dist/topics/`. The directory is intentionally ignored because it is a local publish workspace, not source content. Re-run the sync or publish scripts from a fresh clone of `AgentSkills` to clone the topic repositories and push updates.
-
-Single-skill mirrors can still be generated from `skills/<skill-name>` when a skill needs independent distribution.
+Generated and synced topic workspaces live under `dist/topics/`. The directory is intentionally ignored because it is a local publish workspace, not source content.
 
 ## Notes
 

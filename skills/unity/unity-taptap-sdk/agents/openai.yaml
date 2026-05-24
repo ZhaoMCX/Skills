@@ -1,0 +1,4 @@
+interface:
+  display_name: "TapTap SDK"
+  short_description: "TapTap SDK integration workflow for Unity."
+  default_prompt: "Use $unity-taptap-sdk to integrate or review TapTap SDK in this Unity project."

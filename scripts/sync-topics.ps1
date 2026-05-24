@@ -7,22 +7,49 @@ param(
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$topicsFile = Join-Path $repoRoot "topics.json"
+$skillsRoot = Join-Path $repoRoot "skills"
 
-if (-not (Test-Path -LiteralPath $topicsFile)) {
-    throw "Missing topics manifest: $topicsFile"
-}
-
-$topics = Get-Content -Raw -LiteralPath $topicsFile | ConvertFrom-Json
-$topicNames = if ($Topic) {
-    if ($null -eq $topics.PSObject.Properties[$Topic]) {
-        $available = ($topics.PSObject.Properties.Name | Sort-Object) -join ", "
-        throw "Unknown topic '$Topic'. Available topics: $available"
+function Read-TopicToml([string]$Path) {
+    $result = @{}
+    foreach ($line in Get-Content -Encoding UTF8 -LiteralPath $Path) {
+        $trimmed = $line.Trim()
+        if (-not $trimmed -or $trimmed.StartsWith("#")) { continue }
+        if ($trimmed -match '^([A-Za-z0-9_-]+)\s*=\s*"(.*)"\s*$') {
+            $result[$matches[1]] = $matches[2]
+        } elseif ($trimmed -match '^([A-Za-z0-9_-]+)\s*=\s*\[(.*)\]\s*$') {
+            $items = @()
+            $rawItems = $matches[2].Split(",")
+            foreach ($item in $rawItems) {
+                $value = $item.Trim().Trim('"')
+                if ($value) { $items += $value }
+            }
+            $result[$matches[1]] = $items
+        }
     }
-    @($Topic)
-} else {
-    @($topics.PSObject.Properties.Name | Sort-Object)
+    [pscustomobject]$result
 }
+
+function Get-TopicDirectories {
+    Get-ChildItem -LiteralPath $skillsRoot -Directory | Where-Object {
+        Test-Path -LiteralPath (Join-Path $_.FullName "topic.toml")
+    }
+}
+
+function Resolve-TopicDirectory([string]$Name) {
+    $topics = @(Get-TopicDirectories)
+    foreach ($topic in $topics) {
+        $config = Read-TopicToml (Join-Path $topic.FullName "topic.toml")
+        $aliases = @($config.aliases)
+        if ($topic.Name -eq $Name -or $config.slug -eq $Name -or $config.name -eq $Name -or $aliases -contains $Name) {
+            return $topic
+        }
+    }
+
+    $available = ($topics | ForEach-Object { $_.Name } | Sort-Object) -join ", "
+    throw "Unknown topic '$Name'. Available topics: $available"
+}
+
+$topicDirs = if ($Topic) { @(Resolve-TopicDirectory $Topic) } else { @(Get-TopicDirectories | Sort-Object Name) }
 
 $outputRootPath = if ([System.IO.Path]::IsPathRooted($OutputRoot)) {
     $OutputRoot
@@ -32,10 +59,10 @@ $outputRootPath = if ([System.IO.Path]::IsPathRooted($OutputRoot)) {
 
 New-Item -ItemType Directory -Force -Path $outputRootPath | Out-Null
 
-foreach ($topicName in $topicNames) {
-    $topicConfig = $topics.PSObject.Properties[$topicName].Value
+foreach ($topicDir in $topicDirs) {
+    $topicConfig = Read-TopicToml (Join-Path $topicDir.FullName "topic.toml")
     $repository = $topicConfig.repository
-    $target = Join-Path $outputRootPath $topicName
+    $target = Join-Path $outputRootPath $topicConfig.name
     $remoteUrl = "https://github.com/$repository.git"
 
     if (Test-Path -LiteralPath $target) {
@@ -60,5 +87,5 @@ foreach ($topicName in $topicNames) {
         git clone $remoteUrl $target | Out-Host
     }
 
-    Write-Host "Synced $topicName -> $target"
+    Write-Host "Synced $($topicConfig.name) -> $target"
 }

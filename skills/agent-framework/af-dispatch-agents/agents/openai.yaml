@@ -1,0 +1,4 @@
+interface:
+  display_name: "AF Dispatch Agents"
+  short_description: "Coordinate AF-scoped subagent delegation."
+  default_prompt: "Decide whether to dispatch AgentFramework subagents."
