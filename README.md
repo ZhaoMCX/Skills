@@ -19,6 +19,14 @@ Only `SKILL.md` is required. Categories organize source files only; installed sk
 
 - [Game Structure](skills/game/game-structure) - Place gameplay logic into Module, Data, State, Rule, Ability, UseCase, Result, Surface, and Adapter responsibilities.
 
+### RuoYi
+
+- [RuoYi Framework](skills/ruoyi/ruoyi-framework) - 处理经典若依单体项目，覆盖 Spring Boot、Shiro、Thymeleaf、MyBatis XML、Druid、Quartz 和内置代码生成器。
+- [RuoYi Vue](skills/ruoyi/ruoyi-vue) - 处理若依前后端分离 Vue2 项目族，覆盖 Spring Security/JWT 后端和 Vue2/Element UI 前端。
+- [RuoYi Vue3](skills/ruoyi/ruoyi-vue3) - 处理若依 Vue3 独立前端项目，覆盖 Vite、Element Plus、Pinia、动态路由和权限指令。
+- [RuoYi Cloud](skills/ruoyi/ruoyi-cloud) - 处理若依微服务项目族，覆盖 Gateway、Auth、Nacos、Feign、Redis、Sentinel、Seata 和多模块服务。
+- [RuoYi App](skills/ruoyi/ruoyi-app) - 处理若依移动端 App 模板，覆盖 uni-app Vue2、token 登录、请求封装、导航拦截和后端对接。
+
 ### Unity
 
 - [Unity DOTween](skills/unity/unity-dotween) - Implement, review, and debug Unity DOTween animation safely.
