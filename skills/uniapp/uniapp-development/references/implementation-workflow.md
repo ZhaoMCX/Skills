@@ -45,6 +45,22 @@ Run the most relevant available checks:
 
 If a dev server or mini-program developer tool is needed, say what was and was not verified.
 
+## Mini Program Regression
+
+- For uni-app `mp-weixin`, test the generated mini program output such as `dist/dev/mp-weixin` or `dist/build/mp-weixin`; the repo root is not the WeChat DevTools project unless it contains the active `project.config.json`.
+- Treat `VITE_*` values as build-time inputs. After changing env, AppID, map keys, H5 URLs, or remote web assets, rebuild and verify the generated output before trusting simulator or real-device behavior.
+- H5 passing does not prove the mini program container passes. Recheck container-sensitive flows on `mp-weixin`: `web-view`, location permission, keyboard focus/blur, upload, navigation, tabBar, and platform-specific permissions.
+- Before publishing a preview QR code for real-device testing, run the fastest available simulator gate for the changed surfaces. At minimum, cover launch/login, the changed page route, critical selectors, and any `web-view` URL/navigation contract.
+- Real writes in regression tests must be explicit, traceable, and cleanable: use a unique run prefix, record backend IDs and roles, and provide a cleanup path.
+
+## Web-View And Map Pages
+
+- Add visible loading and error states around `web-view` or remote map pages; blank areas on real devices are hard to distinguish from network or permission failures.
+- When leaving a page or switching tabs, invalidate pending async work. If the platform cannot physically abort a Promise/request, use an active flag or sequence number so stale results cannot update the UI.
+- For `web-view` pages, clearing the bound URL on unload/hide can destroy the embedded page and stop continued loading when that behavior is desired.
+- Do not rely on mini-program `postMessage` as the only immediate navigation path from an embedded H5 map. When running inside WeChat, prefer the supported mini-program bridge for direct navigation, and keep messages for logging or compatibility.
+- Mobile keyboard behavior needs explicit UX handling: blur search inputs after map taps, marker taps, suggestion selection, filter changes, and primary actions when the keyboard should close.
+
 ## Report
 
 Include:

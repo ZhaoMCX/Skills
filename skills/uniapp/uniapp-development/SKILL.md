@@ -44,21 +44,24 @@ Load only the reference needed for the current task:
 - For CLI projects, use actual `package.json` scripts first. Do not invent `npm run dev:*` / `build:*` commands unless the scripts or official docs support them.
 - For App debugging, remember CLI can build App resources, but interactive App run/debug and uniCloud tooling may still require HBuilderX.
 
-## Mini Program Regression and Release Notes
+## Mini Program And Web-View Notes
 
-- For uni-app `mp-weixin`, test the generated mini program output such as `dist/dev/mp-weixin` or `dist/build/mp-weixin`; the repo root is not the WeChat DevTools project unless it contains the active `project.config.json`.
-- Treat `VITE_*` values as build-time inputs. After changing env, AppID, map keys, H5 URLs, or remote web assets, rebuild and verify the generated output before trusting simulator or real-device behavior.
-- H5 passing does not prove the mini program container passes. Recheck container-sensitive flows on `mp-weixin`: `web-view`, location permission, keyboard focus/blur, upload, navigation, tabBar, and platform-specific permissions.
-- Before publishing a preview QR code for real-device testing, run the fastest available simulator gate for the changed surfaces. At minimum, cover launch/login, the changed page route, critical selectors, and any `web-view` URL/navigation contract.
-- Real writes in regression tests must be explicit, traceable, and cleanable: use a unique run prefix, record backend IDs and roles, and provide a cleanup path.
+- For `mp-weixin`, verify the generated mini program output, not the repo root, unless the root contains the active `project.config.json`.
+- Rebuild after env/AppID/map key/H5 URL changes because `VITE_*` and related settings are build-time inputs.
+- Treat `web-view`, remote map pages, location permission, keyboard behavior, upload, navigation, and tabBar flows as container-sensitive. See `references/implementation-workflow.md` for release and regression details.
+- Separate release surfaces before testing or publishing:
+  - Native/UniApp bundle changes require rebuilding the target output and retesting the mini program/app container.
+  - Remote `web-view` assets require deploying the remote static page and verifying the public content hash/version; rebuilding the mini program does not update remote H5.
+  - Backend permission or data changes may not require a frontend rebuild, but they do require role-token API checks and page evidence.
+- For embedded maps or other `web-view` tools, keep the parent page responsible for live native capabilities such as location, permissions, task data refresh, and navigation intent coordination. Avoid competing location sources between H5 and the UniApp parent.
+- Use explicit loading and empty states when data is prepared asynchronously for `web-view`; a page that is blank for the first refresh interval often means the parent mounted the `web-view` before required URL/data state was ready.
 
-## Web-View and Map Pages
+## Role And Data Regression
 
-- Add visible loading and error states around `web-view` or remote map pages; blank areas on real devices are hard to distinguish from network or permission failures.
-- When leaving a page or switching tabs, invalidate pending async work. If the platform cannot physically abort a Promise/request, use an active flag or sequence number so stale results cannot update the UI.
-- For `web-view` pages, clearing the bound URL on unload/hide can destroy the embedded page and stop continued loading when that behavior is desired.
-- Do not rely on mini-program `postMessage` as the only immediate navigation path from an embedded H5 map. When running inside WeChat, prefer the supported mini-program bridge for direct navigation, and keep messages for logging or compatibility.
-- Mobile keyboard behavior needs explicit UX handling: blur search inputs after map taps, marker taps, suggestion selection, filter changes, and primary actions when the keyboard should close.
+- For role-based apps, test by role, not only by page. Record which role token/account was used, which statuses or records are expected, and whether the backend API itself filters data correctly.
+- Do not treat frontend filtering as authorization. If a page hides forbidden data but the role token can fetch it directly, report a backend filtering/authorization issue.
+- When real writes are needed, make them explicit and traceable: unique run ID, stable prefix, role, endpoint, returned ID or lookup ID, key fields, created time, and cleanup status.
+- Cache or reuse prepared fixture accounts/tokens for simulator regressions when appropriate. Do not let flaky captcha recognition or account creation become a false page-rendering failure.
 
 ## Verification
 
@@ -69,5 +72,6 @@ Choose verification from the project and target:
 - Mini program: `npm run dev:<platform>` or `npm run build:<platform>`, then inspect the generated target folder with the corresponding developer tool.
 - App: `npm run build:app-plus` can generate resources for CI; run/debug usually needs HBuilderX.
 - If no script exists, report that clearly and cite the closest available command or manual HBuilderX step.
+- Before producing a real-device preview or release artifact, run the project’s full simulator/container regression for the changed surface, not only a quick smoke gate. Quick gates are useful for feedback, but they do not prove all role flows, subpages, `web-view` bridges, and write paths work.
 
 When reporting results, mention the target platform(s), commands run, and any parts that still need device or mini-program-tool validation.
