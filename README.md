@@ -51,6 +51,38 @@ Only `SKILL.md` is required. Categories organize source files only; installed sk
 
 - [WeChat Mini Program DevTools](skills/wechat/wechat-miniprogram-devtools) - Use official WeChat DevTools CLI and miniprogram-automator workflows.
 
+## Sync
+
+Use these scripts for the two common sync directions.
+
+Sync repository skills to the local global Codex skills directory:
+
+```powershell
+.\scripts\sync-to-global.ps1
+```
+
+Sync global skills back into this repository for skills that already exist in the repository:
+
+```powershell
+.\scripts\sync-from-global.ps1
+```
+
+`sync-from-global.ps1` skips Agent-specific `agents/` metadata by default so the repository stays cross-agent. Pass `-IncludeAgentMetadata` only when a skill intentionally stores Agent-specific UI metadata.
+
+Sync one category:
+
+```powershell
+.\scripts\sync-to-global.ps1 -Category unity
+.\scripts\sync-from-global.ps1 -Category unity
+```
+
+Sync one skill:
+
+```powershell
+.\scripts\sync-to-global.ps1 -Skill game-structure
+.\scripts\sync-from-global.ps1 -Skill game-structure
+```
+
 ## Install
 
 Install all skills into the local Codex skills directory:
@@ -70,6 +102,8 @@ Install one skill:
 ```powershell
 .\scripts\install.ps1 -Skill game-structure
 ```
+
+`install.ps1` is kept as the backward-compatible name for repository-to-global sync. Prefer `sync-to-global.ps1` for new routine usage.
 
 ## Validate
 

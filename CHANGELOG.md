@@ -8,6 +8,7 @@
 - Removed legacy workflow packages, generated repository publishing scripts, and optional Codex UI metadata files.
 - Exposed game, Unity, UniApp, and WeChat skills in the two-level structure.
 - Moved all RuoYi-family skills under `skills/ruoyi/` so the framework variants are maintained as one product family.
+- Added routine sync scripts for both directions: repository to global skills and global skills back to this repository.
 
 ### 新增
 
