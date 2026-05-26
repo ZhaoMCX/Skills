@@ -15,6 +15,10 @@ Only `SKILL.md` is required. Categories organize source files only; installed sk
 
 ## Skills
 
+### Dev
+
+- [Git Commit](skills/dev/git-commit) - Guide atomic Git commits, staging checks, commit message conventions, and pre-commit confirmation.
+
 ### Game
 
 - [Game Structure](skills/game/game-structure) - Place gameplay logic into Module, Data, State, Rule, Ability, UseCase, Result, Surface, and Adapter responsibilities.

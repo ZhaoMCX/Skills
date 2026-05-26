@@ -20,6 +20,7 @@ Use the official WeChat DevTools CLI for project-level operations and `miniprogr
 | visual evidence after `miniProgram.screenshot()` is confirmed to hang | use OS/window capture as the default visual capture path, while keeping functional assertions in `miniprogram-automator` |
 | stale simulator output after config/env changes | quit DevTools, clear only `compile` cache, then reopen the generated mini program output |
 | app/web-view logs | capture automator `console`/`exception` for AppService logs; use CLI/stdout/local DevTools logs or an explicit web-view bridge for deeper logs |
+| real-device preview QR | build, warm DevTools, run simulator smoke for changed flows, then create preview; never assume a new QR includes changes without verifying the generated output |
 
 ## Standard Workflow
 
@@ -35,6 +36,15 @@ Use the official WeChat DevTools CLI for project-level operations and `miniprogr
 6. For interaction or screenshots, ensure DevTools automation is enabled, then connect with `miniprogram-automator`.
 7. Verify results with concrete evidence: command output, screenshot path, page route, selector result, or assertion result.
 
+## Stable Pipeline Pattern
+
+- Split slow GUI startup from fast gates. Use a DevTools warm/open step once, then run healthcheck, smoke, map/web-view checks, and visual capture against the already-open project when possible.
+- Do not put DevTools cold start, login prompts, preview upload, or full visual capture inside a tight unit-test timeout. Give GUI steps their own timeout and clear failure category.
+- Avoid repeatedly killing or closing DevTools during a regression run. After automator checks, prefer `miniProgram.disconnect()` and leave the warmed DevTools session available for the next check.
+- Do not default to `miniProgram.close()` or CLI `close` at the end of automation; DevTools can show close-confirm dialogs or hang on shutdown. Close only when the user asks, or when cache clearing requires it.
+- When a test appears to "wait forever", first add bounded waits around the operation that can hang: DevTools connection, route load, selector wait, `web-view` readiness, screenshot, preview generation, and close/quit.
+- Report timeouts by stage. A DevTools startup timeout, app route timeout, screenshot timeout, and backend/API timeout imply different fixes.
+
 ## Uni-App Build and Cache Pitfalls
 
 - Confirm which `manifest.json` the build actually uses. Some uni-app projects keep both root `manifest.json` and `src/manifest.json`; the generated `project.config.json` can fall back to `touristappid` if the active source manifest has an empty `mp-weixin.appid`.
@@ -47,6 +57,13 @@ Use the official WeChat DevTools CLI for project-level operations and `miniprogr
 ```
 
 Avoid `cache --clean all`, `auth`, or `storage` unless the user explicitly accepts losing local DevTools state.
+
+## Web-View and Real-Device Pitfalls
+
+- A remote H5 page inside `web-view` is a separate deployment surface. Changing the mini program bundle does not update remote map/search code unless that H5 asset is also deployed and fetched from the public URL used by the mini program.
+- Before issuing a real-device preview QR after web-view changes, verify both the generated `web-view src` and the remote H5 content/version that the real device will load.
+- `postMessage` from H5 to mini program is not a reliable sole mechanism for immediate real-device navigation. For embedded H5 actions such as "view task" or "start handling", prefer the official `wx.miniProgram.navigateTo` bridge when available, and keep messages as compatibility/logging evidence.
+- Location and keyboard behavior can differ between simulator and phone. Include explicit checks for `wx.getLocation`, permission failure feedback, input focus, suggestion selection, and blur-on-map-tap behavior when those flows changed.
 
 ## DevTools CLI Notes
 
@@ -115,6 +132,7 @@ Common operation names to look for in help output: `open`, `preview`, `upload`, 
 - DevTools CLI stdout/stderr is useful for project-level state: startup port, selected AppID, cache cleanup, preview/upload errors, and login/permission blockers.
 - `web-view` content, including H5 TianDiTu pages, may not forward browser console/network logs to the mini-program AppService stream. For those logs, use an explicit H5-to-mini-program bridge, local H5 browser testing, DevTools local log files, or a dedicated DevTools/MCP integration if the user asks for deeper inspection.
 - A clean report should distinguish: functional assertion failures, screenshot/capture failures, AppService console messages, AppService exceptions, DevTools CLI output, and web-view/H5 diagnostics.
+- For regression runs with real backend writes, record run ID, record prefix, role, endpoint, returned or looked-up backend IDs, created time, and cleanup status. Do not mix writable data setup failures with read-only UI assertion failures.
 
 ## Common Mistakes
 
@@ -124,6 +142,8 @@ Common operation names to look for in help output: `open`, `preview`, `upload`, 
 - Trusting stale DevTools simulator output after env/AppID changes; clear `compile` cache and reopen the generated output first.
 - Failing a test solely because `miniProgram.screenshot()` timed out while route, selector, size, and API assertions passed.
 - Assuming `web-view` H5 logs are available through mini-program `console` events.
+- Publishing a QR code before rerunning simulator smoke for the changed flows.
+- Forgetting that remote H5 assets, backend permissions, and the mini program bundle may each need separate deployment or verification.
 - Treating preview/upload as harmless. Preview may require login; upload affects the mini program management workflow.
 - Hiding DevTools login, appid, or permission blockers. Report them and ask the user to complete the interactive step.
 
