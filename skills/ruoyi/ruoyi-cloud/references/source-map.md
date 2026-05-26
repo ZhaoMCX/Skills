@@ -1,6 +1,6 @@
 # 源码地图
 
-本技能参考 `yangzongzhuan/RuoYi-Cloud` 快照 `3979713`（2026-04-17，版本 `3.6.8`）和 `RuoYi-Cloud-Vue3` 前端快照 `277b1c8`。代表技术栈：Java 17、Spring Boot 4.0.3、Spring Cloud 2025.1、Spring Cloud Alibaba 2025.1、Nacos、Gateway、Sentinel、OpenFeign、Redis、MyBatis XML、PageHelper、Druid、dynamic-datasource、Seata、JWT。
+本文件的模块地图来自 `yangzongzhuan/RuoYi-Cloud` 和配套 Vue3 前端的参考快照，仅用于说明常见结构和命名。实际版本、JDK、Spring Boot、Spring Cloud/Alibaba、Nacos、Gateway、Sentinel、OpenFeign、Redis、Seata、JWT 和前端组合以目标项目本地代码、配置中心和当前官方分支为准。
 
 同族变体：
 

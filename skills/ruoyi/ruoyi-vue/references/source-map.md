@@ -1,6 +1,6 @@
 # 源码地图
 
-本技能参考 `yangzongzhuan/RuoYi-Vue` 快照 `7da12b0`（2026-04-17，版本 `3.9.2`）。代表技术栈：Java 17、Spring Boot 4.0.3、Spring Security、JWT、Redis、MyBatis XML、PageHelper、Druid、Quartz、Velocity、Vue 2.6、Element UI、Vue CLI、Vuex、Vue Router。
+本文件的模块地图来自 `yangzongzhuan/RuoYi-Vue` 的参考快照，仅用于说明常见结构和命名。实际版本、JDK、Spring Boot、Spring Security、JWT、Redis、Vue/Element UI/Vue CLI、生成器模板和接口契约以目标项目本地代码及当前官方分支为准。
 
 同族变体：
 

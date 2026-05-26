@@ -1,6 +1,6 @@
 # 源码地图
 
-本技能参考 `yangzongzhuan/RuoYi-App` 快照 `207cb4b`（2026-01-29，`manifest.json` 版本 `1.2.0`）。代表技术栈：uni-app、Vue2、Vuex、uni-ui/uni_modules、若依移动端接口封装，支持 H5、App、微信小程序、支付宝小程序等。
+本文件的模块地图来自 `yangzongzhuan/RuoYi-App` 的参考快照，仅用于说明常见结构和命名。实际 uni-app、Vue、uni-ui、平台配置、版本号和后端接口契约以目标项目本地代码、接入后端和当前官方分支为准。
 
 ## 根目录
 

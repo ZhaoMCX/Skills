@@ -1,6 +1,6 @@
 ---
 name: ruoyi-vue
-description: 处理若依前后端分离 Vue2 项目族：RuoYi-Vue、RuoYi-Vue-fast、RuoYi-Vue-Oracle，覆盖 Spring Boot/Spring Security/JWT/Redis 后端与 Vue2/Element UI/Vue CLI 前端。Use when 项目包含 ruoyi-ui、vue.config.js、src/utils/request.js、v-hasPermi、@PreAuthorize("@ss.hasPermi(...)")、SecurityConfig、TokenService，或仓库名/说明为 RuoYi-Vue。
+description: 该技能处理若依前后端分离 Vue2 项目族：RuoYi-Vue、RuoYi-Vue-fast、RuoYi-Vue-Oracle，覆盖 Spring Boot/Spring Security/JWT/Redis 后端与 Vue2/Element UI/Vue CLI 前端。Use when 项目包含 ruoyi-ui、vue.config.js、src/utils/request.js、v-hasPermi、@PreAuthorize("@ss.hasPermi(...)")、SecurityConfig、TokenService，或仓库名/说明为 RuoYi-Vue。
 ---
 
 # RuoYi Vue
@@ -17,6 +17,7 @@ description: 处理若依前后端分离 Vue2 项目族：RuoYi-Vue、RuoYi-Vue-
 
 ## 引用地图
 
+- `references/official-sources.md`：官方仓库、分支和来源优先级。
 - `references/source-map.md`：模块、关键文件、仓库变体。
 - `references/backend-patterns.md`：REST Controller、Spring Security/JWT、Redis token、权限、数据权限、Excel、代码生成。
 - `references/frontend-patterns.md`：Vue2、Element UI、Vuex、路由守卫、Axios、权限指令、列表页模式。

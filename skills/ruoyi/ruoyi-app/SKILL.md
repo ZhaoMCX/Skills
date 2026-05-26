@@ -1,6 +1,6 @@
 ---
 name: ruoyi-app
-description: 处理若依 RuoYi-App 移动端项目，覆盖 uni-app Vue2、uni-ui、Vuex、pages.json、manifest.json、若依 token 登录、请求封装、导航拦截、个人中心和与 RuoYi-Vue/RuoYi-Cloud 后端对接。Use when 项目包含 RuoYi-App、config.js baseUrl、permission.js uni.addInterceptor、utils/request.js、pages/login、pages/mine、uni_modules，或用户明确提到若依移动端/App。
+description: 该技能处理若依 RuoYi-App 移动端项目，覆盖 uni-app Vue2、uni-ui、Vuex、pages.json、manifest.json、若依 token 登录、请求封装、导航拦截、个人中心和与 RuoYi-Vue/RuoYi-Cloud 后端对接。Use when 项目包含 RuoYi-App、config.js baseUrl、permission.js uni.addInterceptor、utils/request.js、pages/login、pages/mine、uni_modules，或用户明确提到若依移动端/App。
 ---
 
 # RuoYi App
@@ -17,6 +17,7 @@ description: 处理若依 RuoYi-App 移动端项目，覆盖 uni-app Vue2、uni-
 
 ## 引用地图
 
+- `references/official-sources.md`：官方仓库、后端契约和来源优先级。
 - `references/source-map.md`：项目结构、关键文件、后端接口契约。
 - `references/app-patterns.md`：请求、登录、导航拦截、Vuex、页面、上传、插件。
 - `references/development-workflow.md`：新增页面/接口、多端验证、打包和评审清单。
