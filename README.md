@@ -4,6 +4,8 @@
 
 Personal Codex skills maintained as a single repository with lightweight, Matt Pocock-style skill folders.
 
+Recommended reference: [mattpocock/skills](https://github.com/mattpocock/skills), a practical example collection for lightweight agent skill structure and workflows.
+
 ## Layout
 
 ```text

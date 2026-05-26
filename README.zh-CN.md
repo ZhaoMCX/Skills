@@ -4,6 +4,8 @@
 
 个人 Codex 技能仓库，使用轻量级的 Matt Pocock 风格技能目录统一维护。
 
+推荐参考：[mattpocock/skills](https://github.com/mattpocock/skills)，一个适合参考轻量级 Agent 技能结构与工作流的实践示例库。
+
 ## 目录结构
 
 ```text
