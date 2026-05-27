@@ -14,6 +14,7 @@ Use these guardrails before and during any remote server operation. Optimize for
 - `references/change-procedure.md`: read-only checks, backup patterns, change flow, and completion evidence.
 - `references/risky-operations.md`: operations requiring explicit confirmation.
 - `references/secrets-and-tls.md`: credential handling, TLS/Nginx checks, and HTTPS completion rules.
+- `references/agent-access-model.md`: dedicated operations account, public-key access, sudoers validation, and revocation safety.
 
 ## Operating Mode
 
@@ -49,6 +50,8 @@ For any server change:
 Never proceed without explicit confirmation for deletion-like operations, destructive deletes, disk formatting, reboot/shutdown, stopping critical services, firewall/security-group changes, database mutations, broad package upgrades, broad permission changes, SSH lockout risks, disabling security controls, or exposing secrets.
 
 Never ask the user to paste private keys, certificate private keys, passwords, API tokens, database URLs, or `.env` secrets into chat when a safer alternative exists.
+
+When whole-server agent access is needed, prefer a dedicated `ops` account with only the agent machine's public key and a validated sudoers grant. Treat passwordless sudo as high trust, and keep deletion-like or security-sensitive revocation behind explicit confirmation.
 
 For TLS/Nginx work, confirm domain, cert path, private key path, backend port, and current layout; use file paths and permission checks rather than printing key contents.
 
