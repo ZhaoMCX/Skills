@@ -12,7 +12,7 @@ Optional scope:
 <type>(<scope>): <summary>
 ```
 
-## Allowed Types
+Allowed types:
 
 - `feat`: user-facing feature or capability
 - `fix`: bug fix
@@ -26,7 +26,7 @@ Optional scope:
 - `ci`: CI configuration or pipeline change
 - `revert`: revert a previous commit
 
-## Summary Rules
+Summary rules:
 
 - Keep the type prefix in English.
 - Match the summary language to the user conversation or explicit user request.

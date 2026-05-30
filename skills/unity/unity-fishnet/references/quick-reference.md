@@ -20,9 +20,9 @@
 | Source repository | `https://github.com/FirstGearGames/FishNet` |
 | Documentation repository | `https://github.com/FirstGearGames/FishNet-Documentation` |
 | UPM Git URL | `https://github.com/FirstGearGames/FishNet.git?path=Assets/FishNet` |
-| Version source | Inspect the target project's installed FishNet package metadata, release notes, and local source before relying on reference examples. |
+| Researched snapshot | `com.firstgeargames.fishnet` `4.7.2`, Unity `2021.3` minimum; verify local package first |
 
-Use official FishNet docs and source for the installed version when local project files do not answer the question.
+No official Agent/Codex/Claude/Gemini skill file was found in the FishNet source or documentation repositories during skill creation.
 
 ## Namespaces
 

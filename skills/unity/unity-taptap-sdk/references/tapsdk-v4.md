@@ -25,30 +25,30 @@
 - v4 distribution repo: `https://github.com/taptap/tapsdk-unity-dist`
 - v3 legacy repo: `https://github.com/taptap/tapsdk-v3-unity`
 
-Check these again for version-sensitive work. Official docs, package manifests, native dependencies, and GitHub tags can diverge; use the target project's installed packages or the current official release before choosing versions.
+Check these again for version-sensitive work. At skill creation time, official stable docs/downloads pointed to `4.10.2`; GitHub main package manifests reported `4.10.3-beta.1`.
 
 ## Package Installation
 
 Prefer UPM package references for new work.
 
-GitHub URL pattern. Replace the tag with the official version selected for the target project:
+GitHub URL pattern:
 
 ```json
 {
   "dependencies": {
-    "com.taptap.sdk.core": "https://github.com/taptap/tapsdk-unity-dist.git?path=/Core#<version>",
-    "com.taptap.sdk.login": "https://github.com/taptap/tapsdk-unity-dist.git?path=/Login#<version>"
+    "com.taptap.sdk.core": "https://github.com/taptap/tapsdk-unity-dist.git?path=/Core#4.10.2",
+    "com.taptap.sdk.login": "https://github.com/taptap/tapsdk-unity-dist.git?path=/Login#4.10.2"
   }
 }
 ```
 
-NPM scoped package pattern. Replace versions with the official/current project version:
+NPM scoped package pattern:
 
 ```json
 {
   "dependencies": {
-    "com.taptap.sdk.core": "<version>",
-    "com.taptap.sdk.login": "<version>"
+    "com.taptap.sdk.core": "4.10.2",
+    "com.taptap.sdk.login": "4.10.2"
   },
   "scopedRegistries": [
     {
@@ -63,8 +63,8 @@ NPM scoped package pattern. Replace versions with the official/current project v
 Unity dependencies commonly required by the docs:
 
 - `com.unity.nuget.newtonsoft-json`: `3.2.1`
-- External Dependency Manager for Unity: use the version required by the current docs/project.
-- `com.unity.purchasing`: use the version required by the installed TapTap IAP package and Unity IAP docs.
+- External Dependency Manager for Unity: `1.2.179` or the version required by the current docs/project
+- `com.unity.purchasing`: source package currently declares `3.1.0` for TapTap IAP
 
 Use local `.unitypackage` imports only when the project cannot use UPM or must mirror a vendor package artifact.
 
@@ -72,7 +72,7 @@ After UPM install, inspect every `Packages/packages-lock.json` TapSDK entry and 
 
 ## v4 Module Map
 
-Verify module package names, dependencies, Unity requirements, and package versions against the installed source or current official release:
+Source manifests at GitHub main currently declare Unity `2020.3.0f1` and version `4.10.3-beta.1` for these modules:
 
 | Module | Package | Dependencies |
 | --- | --- | --- |
@@ -240,7 +240,7 @@ Leaderboard:
 IAP:
 
 - Namespace: `TapSDK.IAP`
-- Verify the installed TapTap IAP source for platform support and Unity IAP store registration before coding platform-specific purchase flows.
+- `TapPurchasingModule.Instance` configures a Unity IAP store named `TapTap` only when `Application.platform == RuntimePlatform.Android` in current source.
 - `ITapTapStoreConfiguration` exposes `SetClientId`, `SetClientToken`, `SetRegionCode`, `SetEnableLog`, `SetIsRNDMode`.
 - `ITapTapIAPBridge` exposes product query, purchase, finish transaction, and restore unfinished purchases through Unity IAP store callbacks.
 - Product query success returns product details including product id, name, description, region id, formatted price, micros amount, and currency.

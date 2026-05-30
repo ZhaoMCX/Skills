@@ -1,6 +1,6 @@
 ---
 name: uniapp-development
-description: Guides uni-app and uni-app x development with DCloud-first source checks, project-structure inspection, cross-platform boundaries, runtime APIs, and build verification. Use when working on uni-app, uni-app x, DCloud, HBuilderX, uniCloud-adjacent frontend projects, mini-program targets, or CLI builds using pages.json, manifest.json, App.vue, main.js, uni.scss, conditional compilation, uni APIs, or @dcloudio tooling.
+description: Guides uni-app, uni-app x, DCloud, HBuilderX, and uniCloud-adjacent frontend work. Use when working on mini-program targets, CLI builds, pages.json, manifest.json, App.vue, main.js, uni.scss, conditional compilation, uni APIs, or @dcloudio tooling.
 ---
 
 # UniApp Development
@@ -48,6 +48,8 @@ Load only the reference needed for the current task:
 
 - For `mp-weixin`, verify the generated mini program output, not the repo root, unless the root contains the active `project.config.json`.
 - Rebuild after env/AppID/map key/H5 URL changes because `VITE_*` and related settings are build-time inputs.
+- If `mp-weixin.appid` is empty, some DCloud builds may write `touristappid` into generated `project.config.json`; for local simulator checks prefer an empty generated appid, and require a real `wx...` AppID for preview, upload, real-device APIs, or release.
+- H5 passing does not prove the mini program container passes. For mobile flows, prefer `build:h5` + H5 visual check first, then `build:mp-weixin` + WeChat DevTools simulator regression.
 - Treat `web-view`, remote map pages, location permission, keyboard behavior, upload, navigation, and tabBar flows as container-sensitive. See `references/implementation-workflow.md` for release and regression details.
 - Separate release surfaces before testing or publishing:
   - Native/UniApp bundle changes require rebuilding the target output and retesting the mini program/app container.
@@ -68,8 +70,8 @@ Load only the reference needed for the current task:
 Choose verification from the project and target:
 
 - Static checks: lint/typecheck scripts if present.
-- H5: use the project's existing H5 dev/build script; common command shapes are in `references/cli-and-build.md`.
-- Mini program: use the project's existing target-platform dev/build script, then inspect the generated folder with the corresponding developer tool.
+- H5: `npm run dev:h5` for manual browser verification or `npm run build:h5` for build verification.
+- Mini program: `npm run dev:<platform>` or `npm run build:<platform>`, then inspect the generated target folder with the corresponding developer tool.
 - App: `npm run build:app-plus` can generate resources for CI; run/debug usually needs HBuilderX.
 - If no script exists, report that clearly and cite the closest available command or manual HBuilderX step.
 - Before producing a real-device preview or release artifact, run the project’s full simulator/container regression for the changed surface, not only a quick smoke gate. Quick gates are useful for feedback, but they do not prove all role flows, subpages, `web-view` bridges, and write paths work.

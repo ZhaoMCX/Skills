@@ -1,6 +1,6 @@
 ---
 name: game-structure
-description: Decide where gameplay logic should live by separating game Module, Data, State, Rule, Ability, UseCase, Result, Surface, and Adapter responsibilities. Use when creating, refactoring, or reviewing game systems; when gameplay rules are mixed with UI, animation, physics, networking, save/load, engine callbacks, or SDK code; or when a game module needs clear responsibility boundaries.
+description: Decide where gameplay logic should live by separating game Module, State, Api, Result, Surface, and Adapter responsibilities. Use when creating, refactoring, or reviewing game systems; when gameplay rules are mixed with UI, animation, physics, networking, save/load, engine callbacks, or SDK code; or when a game module needs clear responsibility boundaries.
 ---
 
 # Game Structure
@@ -22,14 +22,25 @@ Use engine-specific skills only when placement depends on engine APIs or framewo
 | Writing | Role |
 | --- | --- |
 | Stable gameplay ownership boundary | Module |
-| Static tuning, config, content, table, asset definition | Data |
-| Runtime mutable facts and current game truth | State |
-| Can/cannot, calculation, validation, transition | Rule |
-| Start/update/cancel/complete action lifecycle | Ability |
-| Multi-object or cross-module gameplay flow | UseCase |
-| Structured success/failure and failure reason | Result |
-| Input, UI, view, scene object, animation/physics callback | Surface |
+| Pure runtime facts and current game truth | State |
+| Read, validate, calculate, transition, or orchestrate State | Api |
+| Structured success/failure, diagnostics, and optional emitted events | Result |
+| Input, UI, view, scene object, animation/physics callback; calls Api only | Surface |
 | Engine, network, save/load, SDK, filesystem, resource access | Adapter |
+
+## Shape Standards
+
+- State is pure runtime facts. It does not decide, call callbacks, touch external systems, or create Results.
+- Api is the only place that interprets or changes State. It owns validation, calculation, transitions, and flow orchestration.
+- Other Modules may call public Api, but must not import or mutate another Module's internal State.
+- Adapter only touches external systems and passes facts/results to Api. Do not hide gameplay rules in Adapter.
+- Surface only receives input or presents output and calls Api. Do not hide gameplay rules in Surface.
+- Result only describes structured output: success/failure, ResultNotice items, and optional GameEvent items to consume later.
+- Event is an interaction meaning, not a layer. EventKey is a stable event key, GameEvent is an occurred fact, subscriptions are State, dispatch/subscribe functions are Api, and dispatch output is Result.
+- Data is not a default layer. Use it only as a normal domain word when it is precise, such as SaveData.
+- Config is a module or domain capability, not a default layer.
+- State and Api are naming, directory, dependency-direction, and test constraints. Do not add marker interfaces such as IState or IApi.
+- Avoid broad aggregate objects named Bus, Manager, Registry, Controller, or Runner. Prefer explicit State plus focused Api files.
 
 ## Pre-Code Check
 
@@ -45,7 +56,7 @@ Game Structure Check:
 - Verification:
 ```
 
-## Extraction Rule
+## Extraction Standard
 
 Keep behavior local unless one is true:
 
@@ -60,15 +71,16 @@ Do not split every feature into all roles by default.
 
 ## Defaults
 
-Module owns. Data configures. State records. Rule decides. Ability performs. UseCase orchestrates. Result explains. Surface presents or receives. Adapter integrates.
+Module owns. State records. Api decides and performs. Result explains. Surface presents or receives. Adapter integrates.
 
 ## Common Misplacements
 
-- Bad: UI button directly changes health. Good: UI Surface calls a UseCase; Rule changes State.
-- Bad: Network RPC calculates damage. Good: Network Adapter passes request; Combat UseCase validates and resolves.
-- Bad: ScriptableObject or Resource stores current cooldown. Good: Data stores cooldown duration; State stores remaining cooldown.
-- Bad: Animation event applies gameplay truth directly. Good: Animation Surface emits timing signal; UseCase/Rule owns outcome.
-- Bad: Physics callback decides scoring. Good: Physics Surface/Adapter reports contact; Rule decides score.
+- Bad: UI button directly changes health. Good: UI Surface calls Api; Api changes State.
+- Bad: Network RPC calculates damage. Good: Network Adapter passes request; Combat Api validates and resolves.
+- Bad: ScriptableObject or Resource stores current cooldown. Good: a cooldown definition/config stores duration; State stores remaining cooldown.
+- Bad: Animation event applies gameplay truth directly. Good: Animation Surface emits timing signal; Api owns outcome.
+- Bad: Physics callback decides scoring. Good: Physics Surface/Adapter reports contact; Api decides score.
+- Bad: EventBus stores subscriptions, validates publishing, invokes handlers, and aggregates diagnostics. Good: Event State stores subscriptions, Event Api subscribes/dispatches, Event Result reports diagnostics.
 
 ## Hand Off When
 

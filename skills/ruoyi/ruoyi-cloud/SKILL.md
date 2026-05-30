@@ -1,6 +1,6 @@
 ---
 name: ruoyi-cloud
-description: 该技能处理若依微服务项目族：RuoYi-Cloud、RuoYi-Cloud-Oracle，以及与 RuoYi-Cloud-Vue3 的接口边界，覆盖 Spring Boot、Spring Cloud & Alibaba、Nacos、Gateway、Auth、Feign、Redis、Sentinel、Seata、多模块服务与若依权限体系。Use when 项目包含 ruoyi-gateway、ruoyi-auth、ruoyi-modules、ruoyi-api、ruoyi-common-security、bootstrap.yml、Nacos 配置、@InnerAuth、@RequiresPermissions，或仓库名为 RuoYi-Cloud。
+description: 处理若依微服务项目族：RuoYi-Cloud、RuoYi-Cloud-Oracle，以及配套 RuoYi-Cloud-Vue3 前端边界，覆盖 Spring Boot、Spring Cloud & Alibaba、Nacos、Gateway、Auth、Feign、Redis、Sentinel、Seata、多模块服务与若依权限体系。Use when 项目包含 ruoyi-gateway、ruoyi-auth、ruoyi-modules、ruoyi-api、ruoyi-common-security、bootstrap.yml、Nacos 配置、@InnerAuth、@RequiresPermissions，或仓库名为 RuoYi-Cloud。
 ---
 
 # RuoYi Cloud
@@ -17,7 +17,6 @@ description: 该技能处理若依微服务项目族：RuoYi-Cloud、RuoYi-Cloud
 
 ## 引用地图
 
-- `references/official-sources.md`：官方仓库、分支和来源优先级。
 - `references/source-map.md`：模块职责、关键文件、服务链路。
 - `references/backend-patterns.md`：Gateway、Auth、Token、Feign、权限、数据权限、模块开发。
 - `references/ops-workflow.md`：Nacos/Sentinel/Redis/Seata、启动顺序、验证和排错清单。

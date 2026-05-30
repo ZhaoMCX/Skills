@@ -12,9 +12,9 @@
 | Project settings asset | `Assets/Resources/DOTweenSettings.asset` |
 | Namespace | `DG.Tweening` |
 
-## Project Settings Snapshot
+## Current Project Settings Snapshot
 
-Read the target project's `DOTweenSettings.asset` again before making sensitive changes. The table below is a sample interpretation pattern, not a reusable source of truth:
+Read `DOTweenSettings.asset` again before making sensitive changes. At skill creation time the asset indicated:
 
 | Setting | Current value | Practical meaning |
 | --- | --- | --- |

@@ -13,5 +13,3 @@ Do not run these unless the user explicitly confirms the exact intent after seei
 - replacing SSH configuration or authorized keys in a way that could lock out access
 - disabling security controls, SELinux/AppArmor, TLS verification, or authentication
 - exposing secrets, private keys, tokens, environment files, or database dumps
-
-Prefer dry runs, config tests, narrow commands, and reversible edits before any service-impacting command.

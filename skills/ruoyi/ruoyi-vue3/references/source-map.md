@@ -1,6 +1,11 @@
 # 源码地图
 
-本文件的模块地图来自 `yangzongzhuan/RuoYi-Vue3` 与配套 Cloud Vue3 前端的参考快照，仅用于说明常见结构和命名。实际版本、Vite/Element Plus/Pinia/Vue Router/Axios 组合、环境变量和接口前缀以目标项目本地代码及当前官方分支为准。
+本技能参考：
+
+- `yangzongzhuan/RuoYi-Vue3` 快照 `e019ee1`（2026-04-18）。
+- `yangzongzhuan/RuoYi-Cloud-Vue3` 快照 `277b1c8`（2026-04-18）。
+
+代表技术栈：Vue 3.5、Vite 6、Element Plus、Pinia、Vue Router 4、Axios、SCSS、vite-plugin-svg-icons、unplugin-auto-import。
 
 ## 根目录
 

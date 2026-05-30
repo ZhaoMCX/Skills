@@ -1,6 +1,6 @@
 ---
 name: wechat-miniprogram-devtools
-description: Guides WeChat Mini Program DevTools workflows with CLI project operations, simulator automation, generated mp-weixin output handling, preview/upload safety, and evidence capture. Use when working with WeChat Mini Program projects through official WeChat DevTools, DevTools CLI, miniprogram-automator, uni-app mp-weixin output, preview/upload, simulator automation, screenshots, page inspection, clicks, input, or end-to-end checks.
+description: Guides WeChat Mini Program project work through official WeChat DevTools. Use when working with DevTools CLI, miniprogram-automator, uni-app mp-weixin output, preview/upload, simulator automation, screenshots, page inspection, clicks, input, or end-to-end checks.
 ---
 
 # WeChat Mini Program DevTools
@@ -9,18 +9,18 @@ description: Guides WeChat Mini Program DevTools workflows with CLI project oper
 
 Use the official WeChat DevTools CLI for project-level operations and `miniprogram-automator` for simulator interaction. Prefer official DevTools capabilities; do not install or rely on third-party MCP wrappers unless the user explicitly asks.
 
-Read `references/official-sources.md` before relying on exact CLI flags or automator APIs. Use `references/automation-and-release.md` as the index for automation, cache, `web-view`, screenshot, preview, or upload details.
+Load `references/automation-and-release.md` when the task involves stable regression pipelines, preview QR codes, upload/release work, `web-view`, real-device behavior, DevTools cache, screenshot reliability, or detailed logging.
 
 ## Decision Guide
 
 | User asks for | Use |
 | --- | --- |
-| open, preview, upload, build npm, inspect project settings | DevTools CLI; exact flags come from installed help |
+| open, preview, upload, build npm, inspect project settings | DevTools CLI |
 | click, type, navigate pages, read page data, screenshot, assert UI | `miniprogram-automator` after DevTools is open with automation enabled |
 | uni-app / HBuilderX / `mp-weixin` project | build or locate the `dist/dev/mp-weixin` or `dist/build/mp-weixin` output first, then point DevTools at that output |
 | CI-style checks | use CLI for setup and automator for deterministic assertions; report login, appid, or GUI blockers |
 | visual evidence or screenshots | keep functional assertions in automator; use OS/window capture if DevTools protocol screenshots hang |
-| stale simulator output after config/env changes | use the smallest supported cache cleanup, then reopen the generated output |
+| stale simulator output after config/env changes | clear only `compile` cache, then reopen the generated mini program output |
 | real-device preview QR | build, run the required simulator regression for the changed flows, then create and validate an image QR |
 
 ## Standard Workflow
@@ -44,9 +44,10 @@ Read `references/official-sources.md` before relying on exact CLI flags or autom
 - Treat upload as a user-visible release action. Confirm appid, version, description, and target project before uploading.
 - If DevTools reports login, appid, network, or permission errors, state the blocker plainly and avoid inventing workarounds.
 - For build/npm operations inside the mini program output, use DevTools CLI when the project requires WeChat's npm build behavior.
-- On Windows, DevTools automation and screenshots can hang when DevTools is backgrounded or minimized. Keep the DevTools main window visible and foreground before simulator automation or OS screenshots; do not move or resize it unless it is offscreen, minimized, or otherwise impossible to verify.
+- On Windows, do not assume a background or minimized DevTools window is reliable. Before simulator automation or OS screenshots, restore the DevTools main window to the desktop, move/size it predictably, bring it to the foreground, and allow a short repaint settle time.
 - Clean stale DevTools sessions with the official `quit` command first, then kill remaining processes from the DevTools install directory only if needed. A leftover old main window can make automator connect to the wrong or half-stale session.
 - When starting a stable automation session, open the current generated project window first, then enable `auto` on the intended port. Reusing a warmed session is fine only after proving it belongs to the current project and is visible.
+- Some DevTools versions accept `auto --auto-port <port>` even when help output omits it; prefer a fixed auto port for repeatable `miniprogram-automator` connections, and do not assume the `ws connect <port>` value from `--debug` is the automator endpoint.
 - Prefer `miniProgram.disconnect()` after checks. Do not call `miniProgram.close()` by default because it can trigger close prompts or hang shutdown.
 - Treat cleanup/navigation-after-assertion steps as best-effort unless the cleanup behavior itself is the feature under test. A timeout while returning from a diagnostic page should not fail an already-proven page assertion.
 - Do not put cold start, window foregrounding, web-view loading, preview generation, and visual capture under one tight timeout. Use per-stage timeouts and report the exact stage that failed.
@@ -56,7 +57,7 @@ Read `references/official-sources.md` before relying on exact CLI flags or autom
 Before automating, confirm:
 
 - The target directory contains `project.config.json`.
-- `appid` is suitable for the requested action. For local simulator checks, test appids may be acceptable; for upload, confirm the real appid.
+- `appid` is suitable for the requested action. Empty appid can be acceptable for local simulator checks; `touristappid` can trigger DevTools dialogs; preview/upload/real-device capabilities require a confirmed real `wx...` appid.
 - The compiled output is current after source changes.
 - DevTools is installed, logged in when required, and its automation service is enabled.
 - The page route exists in `app.json` or generated pages config.

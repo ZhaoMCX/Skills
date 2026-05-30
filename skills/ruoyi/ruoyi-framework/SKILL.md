@@ -1,6 +1,6 @@
 ---
 name: ruoyi-framework
-description: 该技能处理若依经典单体后台项目族：RuoYi、RuoYi-fast、RuoYi-Oracle，以及 Spring Boot 2/3/4 分支中的 Shiro、Thymeleaf、MyBatis XML、Druid、Quartz 与内置 Velocity 代码生成器。Use when 项目包含 ruoyi-admin、ruoyi-framework、ruoyi-common、ruoyi-system、ruoyi-quartz、ruoyi-generator、RuoYiApplication、ry.bat，或使用 AjaxResult、TableDataInfo、ry-ui.js 等若依经典单体模式。
+description: 处理若依经典单体后台项目族：RuoYi、RuoYi-fast、RuoYi-Oracle，以及 Spring Boot 2/3/4 分支中的 Shiro、Thymeleaf、MyBatis XML、Druid、Quartz 与内置 Velocity 代码生成器。Use when 项目包含 ruoyi-admin、ruoyi-framework、ruoyi-common、ruoyi-system、ruoyi-quartz、ruoyi-generator、RuoYiApplication、ry.bat，或使用 AjaxResult、TableDataInfo、ry-ui.js 等若依经典单体模式。
 ---
 
 # RuoYi Framework
@@ -26,8 +26,7 @@ description: 该技能处理若依经典单体后台项目族：RuoYi、RuoYi-fa
 
 只读取当前任务需要的文件：
 
-- `references/official-sources.md`：官方仓库、分支和来源优先级。
-- `references/source-map.md`：模块地图、关键文件、参考快照的结构取样。
+- `references/source-map.md`：模块地图、关键文件、创建本技能时参考的源码快照。
 - `references/backend-patterns.md`：控制器、服务、Mapper、分页、返回值、数据权限、数据源、事务。
 - `references/frontend-patterns.md`：Thymeleaf、`include.html`、`ry-ui.js`、bootstrap-table、权限、字典、表单。
 - `references/security-and-ops.md`：Shiro、CSRF/XSS、文件上传下载、Quartz 调用安全、日志、防重复提交。

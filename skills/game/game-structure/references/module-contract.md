@@ -17,8 +17,7 @@ Does not own:
 
 | Interaction | Use When | Example |
 | --- | --- | --- |
-| Command | Ask another Module to change its own State | `ApplyBuff`, `GrantItem`, `StartQuest` |
-| Query | Read another Module's public facts | `GetCurrentHealth`, `CanEquip`, `GetQuestProgress` |
+| Api | Ask another Module to run its public API, including reading or changing its own State | `SelectTask`, `GrantItem`, `GetQuestProgress` |
 | Event | React to a fact that already happened | `DamageApplied`, `ItemCollected`, `AreaEntered` |
 | Surface composition | UI/scene combines multiple Modules without moving logic | HUD shows Combat and Inventory |
 | Shared kernel | Tiny stable shared concept | `EntityId`, `GameTime`, `Result`, `StatId` |
@@ -29,11 +28,11 @@ Does not own:
 - Which Module owns the source-of-truth State?
 - Which Module must protect the invariant?
 - Is another Module being asked to change its own State, or are we reaching into internals?
-- Can the interaction be expressed as Command, Query, Event, or Surface composition?
+- Can the interaction be expressed as a public Api, Event, or Surface composition?
 
-## Public API Rule
+## Public API Standard
 
-Other Modules should use public commands, queries, events, or shared-kernel values. They should not import internal State containers, mutate fields directly, or depend on scene/prefab wiring as a module API.
+Other Modules should use public Api, events, or shared-kernel values. They should not import internal State containers, mutate fields directly, or depend on scene/prefab wiring as a module API.
 
 ## Enforcement Hints
 

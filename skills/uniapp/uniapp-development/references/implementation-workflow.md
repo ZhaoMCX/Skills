@@ -49,7 +49,9 @@ If a dev server or mini-program developer tool is needed, say what was and was n
 
 - For uni-app `mp-weixin`, test the generated mini program output such as `dist/dev/mp-weixin` or `dist/build/mp-weixin`; the repo root is not the WeChat DevTools project unless it contains the active `project.config.json`.
 - Treat `VITE_*` values as build-time inputs. After changing env, AppID, map keys, H5 URLs, or remote web assets, rebuild and verify the generated output before trusting simulator or real-device behavior.
-- H5 passing does not prove the mini program container passes. Recheck container-sensitive flows on `mp-weixin`: `web-view`, location permission, keyboard focus/blur, upload, navigation, tabBar, and platform-specific permissions.
+- If the active manifest leaves `mp-weixin.appid` empty, inspect generated `project.config.json`. DCloud may fall back to `touristappid`, which can trigger DevTools AppID dialogs. For stable local simulator checks, add a documented post-build patch that clears generated `appid`; for preview, upload, real-device APIs, and release, require a real `wx...` AppID.
+- H5 passing does not prove the mini program container passes. Recheck container-sensitive flows on `mp-weixin`: `web-view`, location permission, keyboard focus/blur, upload, navigation, tabBar, platform-specific permissions, and any page relying on generated mini-program config.
+- A practical mobile sequence is: run unit tests, build H5, inspect H5 in the browser/CodexApp, build `mp-weixin`, open the generated output in WeChat DevTools, then run route/text/click assertions and visual capture.
 - Before publishing a preview QR code for real-device testing, run the fastest available simulator gate for the changed surfaces. At minimum, cover launch/login, the changed page route, critical selectors, and any `web-view` URL/navigation contract.
 - Real writes in regression tests must be explicit, traceable, and cleanable: use a unique run prefix, record backend IDs and roles, and provide a cleanup path.
 

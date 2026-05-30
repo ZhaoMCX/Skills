@@ -16,8 +16,6 @@ For many asynchronous `uni.*` APIs:
 - APIs that return task objects, such as socket/upload/download style APIs, may require callback form when the task handle is needed.
 - Vue 2 and Vue 3 Promise return formats differ. Vue 2 Promise-wrapped APIs commonly resolve to `[err, res]` and do not report the error through `catch`; Vue 3 APIs resolve to `res` and reject through `catch`. Confirm the project stack before refactoring callback code to `await`.
 
-Re-check the official API documentation for the target API before changing callback/Promise style; async behavior and platform support vary by API and project stack.
-
 ## Common Groups
 
 Check the official API pages before changing detailed parameters:

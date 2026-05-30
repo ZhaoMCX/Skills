@@ -1,6 +1,6 @@
 # 源码地图
 
-本文件的模块地图来自 `yangzongzhuan/RuoYi` 经典单体版的参考快照，仅用于说明常见结构和命名。实际版本、JDK、Spring Boot、Shiro、`javax`/`jakarta`、依赖和模板以目标项目本地代码及当前官方分支为准。
+本技能基于 `yangzongzhuan/RuoYi` 经典单体版快照整理：提交 `45890b4641c2e7e2989aa1f518b09cf187b4af7b`，日期 2026-04-16，版本 `4.8.3`。该快照使用 Java 17、Spring Boot 4.0.3、Apache Shiro 2.1.0 Jakarta 构件、Thymeleaf、MyBatis XML、PageHelper、Druid、Quartz、POI、Fastjson 和 Velocity。
 
 同族变体：
 

@@ -70,7 +70,7 @@ public sealed class FishNetAddressablePrefabs : MonoBehaviour
 }
 ```
 
-Adapt the hashing strategy when package names are not guaranteed unique. FishNet documentation and helper names can differ by installed version; inspect the installed helper or provide your own deterministic nonzero `ushort` mapping. The collection id and prefab ordering are part of the network contract.
+Adapt the hashing strategy when package names are not guaranteed unique. FishNet documentation examples may use `GetStableHash16`; current 4.7.2 GameKit utilities expose `GetStableHashU16`. Inspect the installed helper or provide your own deterministic nonzero `ushort` mapping. The collection id and prefab ordering are part of the network contract.
 
 ## Scene Addressables
 

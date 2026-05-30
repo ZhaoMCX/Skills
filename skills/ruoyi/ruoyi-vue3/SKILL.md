@@ -1,6 +1,6 @@
 ---
 name: ruoyi-vue3
-description: 该技能处理若依 Vue3 独立前端项目族：RuoYi-Vue3、RuoYi-Cloud-Vue3，覆盖 Vue3、Vite、Element Plus、Pinia、Vue Router 4、Axios、若依动态路由和权限指令。Use when 项目根目录有 vite.config.js、package.json type module、src/utils/request.js、src/store/modules、Element Plus、Pinia、VITE_APP_BASE_API，或仓库名为 RuoYi-Vue3 / RuoYi-Cloud-Vue3。
+description: 处理若依 Vue3 独立前端项目族：RuoYi-Vue3、RuoYi-Cloud-Vue3，覆盖 Vue3、Vite、Element Plus、Pinia、Vue Router 4、Axios、若依动态路由和权限指令。Use when 项目根目录有 vite.config.js、package.json type module、src/utils/request.js、src/store/modules、Element Plus、Pinia、VITE_APP_BASE_API，或仓库名为 RuoYi-Vue3 / RuoYi-Cloud-Vue3。
 ---
 
 # RuoYi Vue3
@@ -16,7 +16,6 @@ description: 该技能处理若依 Vue3 独立前端项目族：RuoYi-Vue3、Ruo
 
 ## 引用地图
 
-- `references/official-sources.md`：官方仓库、分支和来源优先级。
 - `references/source-map.md`：项目结构、核心文件、接口契约。
 - `references/frontend-patterns.md`：Vite、request、路由守卫、Pinia、权限、列表页、组件。
 - `references/development-workflow.md`：新增页面/API、联调、构建验证、评审清单。

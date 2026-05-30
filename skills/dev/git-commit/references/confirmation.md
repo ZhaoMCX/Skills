@@ -1,4 +1,6 @@
-# Optional Confirmation
+# Confirmation
+
+Do not stop for confirmation by default when the user asks to commit.
 
 Ask for confirmation before committing only when:
 

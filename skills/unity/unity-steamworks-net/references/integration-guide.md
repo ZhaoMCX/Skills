@@ -32,7 +32,7 @@ Steamworks.NET intentionally stays close to Valve's C++ API. When wrapper docs a
 Prefer Unity Package Manager with a pinned Steamworks.NET release tag. The official installation page recommends UPM for Unity and release pages publish install URLs such as:
 
 ```text
-https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net#<release-tag>
+https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net#2025.163.0
 ```
 
 Use the project's chosen tag, not `master`, unless the task is explicitly to test unreleased changes.
