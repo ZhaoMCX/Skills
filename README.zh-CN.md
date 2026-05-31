@@ -19,6 +19,11 @@ skills/<category>/<skill-name>/
 
 ## 技能
 
+### Agents
+
+- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - 应用 Matt Pocock 风格的 PRD、issue、triage、实现、诊断、TDD、架构和领域文档工作流。
+- [Chinese Agent Rules](skills/agents/chinese-agent-rules) - 默认用中文处理 Agent 对话、计划、用户文档、标题和主题总结。
+
 ### Dev
 
 - [Git Commit](skills/dev/git-commit) - 指导原子化 Git 提交、暂存检查、提交信息规范、可选确认和小步提交模式。

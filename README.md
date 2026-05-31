@@ -19,6 +19,11 @@ Only `SKILL.md` is required. Categories organize source files only; installed sk
 
 ## Skills
 
+### Agents
+
+- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - Apply the Matt Pocock-style workflow for PRDs, issues, triage, implementation, diagnosis, TDD, architecture work, and domain docs.
+- [Chinese Agent Rules](skills/agents/chinese-agent-rules) - Keep agent communication, plans, user-facing docs, headings, and topic summaries in Chinese by default.
+
 ### Dev
 
 - [Git Commit](skills/dev/git-commit) - Guide atomic Git commits, staging checks, commit message conventions, optional confirmation, and small-step commit mode.
