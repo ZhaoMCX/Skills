@@ -62,13 +62,13 @@ skills/<category>/<group>/<skill-name>/
 - [Spring Data](skills/web/spring/spring-data) - 处理 Spring Data 仓库和持久化，覆盖 JPA、JDBC、R2DBC、Redis、MongoDB、Elasticsearch、Neo4j、分页、审计和投影。
 - [Spring Security](skills/web/spring/spring-security) - 处理 Spring Security 认证、授权、CSRF、会话、OAuth2、JWT 资源服务、方法安全、密码和测试。
 
-### UniApp
+#### UniApp
 
-- [UniApp Development](skills/uniapp/uniapp-development) - 处理 uni-app、uni-app x、DCloud、H5、App 和小程序项目。
+- [UniApp Development](skills/web/uniapp/uniapp-development) - 处理 uni-app、uni-app x、DCloud、H5、App 和小程序项目。
 
-### WeChat
+#### WeChat
 
-- [WeChat Mini Program DevTools](skills/wechat/wechat-miniprogram-devtools) - 使用官方微信开发者工具 CLI、项目本地 automator API、生成的 mp-weixin 输出和预览/上传安全流程。
+- [WeChat Mini Program DevTools](skills/web/wechat/wechat-miniprogram-devtools) - 使用官方微信开发者工具 CLI、项目本地 automator API、生成的 mp-weixin 输出和预览/上传安全流程。
 
 ## 同步
 

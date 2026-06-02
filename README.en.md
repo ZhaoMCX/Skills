@@ -62,13 +62,13 @@ Only `SKILL.md` is required. Categories and optional groups organize source file
 - [Spring Data](skills/web/spring/spring-data) - Work on Spring Data repositories and persistence across JPA, JDBC, R2DBC, Redis, MongoDB, Elasticsearch, Neo4j, pagination, auditing, and projections.
 - [Spring Security](skills/web/spring/spring-security) - Work on Spring Security authentication, authorization, CSRF, sessions, OAuth2, JWT resource servers, method security, passwords, and tests.
 
-### UniApp
+#### UniApp
 
-- [UniApp Development](skills/uniapp/uniapp-development) - Work on uni-app, uni-app x, DCloud, H5, app, and mini-program projects.
+- [UniApp Development](skills/web/uniapp/uniapp-development) - Work on uni-app, uni-app x, DCloud, H5, app, and mini-program projects.
 
-### WeChat
+#### WeChat
 
-- [WeChat Mini Program DevTools](skills/wechat/wechat-miniprogram-devtools) - Use official WeChat DevTools CLI, project-local automator APIs, generated mp-weixin output, and preview/upload safety workflows.
+- [WeChat Mini Program DevTools](skills/web/wechat/wechat-miniprogram-devtools) - Use official WeChat DevTools CLI, project-local automator APIs, generated mp-weixin output, and preview/upload safety workflows.
 
 ## Sync
 
