@@ -21,12 +21,12 @@ Only `SKILL.md` is required. Categories organize source files only; installed sk
 
 ### Agents
 
-- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - Apply the Matt Pocock-style workflow for PRDs, issues, triage, implementation, diagnosis, TDD, architecture work, and domain docs.
+- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - Route PRDs, issues, triage, implementation, diagnosis, TDD, architecture work, and domain docs while preserving issue-tracker hygiene.
 - [Chinese Agent Rules](skills/agents/chinese-agent-rules) - Keep agent communication, plans, user-facing docs, headings, and topic summaries in Chinese by default.
 
 ### Dev
 
-- [Git Commit](skills/dev/git-commit) - Guide atomic Git commits, staging checks, commit message conventions, optional confirmation, and small-step commit mode.
+- [Git Commit](skills/dev/git-commit) - Guide atomic Git commits, staging checks, commit message conventions, confirmation templates, and small-step commit mode.
 
 ### Game
 
@@ -46,11 +46,11 @@ Only `SKILL.md` is required. Categories organize source files only; installed sk
 
 ### Unity
 
-- [Unity DOTween](skills/unity/unity-dotween) - Implement, review, and debug lifecycle-safe Unity DOTween animation.
-- [Unity FishNet](skills/unity/unity-fishnet) - Implement, review, and debug FishNet networking with local package/source checks.
-- [Unity Odin](skills/unity/unity-odin) - Work with Odin Inspector and Sirenix Serializer while preserving runtime/editor boundaries.
+- [Unity DOTween](skills/unity/unity-dotween) - Implement, review, and debug lifecycle-safe Unity DOTween animation with reusable patterns and review checklists.
+- [Unity FishNet](skills/unity/unity-fishnet) - Implement, review, and debug FishNet networking with local source checks, authority rules, SyncType guidance, and lifecycle patterns.
+- [Unity Odin](skills/unity/unity-odin) - Work with Odin Inspector and Sirenix Serializer while preserving runtime/editor boundaries, common patterns, and review checks.
 - [Unity Steamworks.NET](skills/unity/unity-steamworks-net) - Integrate and debug Steamworks.NET lifecycle, callbacks, native binaries, and service boundaries.
-- [Unity TapTap SDK](skills/unity/unity-taptap-sdk) - Integrate and debug TapTap SDK modules, platform setup, PC validation, compliance, IAP, and migrations.
+- [Unity TapTap SDK](skills/unity/unity-taptap-sdk) - Integrate and debug TapTap SDK modules, platform setup, PC validation, compliance, IAP, migrations, and release checklists.
 
 ### UniApp
 

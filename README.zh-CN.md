@@ -21,12 +21,12 @@ skills/<category>/<skill-name>/
 
 ### Agents
 
-- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - 应用 Matt Pocock 风格的 PRD、issue、triage、实现、诊断、TDD、架构和领域文档工作流。
+- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - 路由 PRD、issue、triage、实现、诊断、TDD、架构和领域文档工作流，并维护 issue tracker 记录卫生。
 - [Chinese Agent Rules](skills/agents/chinese-agent-rules) - 默认用中文处理 Agent 对话、计划、用户文档、标题和主题总结。
 
 ### Dev
 
-- [Git Commit](skills/dev/git-commit) - 指导原子化 Git 提交、暂存检查、提交信息规范、可选确认和小步提交模式。
+- [Git Commit](skills/dev/git-commit) - 指导原子化 Git 提交、暂存检查、提交信息规范、确认模板和小步提交模式。
 
 ### Game
 
@@ -46,11 +46,11 @@ skills/<category>/<skill-name>/
 
 ### Unity
 
-- [Unity DOTween](skills/unity/unity-dotween) - 安全地实现、审查和调试生命周期清晰的 Unity DOTween 动画。
-- [Unity FishNet](skills/unity/unity-fishnet) - 基于本地包和源码检查实现、审查和调试 FishNet 网络功能。
-- [Unity Odin](skills/unity/unity-odin) - 使用 Odin Inspector 和 Sirenix Serializer，并保持运行时/编辑器边界。
+- [Unity DOTween](skills/unity/unity-dotween) - 安全地实现、审查和调试生命周期清晰的 Unity DOTween 动画，并提供常用模式和检查清单。
+- [Unity FishNet](skills/unity/unity-fishnet) - 基于本地包和源码检查实现、审查和调试 FishNet 网络功能，覆盖权限、SyncType 和生命周期模式。
+- [Unity Odin](skills/unity/unity-odin) - 使用 Odin Inspector 和 Sirenix Serializer，并保持运行时/编辑器边界、常用模式和审查检查。
 - [Unity Steamworks.NET](skills/unity/unity-steamworks-net) - 在 Unity 中集成和调试 Steamworks.NET 生命周期、回调、原生库和服务边界。
-- [Unity TapTap SDK](skills/unity/unity-taptap-sdk) - 在 Unity 中集成和调试 TapTap SDK 模块、平台配置、PC 校验、合规、IAP 和迁移。
+- [Unity TapTap SDK](skills/unity/unity-taptap-sdk) - 在 Unity 中集成和调试 TapTap SDK 模块、平台配置、PC 校验、合规、IAP、迁移和发布检查清单。
 
 ### UniApp
 
