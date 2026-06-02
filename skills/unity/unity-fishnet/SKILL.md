@@ -64,7 +64,10 @@ Before adding or changing FishNet behavior:
 - Only the server spawns, despawns, changes server-synchronized SyncTypes, and grants/removes ownership in the normal server-authoritative path.
 - Treat `RequireOwnership = false` and unauthenticated broadcasts as explicit security surfaces. Always validate the caller `NetworkConnection`.
 - Do not send gameplay truth only through RPCs when late joiners or respawns need the latest value. Use SyncTypes or intentionally buffered RPCs.
+- Do not couple separate SyncTypes by receive order. Make each replicated field self-contained or include an explicit sequence/version.
+- Avoid having prediction, `NetworkTransform`, and manual writes independently author the same transform unless `NetworkTransform` is explicitly configured for prediction/spectator replication and ownership of each transform path is clear.
 - Preserve observer conditions. Do not remove `SceneCondition` or use `Ignore Manager` on `NetworkObserver` until scene membership is understood.
+- Treat `SceneManager.OnLoadEnd` as scene-load completion, not client observer readiness. Prefer `OnClientPresenceChangeEnd` or `OnSpawnServer` when a client must observe scene objects.
 - For Addressables prefabs, never use collection id `0`; use a unique `ushort` in `1..65535`, and load/register bundles on clients before the server sends spawns or adds clients to scenes.
 - For prediction, configure the `NetworkObject` inspector, use tick callbacks, always create reconcile data, use prediction helpers for physics, and keep gameplay colliders outside smoothed graphics.
 - Finish Unity work with compilation, Console checks, and the repository's Unity completion gate when available.

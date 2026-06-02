@@ -227,3 +227,68 @@ The installed module provides drawers and processors for `bool2/3/4`, `float2/3/
 `Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Mathematics/Sirenix.OdinInspector.Modules.UnityMathematics.asmdef`
 
 Do not reimplement these drawers unless the module is missing or a project-specific behavior is explicitly needed.
+# Common Patterns
+
+For inspector-only presentation:
+
+```csharp
+using Sirenix.OdinInspector;
+using UnityEngine;
+
+public sealed class LootTable : MonoBehaviour
+{
+    [Title("Drops")]
+    [TableList, Searchable]
+    [ValidateInput(nameof(HasDrops), "At least one drop is required.")]
+    public DropEntry[] Drops;
+
+    bool HasDrops(DropEntry[] drops) => drops != null && drops.Length > 0;
+}
+```
+
+For Odin serialization of non-Unity data:
+
+```csharp
+using Sirenix.OdinInspector;
+using System.Collections.Generic;
+
+public sealed class RuntimeCatalog : SerializedScriptableObject
+{
+    [OdinSerialize, DictionaryDrawerSettings(KeyLabel = "Id", ValueLabel = "Entry")]
+    Dictionary<string, CatalogEntry> entries = new();
+}
+```
+
+For editor-only tool windows:
+
+```csharp
+#if UNITY_EDITOR
+using Sirenix.OdinInspector.Editor;
+using UnityEditor;
+
+public sealed class ContentBrowserWindow : OdinMenuEditorWindow
+{
+    [MenuItem("Tools/Content Browser")]
+    static void Open() => GetWindow<ContentBrowserWindow>();
+
+    protected override OdinMenuTree BuildMenuTree()
+    {
+        var tree = new OdinMenuTree(supportsMultiSelect: true);
+        tree.Config.DrawSearchToolbar = true;
+        tree.AddAllAssetsAtPath("Items", "Assets", typeof(UnityEngine.ScriptableObject), true);
+        return tree;
+    }
+}
+#endif
+```
+
+# Review Checklist
+
+- Odin attributes are doing presentation work, not hiding missing data ownership or validation.
+- Serialized data uses the correct Sirenix base class and does not assume `[ShowInInspector]` persists values.
+- Editor-only APIs are isolated from runtime builds and asmdefs.
+- Custom drawers call `CallNextDrawer` or draw children deliberately.
+- Drawer mutations use `ValueEntry.SmartValue`, `WeakValues`, `RecordForUndo`, or delayed tree actions as appropriate.
+- AttributeProcessors have clear scope and priority; broad processors do not accidentally affect unrelated types.
+- Editor windows rebuild menu trees intentionally and use search/toolbars only where useful.
+- Unity Console has no compile errors after changes.

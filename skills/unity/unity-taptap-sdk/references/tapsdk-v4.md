@@ -13,6 +13,84 @@
 - Verification Matrix
 - Common Failure Modes
 
+## Skill Common Pattern
+
+```csharp
+using System.Threading.Tasks;
+using TapSDK.Core;
+using TapSDK.Login;
+using UnityEngine;
+
+public sealed class TapTapRuntimeConfig
+{
+    public string ClientId;
+    public string ClientToken;
+    public string ClientPublicKey;
+}
+
+public sealed class TapTapBootstrap : MonoBehaviour
+{
+    bool initialized;
+
+    public async Task<bool> InitializeForPcAsync(TapTapRuntimeConfig config)
+    {
+        if (initialized) return true;
+
+        TapTapSDK.Init(new TapTapSdkOptions
+        {
+            clientId = config.ClientId,
+            clientToken = config.ClientToken,
+            clientPublicKey = config.ClientPublicKey,
+            region = TapTapRegionType.CN,
+            preferredLanguage = TapTapLanguageType.Auto,
+            gameVersion = Application.version,
+            enableLog = Debug.isDebugBuild
+        });
+
+        initialized = true;
+
+#if UNITY_STANDALONE_WIN
+        bool launchedFromTapTap = await TapTapSDK.IsLaunchedFromTapTapPC();
+        if (!launchedFromTapTap) return false;
+#endif
+        return true;
+    }
+
+    public Task<TapTapAccount> LoginAsync()
+    {
+        return TapTapLogin.Instance.LoginWithScopes(new[]
+        {
+            TapTapLogin.TAP_LOGIN_SCOPE_PUBLIC_PROFILE
+        });
+    }
+}
+```
+
+Adapt this into the project's service architecture. Load credentials from the project's existing config pipeline; do not put production credentials directly on scene objects unless that is already the project's accepted release-safe configuration pattern.
+
+## Skill Review Checklist
+
+- Package install method and version are explicit and consistent across all TapSDK modules.
+- Required third-party Unity dependencies are present: Newtonsoft Json and, for native mobile dependency resolution, External Dependency Manager.
+- Initialization happens once and before module calls.
+- Module option objects are passed during initialization when needed.
+- Android/iOS URL schemes, native dependencies, EDM4U/CocoaPods resolution, resources, and build post-processors are preserved.
+- Windows PC flow includes `clientPublicKey`, awaits `IsLaunchedFromTapTapPC()` before protected calls, handles TapTap PC state changes, and excludes local debug files from release.
+- Login scopes match the product need and do not request unnecessary permissions.
+- Compliance callback codes map to explicit game access states, and compliance lifecycle is tied to account/session lifecycle.
+- Use compliance `CheckPaymentLimit` and `SubmitPayment` around payments when required by the product/region.
+- Cloud save, leaderboard, and online battle calls handle login requirement, network errors, retries, account switches, and UI lifecycle.
+- IAP integrates with Unity IAP callbacks, payment compliance checks, platform support checks, and server-side receipt/order validation where the project requires it.
+- Legacy migrations preserve identity, saved data, achievements, compliance behavior, and rollback/read compatibility.
+- No TapTap credentials, tokens, receipts, or personally identifiable user data are logged or committed.
+
+## Platform Implementation Notes
+
+- Android: run/verify External Dependency Manager resolution and inspect merged manifests.
+- iOS/macOS: verify `TDS-Info.plist` merge, URL schemes, query schemes, Swift/CocoaPods build settings, and resource bundles in the exported Xcode project.
+- Initialize with `TapTapSdkOptions` containing `clientId`, `clientToken`, `region`, `preferredLanguage`, `gameVersion`, `enableLog`, and PC `clientPublicKey` when needed.
+- Do not let login, cloud save, leaderboard, online battle, or PC startup continuations mutate destroyed or inactive UI.
+
 ## Source Anchors
 
 - Official Unity integration docs: `https://developer.taptap.cn/docs/sdk/integration-guides/unity/`

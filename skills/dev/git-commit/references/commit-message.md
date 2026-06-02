@@ -1,4 +1,4 @@
-# Commit Message
+# Commit Messages
 
 Default format:
 

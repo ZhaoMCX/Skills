@@ -50,7 +50,7 @@ When commit-ready content contains multiple intents, split it into separate comm
 
 When the user asks to commit, stage only the relevant files, split commit-ready changes into atomic units, create the commit or commits, and report the result. Do not stop for confirmation by default.
 
-Ask for confirmation before committing only when the user asks to review first, the commit scope is ambiguous, unrelated user-owned changes cannot be separated safely, or the commit would include generated, temporary, credential, environment, or unusually large files whose intent is unclear.
+Ask for confirmation before committing only when the user asks to review first, the commit scope is ambiguous, unrelated user-owned changes cannot be separated safely, or the commit would include generated, temporary, credential, environment, or unusually large files whose intent is unclear. See `references/confirmation.md` for the confirmation template.
 
 If the user already supplied an exact commit message and asked to commit, use that message for the relevant commit unless it conflicts with atomicity or the staged content.
 

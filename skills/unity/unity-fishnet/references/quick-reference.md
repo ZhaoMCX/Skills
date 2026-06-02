@@ -107,3 +107,119 @@ Avoid obsolete properties in new code:
 8. Is one system responsible for each transform, animator, and physics state?
 9. Do custom serializers read exactly what writers wrote?
 10. Has the feature been verified with host plus a separate client?
+# Callback Map
+
+- Shared network setup/teardown: `OnStartNetwork` and `OnStopNetwork`.
+- Server state setup: `OnStartServer`.
+- Client presentation setup: `OnStartClient`.
+- Per-observer spawn tailoring: `OnSpawnServer(NetworkConnection)`.
+
+# Communication Map
+
+- `ServerRpc`: client to server; default owner-only.
+- `ObserversRpc`: server to current object observers.
+- `TargetRpc`: server to one client.
+- `SyncVar<T>` or Sync collections: server-to-client replicated state.
+- `Broadcast`: manager/global traffic not tied to a spawned object.
+
+# Preferred Patterns
+
+Server-authoritative SyncVar:
+
+```csharp
+using System;
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
+
+public sealed class HealthState : NetworkBehaviour
+{
+    private readonly SyncVar<int> _health = new(100);
+
+    private void Awake()
+    {
+        _health.OnChange += OnHealthChanged;
+    }
+
+    public override void OnStartServer()
+    {
+        _health.Value = 100;
+    }
+
+    [Server]
+    public void ApplyDamage(int amount)
+    {
+        _health.Value = Math.Max(0, _health.Value - amount);
+    }
+
+    private void OnHealthChanged(int previous, int next, bool asServer)
+    {
+        if (!asServer || IsClientOnlyStarted)
+            UpdateHealthView(next);
+    }
+
+    private void UpdateHealthView(int value) { }
+}
+```
+
+Ownerless server request with caller validation:
+
+```csharp
+using FishNet.Connection;
+using FishNet.Object;
+
+public sealed class DoorSwitch : NetworkBehaviour
+{
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestUseServerRpc(NetworkConnection caller = null)
+    {
+        if (caller == null || !CanUse(caller))
+            return;
+
+        ToggleDoorOnServer();
+    }
+
+    private bool CanUse(NetworkConnection caller) => true;
+    private void ToggleDoorOnServer() { }
+}
+```
+
+Spawn with pooling:
+
+```csharp
+using FishNet.Object;
+using UnityEngine;
+
+public sealed class ProjectileSpawner : NetworkBehaviour
+{
+    [SerializeField] private NetworkObject projectilePrefab;
+
+    [Server]
+    public void SpawnProjectile(Vector3 position, Quaternion rotation)
+    {
+        NetworkObject projectile = NetworkManager.GetPooledInstantiated(
+            projectilePrefab,
+            position,
+            rotation,
+            asServer: true);
+
+        ServerManager.Spawn(projectile);
+    }
+}
+```
+
+# Review Checklist
+
+- Network authority is explicit for each mutation and request path.
+- Network startup/teardown uses FishNet callbacks, not Unity lifecycle guessing.
+- RPC direction, ownership requirement, channel, caller parameter, and late-join behavior are correct.
+- SyncTypes are initialized once, changed by the correct side, and not read from `OnDestroy` as current truth.
+- Authentication and connection code uses manager callbacks at the correct readiness point.
+- Host mode is considered; SyncType callbacks and owner checks behave correctly for client-host.
+- Spawned objects are registered prefabs with `NetworkObject`, spawned only by server, and despawned with the intended destroy/pool behavior.
+- Ownership changes happen on server and callbacks cleanly refresh owner-only input/UI.
+- Observer and scene membership explain which clients see each object.
+- Scene-load completion is not confused with observer visibility.
+- Prediction runs from tick callbacks, reconcile is always created, and physics uses FishNet prediction helpers.
+- Addressables bundles and prefab collections are loaded and registered on both sides before use.
+- Custom serializers read in exactly the same order they write.
+- Multi-client Play Mode, dedicated server, or headless path has been tested for user-facing network changes.

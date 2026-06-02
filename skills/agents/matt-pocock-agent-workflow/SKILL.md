@@ -50,13 +50,22 @@ If any of these are missing, use or suggest `setup-matt-pocock-skills` before ru
 When implementing an issue:
 
 1. Read the issue and the repository agent configuration.
-2. Confirm the issue is actionable; if not, use `triage` to clarify or mark it appropriately.
+2. Confirm the issue is actionable; if it has not been triaged for agent readiness, use `triage` before implementation. Do not treat a freshly written issue as ready merely because it has a `ready-for-agent` status line.
 3. Choose the implementation skill path: usually `tdd`, `diagnose`, or a project-specific technical skill.
-4. Implement the smallest vertical slice that satisfies the acceptance criteria.
-5. Verify with relevant tests, builds, or manual checks.
-6. Update the issue according to `docs/agents/issue-tracker.md`.
+4. Before changing implementation files, update or append to the issue tracker when the repository convention requires start notes, assignment notes, or an agent brief.
+5. Implement the smallest vertical slice that satisfies the acceptance criteria.
+6. Verify with relevant tests, builds, or manual checks.
+7. Immediately update the issue according to `docs/agents/issue-tracker.md` with implementation summary, verification results, residual risk, and related follow-up tickets. Do this before the final user-facing summary.
 
-Do not hard-code issue statuses, completion rules, or label meanings. Follow the current repository's agent docs. If no completion convention exists, at minimum add an implementation summary, test results, and related commit information.
+Do not hard-code issue statuses, completion rules, or label meanings. Follow the current repository's agent docs. If no completion convention exists, at minimum add an implementation summary, test results, residual risk, and related commit information under the issue's comment/history section.
+
+## Issue Tracker Hygiene
+
+- `to-issues` creates candidate work; `triage` prepares, classifies, and checks those issues for human or agent execution. Do not skip `triage` when the next step is handing an issue to an agent or beginning implementation.
+- Keep the issue tracker as the durable source of workflow truth. User-facing chat summaries do not replace issue comments, status updates, agent briefs, or test-result notes.
+- When a local markdown tracker records state in a `Status:` line, preserve the repository's configured state vocabulary and add progress details under `## Comments` rather than inventing ad-hoc statuses.
+- If the tracker lacks a completion state, keep the configured state line intact unless the repository docs say otherwise, and append a clear implemented/verified note with tests run and any remaining risks.
+- When publishing issues from a PRD, show or internally validate dependency order, HITL/AFK suitability, and readiness. If issues were already published without that review, run `triage` as the next step to repair the workflow.
 
 ## Issue Splitting
 

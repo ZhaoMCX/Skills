@@ -313,3 +313,96 @@ if (this == null || !isActiveAndEnabled) return;
 6. For materials, inspect whether the asset material or instance material changed.
 7. For physics, test collisions and fixed-step behavior.
 8. Check Unity Console for compile/runtime errors and finish with `unity-check`.
+# Preferred Patterns
+
+For one active tween per component:
+
+```csharp
+using DG.Tweening;
+using UnityEngine;
+
+public sealed class ScaleFeedback : MonoBehaviour
+{
+    Tween scaleTween;
+
+    public void Play()
+    {
+        scaleTween?.Kill();
+        transform.localScale = Vector3.one;
+        scaleTween = transform
+            .DOPunchScale(Vector3.one * 0.12f, 0.18f, vibrato: 8, elasticity: 0.8f)
+            .SetEase(Ease.OutQuad)
+            .SetLink(gameObject)
+            .OnKill(() => scaleTween = null);
+    }
+
+    void OnDestroy()
+    {
+        scaleTween?.Kill();
+    }
+}
+```
+
+For UI open/close sequences:
+
+```csharp
+using DG.Tweening;
+using UnityEngine;
+
+public sealed class PanelTween : MonoBehaviour
+{
+    [SerializeField] CanvasGroup canvasGroup;
+    [SerializeField] RectTransform content;
+
+    Sequence sequence;
+
+    public void Show()
+    {
+        sequence?.Kill();
+        gameObject.SetActive(true);
+        canvasGroup.alpha = 0f;
+        content.localScale = Vector3.one * 0.96f;
+
+        sequence = DOTween.Sequence()
+            .SetUpdate(isIndependentUpdate: true)
+            .SetLink(gameObject)
+            .Join(canvasGroup.DOFade(1f, 0.16f))
+            .Join(content.DOScale(1f, 0.18f).SetEase(Ease.OutBack))
+            .OnKill(() => sequence = null);
+    }
+
+    public void Hide()
+    {
+        sequence?.Kill();
+        sequence = DOTween.Sequence()
+            .SetUpdate(isIndependentUpdate: true)
+            .SetLink(gameObject)
+            .Join(canvasGroup.DOFade(0f, 0.12f))
+            .Join(content.DOScale(0.96f, 0.12f).SetEase(Ease.InQuad))
+            .OnComplete(() => gameObject.SetActive(false))
+            .OnKill(() => sequence = null);
+    }
+}
+```
+
+For custom values:
+
+```csharp
+Tween tween = DOTween
+    .To(() => value, x => value = x, targetValue, 0.25f)
+    .SetEase(Ease.OutCubic)
+    .SetLink(gameObject);
+```
+
+# Review Checklist
+
+- The tween target exists for the entire tween lifetime or is linked/killed safely.
+- Repeated calls cannot stack unintended duplicate tweens.
+- The code explicitly handles `OnDisable`, `OnDestroy`, and panel close/open races.
+- Time-scale behavior matches the UX: paused gameplay UI uses independent update, gameplay effects usually use scaled time.
+- Sequence target/lifetime is controlled at the sequence level.
+- Physics tweens use physics targets and update type intentionally.
+- Material tweens do not mutate shared assets unintentionally.
+- UI layout tweens use `RectTransform`/`CanvasGroup` shortcuts instead of world-space transform shortcuts when layout matters.
+- Callbacks cannot fire on dead objects or mutate stale state after the owner has been disabled.
+- Console has no compile errors after changes.

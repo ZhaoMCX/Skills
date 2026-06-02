@@ -44,6 +44,7 @@ Before adding or changing DOTween behavior:
 - Prefer code-driven tweens over hidden scene authoring unless DOTween Pro components are confirmed present and the prefab workflow needs them.
 - Prefer `SetLink(gameObject)` or explicit `Kill` for GameObject-owned tweens. Remember `SetLink` has no effect after a tween is nested inside a `Sequence`; link or kill the owning sequence instead.
 - Keep a field for any tween that can overlap with itself. Kill, rewind, complete, or restart it intentionally before creating another one.
+- Do not use `SetTarget` to label shortcut tweens unless you understand the side effect: shortcut tweens already use their shortcut target, and overriding it can break target-based operations.
 - Use `SetId` for grouping/filtering tweens by feature, state, or owner.
 - Use `SetUpdate(true)` for UI that must keep animating while `Time.timeScale == 0`, such as pause menus.
 - Use `UpdateType.Fixed` for Rigidbody/Rigidbody2D tweens that should align with physics.
