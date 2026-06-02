@@ -11,7 +11,11 @@ function Add-Error([string]$Message) {
 }
 
 function Get-RelativePath([string]$Path) {
-    return [System.IO.Path]::GetRelativePath($repoRoot, $Path).Replace("\", "/")
+    $rootPath = (Resolve-Path -LiteralPath $repoRoot).Path.TrimEnd("\") + "\"
+    $targetPath = (Resolve-Path -LiteralPath $Path).Path
+    $rootUri = [System.Uri]::new($rootPath)
+    $targetUri = [System.Uri]::new($targetPath)
+    return [System.Uri]::UnescapeDataString($rootUri.MakeRelativeUri($targetUri).ToString()).Replace("/", "/")
 }
 
 function Test-Slug([string]$Value) {
@@ -82,13 +86,17 @@ foreach ($category in $categoryDirs) {
         Add-Error "Category must not be a skill directory: $($category.Name)"
     }
 
-    $skillDirs = @(Get-ChildItem -LiteralPath $category.FullName -Directory)
+    $skillDirs = @(Get-ChildItem -LiteralPath $category.FullName -Recurse -Directory | Where-Object {
+        (Test-Path -LiteralPath (Join-Path $_.FullName "SKILL.md")) -and
+        (-not (Test-Path -LiteralPath (Join-Path $_.Parent.FullName "SKILL.md")))
+    })
     if ($skillDirs.Count -eq 0) {
         Add-Error "Category has no skills: $($category.Name)"
     }
 
     foreach ($skill in $skillDirs) {
-        $skillLabel = "$($category.Name)/$($skill.Name)"
+        $relativeSkillPath = Get-RelativePath $skill.FullName
+        $skillLabel = $relativeSkillPath.Substring("skills/".Length)
         $skillFile = Join-Path $skill.FullName "SKILL.md"
 
         if (-not (Test-Path -LiteralPath $skillFile)) {
@@ -141,7 +149,7 @@ foreach ($category in $categoryDirs) {
         }
 
         Test-ReferencedFiles $content $skill.FullName $skillLabel
-        $skillRelativeLinks.Add("skills/$($category.Name)/$($skill.Name)") | Out-Null
+        $skillRelativeLinks.Add($relativeSkillPath) | Out-Null
     }
 }
 

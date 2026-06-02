@@ -10,12 +10,13 @@ Recommended reference: [mattpocock/skills](https://github.com/mattpocock/skills)
 
 ```text
 skills/<category>/<skill-name>/
+skills/<category>/<group>/<skill-name>/
   SKILL.md
   references/
   scripts/
 ```
 
-Only `SKILL.md` is required. Categories organize source files only; installed skills are copied directly into the local Codex skills directory by skill name.
+Only `SKILL.md` is required. Categories and optional groups organize source files only; installed skills are copied directly into the local Codex skills directory by skill name.
 
 ## Skills
 
@@ -36,13 +37,22 @@ Only `SKILL.md` is required. Categories organize source files only; installed sk
 
 - [Server Operation Guardrails](skills/ops/server-operation-guardrails) - Apply remote-server safety rules for read-only inspection, confirmed changes, backups, secrets, TLS, rollback, and verification.
 
-### RuoYi
+### Web
 
-- [RuoYi Framework](skills/ruoyi/ruoyi-framework) - Work on classic RuoYi monolith projects with Spring Boot, Shiro, Thymeleaf, MyBatis XML, Druid, Quartz, and the built-in code generator.
-- [RuoYi Vue](skills/ruoyi/ruoyi-vue) - Work on RuoYi Vue2 front/back separated projects with Spring Security/JWT backends and Vue2/Element UI frontends.
-- [RuoYi Vue3](skills/ruoyi/ruoyi-vue3) - Work on standalone RuoYi Vue3 frontends with Vite, Element Plus, Pinia, dynamic routes, and permission directives.
-- [RuoYi Cloud](skills/ruoyi/ruoyi-cloud) - Work on RuoYi microservice projects with Gateway, Auth, Nacos, Feign, Redis, Sentinel, Seata, and multi-module services.
-- [RuoYi App](skills/ruoyi/ruoyi-app) - Work on RuoYi mobile app templates with uni-app Vue2, token login, request wrappers, navigation guards, and backend integration.
+#### RuoYi
+
+- [RuoYi Framework](skills/web/ruoyi/ruoyi-framework) - Work on classic RuoYi monolith projects with Spring Boot, Shiro, Thymeleaf, MyBatis XML, Druid, Quartz, and the built-in code generator.
+- [RuoYi Vue](skills/web/ruoyi/ruoyi-vue) - Work on RuoYi Vue2 front/back separated projects with Spring Security/JWT backends and Vue2/Element UI frontends.
+- [RuoYi Vue3](skills/web/ruoyi/ruoyi-vue3) - Work on standalone RuoYi Vue3 frontends with Vite, Element Plus, Pinia, dynamic routes, and permission directives.
+- [RuoYi Cloud](skills/web/ruoyi/ruoyi-cloud) - Work on RuoYi microservice projects with Gateway, Auth, Nacos, Feign, Redis, Sentinel, Seata, and multi-module services.
+- [RuoYi App](skills/web/ruoyi/ruoyi-app) - Work on RuoYi mobile app templates with uni-app Vue2, token login, request wrappers, navigation guards, and backend integration.
+
+#### Spring
+
+- [Spring Boot](skills/web/spring/spring-boot) - Work on Spring Boot applications, configuration, starters, auto-configuration, Actuator, tests, packaging, and production readiness.
+- [Spring Cloud](skills/web/spring/spring-cloud) - Work on Spring Cloud microservices, Gateway, Config, OpenFeign, LoadBalancer, circuit breakers, streams, contracts, and distributed integration.
+- [Spring Data](skills/web/spring/spring-data) - Work on Spring Data repositories and persistence across JPA, JDBC, R2DBC, Redis, MongoDB, Elasticsearch, Neo4j, pagination, auditing, and projections.
+- [Spring Security](skills/web/spring/spring-security) - Work on Spring Security authentication, authorization, CSRF, sessions, OAuth2, JWT resource servers, method security, passwords, and tests.
 
 ### Unity
 
@@ -83,6 +93,8 @@ Sync one category:
 ```powershell
 .\scripts\sync-to-global.ps1 -Category unity
 .\scripts\sync-from-global.ps1 -Category unity
+.\scripts\sync-to-global.ps1 -Category web
+.\scripts\sync-from-global.ps1 -Category web
 ```
 
 Sync one skill:
@@ -104,6 +116,7 @@ Install one category:
 
 ```powershell
 .\scripts\install.ps1 -Category unity
+.\scripts\install.ps1 -Category web
 ```
 
 Install one skill:

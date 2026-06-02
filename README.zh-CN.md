@@ -10,12 +10,13 @@
 
 ```text
 skills/<category>/<skill-name>/
+skills/<category>/<group>/<skill-name>/
   SKILL.md
   references/
   scripts/
 ```
 
-只有 `SKILL.md` 是必需的。分类目录只用于组织仓库源码；安装时技能会按技能名直接复制到本地 Codex 全局技能目录。
+只有 `SKILL.md` 是必需的。分类目录和可选分组目录只用于组织仓库源码；安装时技能会按技能名直接复制到本地 Codex 全局技能目录。
 
 ## 技能
 
@@ -36,13 +37,22 @@ skills/<category>/<skill-name>/
 
 - [Server Operation Guardrails](skills/ops/server-operation-guardrails) - 为远程服务器读检查、确认变更、备份、密钥、TLS、回滚和验证应用安全规则。
 
-### RuoYi
+### Web
 
-- [RuoYi Framework](skills/ruoyi/ruoyi-framework) - 处理经典若依单体项目，覆盖 Spring Boot、Shiro、Thymeleaf、MyBatis XML、Druid、Quartz 和内置代码生成器。
-- [RuoYi Vue](skills/ruoyi/ruoyi-vue) - 处理若依前后端分离 Vue2 项目族，覆盖 Spring Security/JWT 后端和 Vue2/Element UI 前端。
-- [RuoYi Vue3](skills/ruoyi/ruoyi-vue3) - 处理若依 Vue3 独立前端项目，覆盖 Vite、Element Plus、Pinia、动态路由和权限指令。
-- [RuoYi Cloud](skills/ruoyi/ruoyi-cloud) - 处理若依微服务项目族，覆盖 Gateway、Auth、Nacos、Feign、Redis、Sentinel、Seata 和多模块服务。
-- [RuoYi App](skills/ruoyi/ruoyi-app) - 处理若依移动端 App 模板，覆盖 uni-app Vue2、token 登录、请求封装、导航拦截和后端对接。
+#### RuoYi
+
+- [RuoYi Framework](skills/web/ruoyi/ruoyi-framework) - 处理经典若依单体项目，覆盖 Spring Boot、Shiro、Thymeleaf、MyBatis XML、Druid、Quartz 和内置代码生成器。
+- [RuoYi Vue](skills/web/ruoyi/ruoyi-vue) - 处理若依前后端分离 Vue2 项目族，覆盖 Spring Security/JWT 后端和 Vue2/Element UI 前端。
+- [RuoYi Vue3](skills/web/ruoyi/ruoyi-vue3) - 处理若依 Vue3 独立前端项目，覆盖 Vite、Element Plus、Pinia、动态路由和权限指令。
+- [RuoYi Cloud](skills/web/ruoyi/ruoyi-cloud) - 处理若依微服务项目族，覆盖 Gateway、Auth、Nacos、Feign、Redis、Sentinel、Seata 和多模块服务。
+- [RuoYi App](skills/web/ruoyi/ruoyi-app) - 处理若依移动端 App 模板，覆盖 uni-app Vue2、token 登录、请求封装、导航拦截和后端对接。
+
+#### Spring
+
+- [Spring Boot](skills/web/spring/spring-boot) - 处理 Spring Boot 应用、配置、starter、自动配置、Actuator、测试、打包和生产就绪工作。
+- [Spring Cloud](skills/web/spring/spring-cloud) - 处理 Spring Cloud 微服务、Gateway、Config、OpenFeign、LoadBalancer、熔断、消息流、契约和分布式集成。
+- [Spring Data](skills/web/spring/spring-data) - 处理 Spring Data 仓库和持久化，覆盖 JPA、JDBC、R2DBC、Redis、MongoDB、Elasticsearch、Neo4j、分页、审计和投影。
+- [Spring Security](skills/web/spring/spring-security) - 处理 Spring Security 认证、授权、CSRF、会话、OAuth2、JWT 资源服务、方法安全、密码和测试。
 
 ### Unity
 
@@ -83,6 +93,8 @@ skills/<category>/<skill-name>/
 ```powershell
 .\scripts\sync-to-global.ps1 -Category unity
 .\scripts\sync-from-global.ps1 -Category unity
+.\scripts\sync-to-global.ps1 -Category web
+.\scripts\sync-from-global.ps1 -Category web
 ```
 
 同步一个技能：
@@ -104,6 +116,7 @@ skills/<category>/<skill-name>/
 
 ```powershell
 .\scripts\install.ps1 -Category unity
+.\scripts\install.ps1 -Category web
 ```
 
 安装一个技能：

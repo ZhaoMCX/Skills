@@ -31,8 +31,9 @@ function Resolve-CategoryDirectory([string]$Name) {
 
 function Get-SkillDirectories([System.IO.DirectoryInfo[]]$CategoryDirs) {
     foreach ($categoryDir in $CategoryDirs) {
-        Get-ChildItem -LiteralPath $categoryDir.FullName -Directory | Where-Object {
-            Test-Path -LiteralPath (Join-Path $_.FullName "SKILL.md")
+        Get-ChildItem -LiteralPath $categoryDir.FullName -Recurse -Directory | Where-Object {
+            (Test-Path -LiteralPath (Join-Path $_.FullName "SKILL.md")) -and
+            (-not (Test-Path -LiteralPath (Join-Path $_.Parent.FullName "SKILL.md")))
         }
     }
 }
