@@ -1,6 +1,6 @@
 # Skills
 
-[简体中文](README.md) | [English](README.en.md)
+[English](README.en.md)
 
 个人 Codex 技能仓库，使用轻量级的 Matt Pocock 风格技能目录统一维护。
 

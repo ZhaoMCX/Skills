@@ -1,6 +1,6 @@
 # Skills
 
-[简体中文](README.md) | [English](README.en.md)
+[简体中文](README.md)
 
 Personal Codex skills maintained as a single repository with lightweight, Matt Pocock-style skill folders.
 

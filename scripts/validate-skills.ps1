@@ -153,7 +153,7 @@ foreach ($category in $categoryDirs) {
     }
 }
 
-foreach ($name in @("README.md", "README.zh-CN.md")) {
+foreach ($name in @("README.md", "README.en.md")) {
     $readmePath = Join-Path $repoRoot $name
     if (-not (Test-Path -LiteralPath $readmePath)) {
         Add-Error "Missing $name"
