@@ -1,81 +1,92 @@
 ---
 name: matt-pocock-agent-workflow
-description: Routes repository work across Matt Pocock engineering skills and project agent docs without replacing the individual skills. Use when deciding whether to run setup-matt-pocock-skills, to-prd, to-issues, triage, diagnose, tdd, grill-with-docs, improve-codebase-architecture, or zoom-out; when a request spans multiple of those workflows; or when implementing an issue end to end.
+description: Suggests optional Matt Pocock-style engineering skills for repository work without forcing a workflow. Use when a task may benefit from setup-matt-pocock-skills, grill-with-docs, to-prd, to-issues, triage, diagnose, tdd, improve-codebase-architecture, or zoom-out, especially for PRDs, issues, triage, implementation planning, business/domain rules, debugging, testing, architecture improvement, or unfamiliar code. The skill should recommend relevant downstream skills and ask the user whether to use them unless the user explicitly invoked a downstream skill.
 ---
 
 # Matt Pocock Agent Workflow
 
-Use this skill to choose and sequence Matt Pocock-style engineering skills. It is a router and coordinator: once the right individual skill is obvious, load that skill and follow its instructions.
+Use this skill as a lightweight suggestion layer, not as a process owner. It helps notice when a Matt Pocock-style skill might be useful, explains why, and asks the user whether to use it.
 
-## Trigger Rules
+Do not treat this skill as permission to force `zoom-out`, `tdd`, `triage`, issue updates, or any other downstream workflow. The user stays in control.
 
-Use this skill when the user asks to:
+## Quick Start
 
-- Turn a conversation, idea, plan, or spec into a PRD or implementation issues.
-- Create, classify, review, move, or prepare issues for a human or agent.
-- Implement an issue end to end from issue context through verification and tracker update.
-- Diagnose a bug, regression, broken behavior, or failing test when issue workflow or project docs may matter.
-- Use TDD, red-green-refactor, integration tests, or a test-first implementation flow.
-- Improve architecture, reduce coupling, clarify domain boundaries, or make code easier for agents to navigate.
-- Zoom out on unfamiliar code before planning or changing it.
-- Decide which Matt Pocock engineering skill should handle a request.
+1. Identify one or two skills that may fit the current task.
+2. Briefly tell the user why those skills may help.
+3. Ask whether to use them before loading downstream skills.
+4. Continue without the downstream skill if the user declines, ignores the suggestion, or asks for direct work.
 
-Do not use this skill just because a task mentions code, docs, or tests. If the user directly invokes one specific skill and no routing is needed, use that skill directly.
+If the user directly names a downstream skill, use that skill directly and skip the confirmation step.
 
-## First Move
+## Suggestion Map
 
-Check whether the current repository is configured for agent skills:
+- Suggest `zoom-out` when the codebase, API surface, architecture, or cross-module behavior is unfamiliar.
+- Suggest `grill-with-docs` when business rules, domain terms, lifecycle states, ownership, boundaries, or acceptance criteria need sharpening.
+- Suggest `tdd` when the task affects public behavior, high-risk logic, integration behavior, or the user asks for complete testing or red-green-refactor.
+- Suggest `diagnose` when the user reports broken behavior, a regression, an exception, flaky tests, failed verification, or performance trouble.
+- Suggest `improve-codebase-architecture` when the user asks about coupling, module boundaries, testability, maintainability, or agent-navigable design.
+- Suggest `to-prd` when the user wants a product or feature specification.
+- Suggest `to-issues` when the user wants a plan or PRD split into implementation tickets.
+- Suggest `triage` when creating, classifying, readiness-checking, or handing off issues.
+- Suggest `setup-matt-pocock-skills` when the repository's issue tracker, triage labels, or domain-doc layout are missing or unclear.
+
+## How To Ask
+
+Keep the prompt short and specific:
+
+```text
+这个任务可能适合用 `$diagnose`，因为你描述的是失败/回归类问题。要我按诊断流程来走，还是直接先看代码？
+```
+
+When several skills may apply, offer a compact route instead of a long menu:
+
+```text
+这里可以用 `$zoom-out -> $grill-with-docs`：先看现有边界，再把业务规则问清楚。要按这个走吗？
+```
+
+Avoid asking for permission when the user already made the choice:
+
+```text
+用户说“用 `$tdd` 做这个”时，直接加载并应用 `$tdd`。
+```
+
+## Repository Setup
+
+If setup appears relevant, suggest checking for:
 
 - `## Agent skills` in `AGENTS.md` or equivalent agent instructions.
 - `docs/agents/issue-tracker.md`.
 - `docs/agents/triage-labels.md`.
 - `docs/agents/domain.md` or another documented domain-doc layout.
 
-If any of these are missing, use or suggest `setup-matt-pocock-skills` before running PRD, issue, triage, diagnosis, TDD, architecture, or zoom-out workflows.
+Do not block ordinary work merely because setup is absent. Only recommend `setup-matt-pocock-skills` when issue, PRD, triage, domain-doc, or agent handoff work would benefit from durable repository conventions.
 
-## Skill Router
+## Issue Work
 
-- Use `setup-matt-pocock-skills` before the first engineering workflow in an unconfigured repo, or when the issue tracker, triage labels, or domain-doc layout are unclear.
-- Use `to-prd` when turning a discussion, idea, or rough requirement into a PRD.
-- Use `grill-with-docs` before `to-prd` when domain language, boundaries, ownership, or decisions are unclear.
-- Use `to-issues` when splitting a PRD, plan, or specification into implementation issues.
-- Use `triage` when creating, classifying, moving, checking, or preparing issues for a human or agent.
-- Use `diagnose` when fixing bugs, failing tests, broken behavior, regressions, or reports that something is wrong.
-- Use `tdd` when the user requests test-first work, red-green-refactor, public behavior tests, or a high-risk implementation.
-- Use `improve-codebase-architecture` when the task asks for architecture improvement, refactoring opportunities, coupling reduction, testability, or clearer domain boundaries.
-- Use `zoom-out` when unfamiliar code needs broader context before planning, diagnosing, or changing it.
+For issue implementation, suggest but do not require this order:
 
-## Issue Implementation Workflow
+1. Read the issue and repository agent configuration.
+2. Check whether the issue is actionable.
+3. Use `triage` if readiness or label state is unclear.
+4. Use `tdd` or `diagnose` if the implementation risk warrants it.
+5. Update the issue tracker if the repository convention expects progress notes, verification results, or residual risk notes.
 
-When implementing an issue:
-
-1. Read the issue and the repository agent configuration.
-2. Confirm the issue is actionable; if it has not been triaged for agent readiness, use `triage` before implementation. Do not treat a freshly written issue as ready merely because it has a `ready-for-agent` status line.
-3. Choose the implementation skill path: usually `tdd`, `diagnose`, or a project-specific technical skill.
-4. Before changing implementation files, update or append to the issue tracker when the repository convention requires start notes, assignment notes, or an agent brief.
-5. Implement the smallest vertical slice that satisfies the acceptance criteria.
-6. Verify with relevant tests, builds, or manual checks.
-7. Immediately update the issue according to `docs/agents/issue-tracker.md` with implementation summary, verification results, residual risk, and related follow-up tickets. Do this before the final user-facing summary.
-
-Do not hard-code issue statuses, completion rules, or label meanings. Follow the current repository's agent docs. If no completion convention exists, at minimum add an implementation summary, test results, residual risk, and related commit information under the issue's comment/history section.
-
-## Issue Tracker Hygiene
-
-- `to-issues` creates candidate work; `triage` prepares, classifies, and checks those issues for human or agent execution. Do not skip `triage` when the next step is handing an issue to an agent or beginning implementation.
-- Keep the issue tracker as the durable source of workflow truth. User-facing chat summaries do not replace issue comments, status updates, agent briefs, or test-result notes.
-- When a local markdown tracker records state in a `Status:` line, preserve the repository's configured state vocabulary and add progress details under `## Comments` rather than inventing ad-hoc statuses.
-- If the tracker lacks a completion state, keep the configured state line intact unless the repository docs say otherwise, and append a clear implemented/verified note with tests run and any remaining risks.
-- When publishing issues from a PRD, show or internally validate dependency order, HITL/AFK suitability, and readiness. If issues were already published without that review, run `triage` as the next step to repair the workflow.
-
-## Issue Splitting
-
-When converting plans into issues, prefer tracer-bullet vertical slices:
-
-- Each issue should be independently understandable.
-- Each issue should produce observable value or reduce concrete risk.
-- Each issue should identify dependencies and human-in-the-loop needs.
-- Ask the user to confirm granularity, dependencies, and HITL/AFK markers before publishing issues.
+Do not invent issue statuses or completion rules. If the user chooses issue workflow support, follow the repository's existing issue tracker docs.
 
 ## Communication
 
-Name the Matt Pocock skill path being used in a short update, then keep the work moving. Combine skills when the task naturally crosses boundaries, but keep the active set minimal.
+Use suggestion language:
+
+- "这个任务可能适合..."
+- "我建议可选用..."
+- "要我按这个技能走吗？"
+- "也可以不用，我可以直接继续。"
+
+Avoid mandatory language:
+
+- "必须使用..."
+- "不要继续，除非..."
+- "Hard trigger..."
+- "This route is required..."
+
+The goal is to make useful skills discoverable while preserving the user's control over the workflow.

@@ -2,7 +2,9 @@
 
 [English](README.en.md)
 
-个人 Codex 技能仓库，使用轻量级的 Matt Pocock 风格技能目录统一维护。
+个人 Codex 技能同步仓库，负责把本地全局技能目录中的稳定版本收录、校验并同步分发。
+
+本仓库只负责同步和分发，不负责在仓库内设计或现场改写技能内容。技能内容改动应先在本地全局技能目录中完成并验证，再同步回本仓库收录。
 
 推荐参考：[mattpocock/skills](https://github.com/mattpocock/skills)，一个适合参考轻量级 Agent 技能结构与工作流的实践示例库。
 
@@ -22,7 +24,7 @@ skills/<category>/<group>/<skill-name>/
 
 ### Agents
 
-- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - 路由 PRD、issue、triage、实现、诊断、TDD、架构和领域文档工作流，并维护 issue tracker 记录卫生。
+- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - 为 PRD、issue、triage、实现计划、诊断、TDD、架构和领域文档任务建议可选工程技能，并在用户确认后路由。
 - [Chinese Agent Rules](skills/agents/chinese-agent-rules) - 默认用中文处理 Agent 对话、计划、用户文档、标题和主题总结。
 
 ### Dev
@@ -46,6 +48,9 @@ skills/<category>/<group>/<skill-name>/
 - [Server Operation Guardrails](skills/ops/server-operation-guardrails) - 为远程服务器读检查、确认变更、备份、密钥、TLS、回滚和验证应用安全规则。
 
 ### Web
+
+- [Web Fullstack Dev](skills/web/web-fullstack-dev) - 处理 Web-first 全栈 monorepo，覆盖 RuoYi 后端、Vue3 后台、桌面 Web、uni-app、多端验收和 OpenAPI 契约。
+- [Web Structure](skills/web/web-structure) - 判断 Web、Vue、uni-app、H5 和小程序前端业务逻辑应放在 Feature、State、Feature API、Result、Surface 或 Adapter。
 
 #### RuoYi
 

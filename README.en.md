@@ -2,7 +2,9 @@
 
 [简体中文](README.md)
 
-Personal Codex skills maintained as a single repository with lightweight, Matt Pocock-style skill folders.
+Personal Codex skill sync repository for collecting, validating, and distributing stable versions from the local global skills directory.
+
+This repository only handles sync and distribution. It does not own in-repository skill design or ad-hoc skill edits. Make and verify skill content changes in the local global skills directory first, then sync them back into this repository for collection.
 
 Recommended reference: [mattpocock/skills](https://github.com/mattpocock/skills), a practical example collection for lightweight agent skill structure and workflows.
 
@@ -22,7 +24,7 @@ Only `SKILL.md` is required. Categories and optional groups organize source file
 
 ### Agents
 
-- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - Route PRDs, issues, triage, implementation, diagnosis, TDD, architecture work, and domain docs while preserving issue-tracker hygiene.
+- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - Suggest optional engineering skills for PRDs, issues, triage, implementation planning, diagnosis, TDD, architecture work, and domain docs, then route after user confirmation.
 - [Chinese Agent Rules](skills/agents/chinese-agent-rules) - Keep agent communication, plans, user-facing docs, headings, and topic summaries in Chinese by default.
 
 ### Dev
@@ -46,6 +48,9 @@ Only `SKILL.md` is required. Categories and optional groups organize source file
 - [Server Operation Guardrails](skills/ops/server-operation-guardrails) - Apply remote-server safety rules for read-only inspection, confirmed changes, backups, secrets, TLS, rollback, and verification.
 
 ### Web
+
+- [Web Fullstack Dev](skills/web/web-fullstack-dev) - Work on Web-first full-stack monorepos across RuoYi backends, Vue3 admin, desktop Web, uni-app, multi-surface verification, and OpenAPI contracts.
+- [Web Structure](skills/web/web-structure) - Place Web, Vue, uni-app, H5, and mini-program frontend business logic into Feature, State, Feature API, Result, Surface, or Adapter responsibilities.
 
 #### RuoYi
 

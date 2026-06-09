@@ -44,9 +44,11 @@ Load `references/automation-and-release.md` when the task involves stable regres
 - Treat upload as a user-visible release action. Confirm appid, version, description, and target project before uploading.
 - If DevTools reports login, appid, network, or permission errors, state the blocker plainly and avoid inventing workarounds.
 - For build/npm operations inside the mini program output, use DevTools CLI when the project requires WeChat's npm build behavior.
+- For simulator automation, keep exactly one target-project DevTools session active. Before opening a different generated project, run the official `quit` command for the old session, then confirm the intended automation port is no longer listening.
 - On Windows, do not assume a background or minimized DevTools window is reliable. Before simulator automation or OS screenshots, restore the DevTools main window to the desktop, move/size it predictably, bring it to the foreground, and allow a short repaint settle time.
 - Clean stale DevTools sessions with the official `quit` command first, then kill remaining processes from the DevTools install directory only if needed. A leftover old main window can make automator connect to the wrong or half-stale session.
 - When starting a stable automation session, open the current generated project window first, then enable `auto` on the intended port. Reusing a warmed session is fine only after proving it belongs to the current project and is visible.
+- If DevTools shows an interactive dialog, trust prompt, AppID-change prompt, tourist-mode prompt, login prompt, authorization prompt, or permission prompt, do not continue automation in the background. Confirm only when the action is clearly local and safe; otherwise stop and tell the user exactly what needs interactive confirmation.
 - Some DevTools versions accept `auto --auto-port <port>` even when help output omits it; prefer a fixed auto port for repeatable `miniprogram-automator` connections, and do not assume the `ws connect <port>` value from `--debug` is the automator endpoint.
 - Prefer `miniProgram.disconnect()` after checks. Do not call `miniProgram.close()` by default because it can trigger close prompts or hang shutdown.
 - Treat cleanup/navigation-after-assertion steps as best-effort unless the cleanup behavior itself is the feature under test. A timeout while returning from a diagnostic page should not fail an already-proven page assertion.
@@ -74,6 +76,7 @@ Before automating, confirm:
 ## Report
 
 - Mention project path opened in DevTools, target appid, commands run, and whether automation connected.
+- Mention whether the DevTools window was brought to the foreground, whether only one target-project DevTools session was active, and whether any dialog or interactive blocker appeared.
 - Separate functional assertion failures, screenshot/capture failures, AppService logs, DevTools CLI output, and `web-view`/H5 diagnostics.
 - If preview/upload was requested, report version, description, target project, and any login or permission blocker.
 - For real-write regressions, include run ID, prefix, role, endpoint, returned or looked-up ID, and cleanup status.
