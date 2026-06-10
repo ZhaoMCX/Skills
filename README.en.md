@@ -49,6 +49,7 @@ Only `SKILL.md` is required. Categories and optional groups organize source file
 
 ### Web
 
+- [CodexApp Screenshot Test](skills/web/codexapp-screenshot-test) - Guide business-flow visual QA with the CodexApp in-app browser, including when to screenshot, when DOM/data assertions are enough, and how to report evidence.
 - [Web Fullstack Dev](skills/web/web-fullstack-dev) - Work on Web-first full-stack monorepos across RuoYi backends, Vue3 admin, desktop Web, uni-app, multi-surface verification, and OpenAPI contracts.
 - [Web Structure](skills/web/web-structure) - Place Web, Vue, uni-app, H5, and mini-program frontend business logic into Feature, State, Feature API, Result, Surface, or Adapter responsibilities.
 

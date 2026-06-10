@@ -49,6 +49,7 @@ skills/<category>/<group>/<skill-name>/
 
 ### Web
 
+- [CodexApp Screenshot Test](skills/web/codexapp-screenshot-test) - 指导使用 CodexApp 内置浏览器做业务流程视觉 QA，判断何时截图、何时用 DOM/数据断言，以及如何报告证据。
 - [Web Fullstack Dev](skills/web/web-fullstack-dev) - 处理 Web-first 全栈 monorepo，覆盖 RuoYi 后端、Vue3 后台、桌面 Web、uni-app、多端验收和 OpenAPI 契约。
 - [Web Structure](skills/web/web-structure) - 判断 Web、Vue、uni-app、H5 和小程序前端业务逻辑应放在 Feature、State、Feature API、Result、Surface 或 Adapter。
 

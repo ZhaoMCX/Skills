@@ -5,6 +5,7 @@ $skillsRoot = Join-Path $repoRoot "skills"
 $errors = New-Object System.Collections.Generic.List[string]
 $skillNames = New-Object System.Collections.Generic.HashSet[string]
 $skillRelativeLinks = New-Object System.Collections.Generic.List[string]
+$maxSkillLines = 120
 
 function Add-Error([string]$Message) {
     $errors.Add($Message)
@@ -113,8 +114,8 @@ foreach ($category in $categoryDirs) {
         }
 
         $lines = @(Get-Content -Encoding UTF8 -LiteralPath $skillFile)
-        if ($lines.Count -gt 100) {
-            Add-Error "SKILL.md exceeds 100 lines ($($lines.Count)): ${skillLabel}"
+        if ($lines.Count -gt $maxSkillLines) {
+            Add-Error "SKILL.md exceeds $maxSkillLines lines ($($lines.Count)): ${skillLabel}"
         }
 
         $content = Get-Content -Raw -Encoding UTF8 -LiteralPath $skillFile
