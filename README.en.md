@@ -24,7 +24,6 @@ Only `SKILL.md` is required. Categories and optional groups organize source file
 
 ### Agents
 
-- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - Suggest optional engineering skills for PRDs, issues, triage, implementation planning, diagnosis, TDD, architecture work, and domain docs, then route after user confirmation.
 - [Chinese Agent Rules](skills/agents/chinese-agent-rules) - Keep agent communication, plans, user-facing docs, headings, and topic summaries in Chinese by default.
 
 ### Dev
@@ -74,7 +73,7 @@ Only `SKILL.md` is required. Categories and optional groups organize source file
 
 #### WeChat
 
-- [WeChat Mini Program DevTools](skills/web/wechat/wechat-miniprogram-devtools) - Use official WeChat DevTools CLI, project-local automator APIs, generated mp-weixin output, and preview/upload safety workflows.
+- [WeChat Mini Program DevTools](skills/web/wechat/wechat-miniprogram-devtools) - Use official WeChat DevTools CLI, project-local automator APIs, native Mini Program structure, WXML/WXSS, generated mp-weixin output, and preview/upload safety workflows.
 
 ## Sync
 
@@ -139,7 +138,7 @@ Install one skill:
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate-skills.ps1
 ```
 
-Validation enforces skill names, frontmatter, two-sentence descriptions with `Use when`, `SKILL.md` length, referenced files, README links, and generated-file exclusions.
+Validation enforces skill names, frontmatter, non-empty descriptions, `SKILL.md` length, referenced files, README links, and generated-file exclusions.
 
 ## Notes
 

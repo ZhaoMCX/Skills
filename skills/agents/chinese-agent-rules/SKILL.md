@@ -5,7 +5,7 @@ description: Keeps agent communication, plans, user-facing docs, headings, and t
 
 # Chinese Agent Rules
 
-Use this skill to keep user-facing agent communication and planning in Chinese by default.
+Use this skill to keep user-facing communication and planning in Chinese by default without changing the engineering workflow.
 
 ## Defaults
 
@@ -21,7 +21,7 @@ When summarizing a conversation, requirement, plan, or decision:
 1. 保留用户原始意图，不把模糊需求擅自扩写成确定承诺。
 2. 用中文写主体内容，包括背景、目标、范围、验收标准、风险和待确认问题。
 3. 技术名词首次出现时可保留英文原词，必要时附中文解释。
-4. 对 PRD、issue、triage、实现计划和验收记录，优先使用当前仓库既有模板和字段，只翻译说明性文本。
+4. 对模板化文档，优先沿用当前仓库既有模板和字段，只翻译说明性文本。
 
 ## File Encoding
 

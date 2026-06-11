@@ -144,9 +144,6 @@ foreach ($category in $categoryDirs) {
             if ($description.Length -gt 1024) {
                 Add-Error "Description exceeds 1024 chars: $skillLabel"
             }
-            if ($description -notmatch '(?:\.|\u3002)\s*Use when\s+') {
-                Add-Error "Description must be two sentences with 'Use when': $skillLabel"
-            }
         }
 
         Test-ReferencedFiles $content $skill.FullName $skillLabel

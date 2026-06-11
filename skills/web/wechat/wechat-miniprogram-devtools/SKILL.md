@@ -1,6 +1,6 @@
 ---
 name: wechat-miniprogram-devtools
-description: Guides WeChat Mini Program project work through official WeChat DevTools. Use when working with DevTools CLI, miniprogram-automator, uni-app mp-weixin output, preview/upload, simulator automation, screenshots, page inspection, clicks, input, or end-to-end checks.
+description: Guides WeChat Mini Program project work through official WeChat DevTools and native Mini Program structure, WXML, WXSS, page/component code, and built-in components. Use when working with DevTools CLI, miniprogram-automator, uni-app mp-weixin output, app/page JSON, WXML/WXSS, official components, preview/upload, simulator automation, screenshots, page inspection, clicks, input, or end-to-end checks.
 ---
 
 # WeChat Mini Program DevTools
@@ -8,6 +8,23 @@ description: Guides WeChat Mini Program project work through official WeChat Dev
 ## Overview
 
 Use the official WeChat DevTools CLI for project-level operations and `miniprogram-automator` for simulator interaction. Prefer official DevTools capabilities; do not install or rely on third-party MCP wrappers unless the user explicitly asks.
+
+Load `references/mini-program-framework.md` when the task involves native Mini Program files, `app.json`/page JSON, `Page`/`Component`, WXML, WXSS, events, routing, built-in components, custom components, or reviewing generated `mp-weixin` output.
+
+## Hard Gate For Simulator Automation
+
+Before any simulator interaction, screenshot, visual QA, or `App.captureScreenshot` call, the DevTools main window must be restored onto the visible desktop. It must not be minimized to the taskbar, hidden in the background, off-screen, blocked by virtual-desktop state, or only running as a background process.
+
+Minimized or background-only DevTools windows can make automation unable to execute and usually surface as `miniprogram-automator` hangs or timeouts. Do not treat a live process, open CLI port, successful automator connection, clean AppService logs, or passing page-data assertions as proof that visual/simulator automation can proceed.
+
+If this gate has not been proven in the current run:
+
+1. Restore the target DevTools window.
+2. Move and size it onto the visible desktop.
+3. Allow a short repaint settle time.
+4. Then connect `miniprogram-automator` and run simulator actions.
+
+If a simulator action or screenshot times out, stop and re-establish visible desktop window state before retrying. If the DevTools window cannot be visibly located, report the window-state blocker instead of retrying background automation.
 
 Load `references/automation-and-release.md` when the task involves stable regression pipelines, preview QR codes, upload/release work, `web-view`, real-device behavior, DevTools cache, screenshot reliability, or detailed logging.
 
@@ -17,6 +34,7 @@ Load `references/automation-and-release.md` when the task involves stable regres
 | --- | --- |
 | open, preview, upload, build npm, inspect project settings | DevTools CLI |
 | click, type, navigate pages, read page data, screenshot, assert UI | `miniprogram-automator` after DevTools is open with automation enabled |
+| write or review native Mini Program structure, syntax, page/component code, or official components | load `references/mini-program-framework.md`, then inspect local files |
 | uni-app / HBuilderX / `mp-weixin` project | build or locate the `dist/dev/mp-weixin` or `dist/build/mp-weixin` output first, then point DevTools at that output |
 | CI-style checks | use CLI for setup and automator for deterministic assertions; report login, appid, or GUI blockers |
 | visual evidence or screenshots | keep functional assertions in automator; prefer DevTools/automator screenshot capture; use OS/window capture only when explicitly approved or DevTools capture is impossible |
@@ -56,7 +74,7 @@ Load `references/automation-and-release.md` when the task involves stable regres
 - If DevTools reports login, appid, network, or permission errors, state the blocker plainly and avoid inventing workarounds.
 - For build/npm operations inside the mini program output, use DevTools CLI when the project requires WeChat's npm build behavior.
 - For simulator automation, keep exactly one target-project DevTools session active. Before opening a different generated project, prefer reusing the visible current session when it is the same project; otherwise close or clean the old session first, then confirm the intended automation port is no longer listening.
-- DevTools must be visible on the desktop for simulator automation, screenshots, or visual QA. A covered, minimized, or off-screen DevTools window can make `App.captureScreenshot`, window capture, and some simulator operations hang or time out even when AppService has no errors.
+- DevTools must be visible on the desktop for simulator automation, screenshots, or visual QA. A covered, minimized, background-only, or off-screen DevTools window can make `App.captureScreenshot`, window capture, and simulator operations hang or time out even when AppService has no errors.
 - On Windows, always restore the DevTools main window, move/size it predictably, and allow a short repaint settle time immediately before screenshots or visual QA. Bringing DevTools to the top is useful for capture reliability, but do not describe this as a requirement to keep it permanently in the system foreground.
 - For automator cleanup, prefer `miniProgram.disconnect()`. Do not use `miniProgram.close()` or click the window close button by default because either can trigger prompts, visible UI churn, or shutdown hangs.
 - The official DevTools CLI `quit` command may show a visible "CLI/HTTP call is closing DevTools, auto close after 3 seconds" prompt in current Windows DevTools versions. Treat `quit` as the official graceful close path, not as a truly silent close path.

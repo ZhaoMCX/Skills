@@ -24,7 +24,6 @@ skills/<category>/<group>/<skill-name>/
 
 ### Agents
 
-- [Matt Pocock Agent Workflow](skills/agents/matt-pocock-agent-workflow) - 为 PRD、issue、triage、实现计划、诊断、TDD、架构和领域文档任务建议可选工程技能，并在用户确认后路由。
 - [Chinese Agent Rules](skills/agents/chinese-agent-rules) - 默认用中文处理 Agent 对话、计划、用户文档、标题和主题总结。
 
 ### Dev
@@ -74,7 +73,7 @@ skills/<category>/<group>/<skill-name>/
 
 #### WeChat
 
-- [WeChat Mini Program DevTools](skills/web/wechat/wechat-miniprogram-devtools) - 使用官方微信开发者工具 CLI、项目本地 automator API、生成的 mp-weixin 输出和预览/上传安全流程。
+- [WeChat Mini Program DevTools](skills/web/wechat/wechat-miniprogram-devtools) - 使用官方微信开发者工具 CLI、项目本地 automator API、原生小程序结构、WXML/WXSS、生成的 mp-weixin 输出和预览/上传安全流程。
 
 ## 同步
 
@@ -139,7 +138,7 @@ skills/<category>/<group>/<skill-name>/
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate-skills.ps1
 ```
 
-校验会强制检查技能名、frontmatter、包含 `Use when` 的两句式 description、`SKILL.md` 行数、引用文件、README 链接和生成文件排除。
+校验会强制检查技能名、frontmatter、非空 description、`SKILL.md` 行数、引用文件、README 链接和生成文件排除。
 
 ## 备注
 
