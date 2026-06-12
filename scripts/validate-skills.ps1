@@ -75,80 +75,74 @@ if (-not (Test-Path -LiteralPath $skillsRoot)) {
     throw "Missing skills directory: $skillsRoot"
 }
 
-$categoryDirs = @(Get-ChildItem -LiteralPath $skillsRoot -Directory)
+$skillDirs = @(Get-ChildItem -LiteralPath $skillsRoot -Directory | Where-Object {
+    Test-Path -LiteralPath (Join-Path $_.FullName "SKILL.md")
+})
 
-if ($categoryDirs.Count -eq 0) {
-    Add-Error "No skill categories found under skills/."
+if ($skillDirs.Count -eq 0) {
+    Add-Error "No flat skill directories found under skills/."
 }
 
-foreach ($category in $categoryDirs) {
-    $categorySkillFile = Join-Path $category.FullName "SKILL.md"
-    if (Test-Path -LiteralPath $categorySkillFile) {
-        Add-Error "Category must not be a skill directory: $($category.Name)"
+$nestedSkillFiles = @(Get-ChildItem -LiteralPath $skillsRoot -Recurse -Filter SKILL.md | Where-Object {
+    $_.Directory.Parent.FullName -ne $skillsRoot
+})
+foreach ($nestedSkillFile in $nestedSkillFiles) {
+    Add-Error "Nested skill directory is not allowed: $(Get-RelativePath $nestedSkillFile.Directory.FullName)"
+}
+
+$nonSkillTopDirs = @(Get-ChildItem -LiteralPath $skillsRoot -Directory | Where-Object {
+    -not (Test-Path -LiteralPath (Join-Path $_.FullName "SKILL.md"))
+})
+foreach ($dir in $nonSkillTopDirs) {
+    Add-Error "Top-level directory under skills/ must be a skill: $(Get-RelativePath $dir.FullName)"
+}
+
+foreach ($skill in $skillDirs) {
+    $relativeSkillPath = Get-RelativePath $skill.FullName
+    $skillLabel = $relativeSkillPath.Substring("skills/".Length)
+    $skillFile = Join-Path $skill.FullName "SKILL.md"
+
+    if (-not (Test-Slug $skill.Name)) {
+        Add-Error "Skill directory is not a slug: $skillLabel"
     }
 
-    $skillDirs = @(Get-ChildItem -LiteralPath $category.FullName -Recurse -Directory | Where-Object {
-        (Test-Path -LiteralPath (Join-Path $_.FullName "SKILL.md")) -and
-        (-not (Test-Path -LiteralPath (Join-Path $_.Parent.FullName "SKILL.md")))
-    })
-    if ($skillDirs.Count -eq 0) {
-        Add-Error "Category has no skills: $($category.Name)"
+    if (-not $skillNames.Add($skill.Name)) {
+        Add-Error "Duplicate skill name: $($skill.Name)"
     }
 
-    foreach ($skill in $skillDirs) {
-        $relativeSkillPath = Get-RelativePath $skill.FullName
-        $skillLabel = $relativeSkillPath.Substring("skills/".Length)
-        $skillFile = Join-Path $skill.FullName "SKILL.md"
-
-        if (-not (Test-Path -LiteralPath $skillFile)) {
-            Add-Error "Missing SKILL.md: $skillLabel"
-            continue
-        }
-
-        if (-not (Test-Slug $skill.Name)) {
-            Add-Error "Skill directory is not a slug: $skillLabel"
-        }
-
-        if (-not $skillNames.Add($skill.Name)) {
-            Add-Error "Duplicate skill name: $($skill.Name)"
-        }
-
-        $lines = @(Get-Content -Encoding UTF8 -LiteralPath $skillFile)
-        if ($lines.Count -gt $maxSkillLines) {
-            Add-Error "SKILL.md exceeds $maxSkillLines lines ($($lines.Count)): ${skillLabel}"
-        }
-
-        $content = Get-Content -Raw -Encoding UTF8 -LiteralPath $skillFile
-        $frontmatter = Get-Frontmatter $content $skillLabel
-        if ($null -eq $frontmatter) {
-            continue
-        }
-
-        $name = Get-FrontmatterValue $frontmatter "name"
-        $description = Get-FrontmatterValue $frontmatter "description"
-
-        if ([string]::IsNullOrWhiteSpace($name)) {
-            Add-Error "Missing name in SKILL.md: $skillLabel"
-        }
-        elseif ($name -ne $skill.Name) {
-            Add-Error "SKILL.md name does not match directory: $skillLabel"
-        }
-        elseif (-not (Test-Slug $name)) {
-            Add-Error "SKILL.md name is not a slug: $skillLabel"
-        }
-
-        if ([string]::IsNullOrWhiteSpace($description)) {
-            Add-Error "Missing description in SKILL.md: $skillLabel"
-        }
-        else {
-            if ($description.Length -gt 1024) {
-                Add-Error "Description exceeds 1024 chars: $skillLabel"
-            }
-        }
-
-        Test-ReferencedFiles $content $skill.FullName $skillLabel
-        $skillRelativeLinks.Add($relativeSkillPath) | Out-Null
+    $lines = @(Get-Content -Encoding UTF8 -LiteralPath $skillFile)
+    if ($lines.Count -gt $maxSkillLines) {
+        Add-Error "SKILL.md exceeds $maxSkillLines lines ($($lines.Count)): ${skillLabel}"
     }
+
+    $content = Get-Content -Raw -Encoding UTF8 -LiteralPath $skillFile
+    $frontmatter = Get-Frontmatter $content $skillLabel
+    if ($null -eq $frontmatter) {
+        continue
+    }
+
+    $name = Get-FrontmatterValue $frontmatter "name"
+    $description = Get-FrontmatterValue $frontmatter "description"
+
+    if ([string]::IsNullOrWhiteSpace($name)) {
+        Add-Error "Missing name in SKILL.md: $skillLabel"
+    }
+    elseif ($name -ne $skill.Name) {
+        Add-Error "SKILL.md name does not match directory: $skillLabel"
+    }
+    elseif (-not (Test-Slug $name)) {
+        Add-Error "SKILL.md name is not a slug: $skillLabel"
+    }
+
+    if ([string]::IsNullOrWhiteSpace($description)) {
+        Add-Error "Missing description in SKILL.md: $skillLabel"
+    }
+    elseif ($description.Length -gt 1024) {
+        Add-Error "Description exceeds 1024 chars: $skillLabel"
+    }
+
+    Test-ReferencedFiles $content $skill.FullName $skillLabel
+    $skillRelativeLinks.Add($relativeSkillPath) | Out-Null
 }
 
 foreach ($name in @("README.md", "README.en.md")) {

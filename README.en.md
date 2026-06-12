@@ -2,112 +2,162 @@
 
 [简体中文](README.md)
 
-Personal Codex skill sync repository for collecting, validating, and distributing stable versions from the local global skills directory.
+An author-maintained Codex skill library for reusable Agent skills, reference materials, and supporting scripts.
 
-This repository only handles sync and distribution. It does not own in-repository skill design or ad-hoc skill edits. Make and verify skill content changes in the local global skills directory first, then sync them back into this repository for collection.
-
-Recommended reference: [mattpocock/skills](https://github.com/mattpocock/skills), a practical example collection for lightweight agent skill structure and workflows.
+README is the source for repository classification, status, and dependency explanations. Skill directories stay flat so they are easy to browse, validate, and reuse across Agents.
 
 ## Layout
 
 ```text
-skills/<category>/<skill-name>/
-skills/<category>/<group>/<skill-name>/
+skills/<skill-name>/
   SKILL.md
   references/
   scripts/
 ```
 
-Only `SKILL.md` is required. Categories and optional groups organize source files only; installed skills are copied directly into the local Codex skills directory by skill name.
+Only `SKILL.md` is required. Repository skill directories must be flat under `skills/`; README is the only source for category and status explanations, and filesystem paths do not express categories.
 
-## Skills
+## Agent Usage
 
-### Agents
+When an agent needs to choose skills, first match the task against "Repository Skill Modules", then check "Direct Skill Dependencies". If the target skill depends on other repository skills, install them together; if it depends on external skills, fetch them from the source listed under "External Dependency Skills".
 
-- [Chinese Agent Rules](skills/agents/chinese-agent-rules) - Keep agent communication, plans, user-facing docs, headings, and topic summaries in Chinese by default.
-
-### Dev
-
-- [Git Commit](skills/dev/git-commit) - Guide atomic Git commits, staging checks, commit message conventions, confirmation templates, and small-step commit mode.
-
-### Game
-
-- [Game Structure](skills/game/game-structure) - Place gameplay logic into Module, Data, State, Rule, Ability, UseCase, Result, Surface, and Adapter responsibilities.
-
-#### Unity
-
-- [Unity DOTween](skills/game/unity/unity-dotween) - Implement, review, and debug lifecycle-safe Unity DOTween animation with reusable patterns and review checklists.
-- [Unity FishNet](skills/game/unity/unity-fishnet) - Implement, review, and debug FishNet networking with local source checks, authority rules, SyncType guidance, and lifecycle patterns.
-- [Unity Odin](skills/game/unity/unity-odin) - Work with Odin Inspector and Sirenix Serializer while preserving runtime/editor boundaries, common patterns, and review checks.
-- [Unity Steamworks.NET](skills/game/unity/unity-steamworks-net) - Integrate and debug Steamworks.NET lifecycle, callbacks, native binaries, and service boundaries.
-- [Unity TapTap SDK](skills/game/unity/unity-taptap-sdk) - Integrate and debug TapTap SDK modules, platform setup, PC validation, compliance, IAP, migrations, and release checklists.
-
-### Ops
-
-- [Server Operation Guardrails](skills/ops/server-operation-guardrails) - Apply remote-server safety rules for read-only inspection, confirmed changes, backups, secrets, TLS, rollback, and verification.
-
-### Web
-
-- [CodexApp Screenshot Test](skills/web/codexapp-screenshot-test) - Guide business-flow visual QA with the CodexApp in-app browser, including when to screenshot, when DOM/data assertions are enough, and how to report evidence.
-- [Web Fullstack Dev](skills/web/web-fullstack-dev) - Work on Web-first full-stack monorepos across RuoYi backends, Vue3 admin, desktop Web, uni-app, multi-surface verification, and OpenAPI contracts.
-- [Web Structure](skills/web/web-structure) - Place Web, Vue, uni-app, H5, and mini-program frontend business logic into Feature, State, Feature API, Result, Surface, or Adapter responsibilities.
-
-#### RuoYi
-
-- [RuoYi Framework](skills/web/ruoyi/ruoyi-framework) - Work on classic RuoYi monolith projects with Spring Boot, Shiro, Thymeleaf, MyBatis XML, Druid, Quartz, and the built-in code generator.
-- [RuoYi Vue](skills/web/ruoyi/ruoyi-vue) - Work on RuoYi Vue2 front/back separated projects with Spring Security/JWT backends and Vue2/Element UI frontends.
-- [RuoYi Vue3](skills/web/ruoyi/ruoyi-vue3) - Work on standalone RuoYi Vue3 frontends with Vite, Element Plus, Pinia, dynamic routes, and permission directives.
-- [RuoYi Cloud](skills/web/ruoyi/ruoyi-cloud) - Work on RuoYi microservice projects with Gateway, Auth, Nacos, Feign, Redis, Sentinel, Seata, and multi-module services.
-- [RuoYi App](skills/web/ruoyi/ruoyi-app) - Work on RuoYi mobile app templates with uni-app Vue2, token login, request wrappers, navigation guards, and backend integration.
-
-#### Spring
-
-- [Spring Boot](skills/web/spring/spring-boot) - Work on Spring Boot applications, configuration, starters, auto-configuration, Actuator, tests, packaging, and production readiness.
-- [Spring Cloud](skills/web/spring/spring-cloud) - Work on Spring Cloud microservices, Gateway, Config, OpenFeign, LoadBalancer, circuit breakers, streams, contracts, and distributed integration.
-- [Spring Data](skills/web/spring/spring-data) - Work on Spring Data repositories and persistence across JPA, JDBC, R2DBC, Redis, MongoDB, Elasticsearch, Neo4j, pagination, auditing, and projections.
-- [Spring Security](skills/web/spring/spring-security) - Work on Spring Security authentication, authorization, CSRF, sessions, OAuth2, JWT resource servers, method security, passwords, and tests.
-
-#### UniApp
-
-- [UniApp Development](skills/web/uniapp/uniapp-development) - Work on uni-app, uni-app x, DCloud, H5, app, and mini-program projects.
-
-#### WeChat
-
-- [WeChat Mini Program DevTools](skills/web/wechat/wechat-miniprogram-devtools) - Use official WeChat DevTools CLI, project-local automator APIs, native Mini Program structure, WXML/WXSS, generated mp-weixin output, and preview/upload safety workflows.
-
-## Sync
-
-Use these scripts for the two common sync directions.
-
-Sync repository skills to the local global Codex skills directory:
+Install one skill:
 
 ```powershell
-.\scripts\sync-to-global.ps1
+.\scripts\install.ps1 -Skill web-fullstack-dev
 ```
 
-Sync global skills back into this repository for skills that already exist in the repository:
+Common entry points:
 
-```powershell
-.\scripts\sync-from-global.ps1
-```
+| Task type | Skills to install first |
+| --- | --- |
+| Chinese conversation, plans, and user-facing docs | [Chinese Agent Rules](skills/chinese-agent-rules) |
+| Git commit preparation | [Git Commit](skills/git-commit) |
+| Remote servers or production operations | [Server Operation Guardrails](skills/server-operation-guardrails) |
+| Feishu business facts, PRDs, business chains, and tickets | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base), [Feishu Business Chain](skills/feishu-business-chain) |
+| Feishu UI design systems and visual facts | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base), [Feishu UI Design System](skills/feishu-ui-design-system) |
+| Web-first full-stack business development | [Web Fullstack Dev](skills/web-fullstack-dev) |
+| Web, Vue, H5, uni-app, and Mini Program responsibility boundaries | [Web Structure](skills/web-structure) |
+| uni-app / DCloud / multi-surface projects | [UniApp Development](skills/uniapp-development) |
+| Native WeChat Mini Programs and WeChat DevTools | [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools) |
+| RuoYi project families | [RuoYi Framework](skills/ruoyi-framework), [RuoYi Vue](skills/ruoyi-vue), [RuoYi Vue3](skills/ruoyi-vue3), [RuoYi Cloud](skills/ruoyi-cloud), [RuoYi App](skills/ruoyi-app) |
+| Spring backend concerns | [Spring Boot](skills/spring-boot), [Spring Cloud](skills/spring-cloud), [Spring Data](skills/spring-data), [Spring Security](skills/spring-security) |
+| Game responsibility boundaries and Unity concerns | [Game Structure](skills/game-structure), [Unity DOTween](skills/unity-dotween), [Unity FishNet](skills/unity-fishnet), [Unity Odin](skills/unity-odin), [Unity Steamworks.NET](skills/unity-steamworks-net), [Unity TapTap SDK](skills/unity-taptap-sdk) |
 
-`sync-from-global.ps1` skips Agent-specific `agents/` metadata by default so the repository stays cross-agent. Pass `-IncludeAgentMetadata` only when a skill intentionally stores Agent-specific UI metadata.
+## External Dependency Skills
 
-Sync one category:
+These skills are not collected into this repository, but they are documented as external dependency sources for repository skill design, orchestration, questioning, verification, and UI/UX judgment.
 
-```powershell
-.\scripts\sync-to-global.ps1 -Category game
-.\scripts\sync-from-global.ps1 -Category game
-.\scripts\sync-to-global.ps1 -Category web
-.\scripts\sync-from-global.ps1 -Category web
-```
+### mattpocock/skills
 
-Sync one skill:
+#### Engineering
 
-```powershell
-.\scripts\sync-to-global.ps1 -Skill game-structure
-.\scripts\sync-from-global.ps1 -Skill game-structure
-```
+- [`diagnose`](https://github.com/mattpocock/skills/tree/main/skills/engineering/diagnose)
+- [`grill-with-docs`](https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs)
+- [`improve-codebase-architecture`](https://github.com/mattpocock/skills/tree/main/skills/engineering/improve-codebase-architecture)
+- [`prototype`](https://github.com/mattpocock/skills/tree/main/skills/engineering/prototype)
+- [`setup-matt-pocock-skills`](https://github.com/mattpocock/skills/tree/main/skills/engineering/setup-matt-pocock-skills)
+- [`tdd`](https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd)
+- [`to-issues`](https://github.com/mattpocock/skills/tree/main/skills/engineering/to-issues)
+- [`to-prd`](https://github.com/mattpocock/skills/tree/main/skills/engineering/to-prd)
+- [`triage`](https://github.com/mattpocock/skills/tree/main/skills/engineering/triage)
+- [`zoom-out`](https://github.com/mattpocock/skills/tree/main/skills/engineering/zoom-out)
+
+#### Productivity
+
+- [`caveman`](https://github.com/mattpocock/skills/tree/main/skills/productivity/caveman)
+- [`grill-me`](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me)
+- [`handoff`](https://github.com/mattpocock/skills/tree/main/skills/productivity/handoff)
+- [`teach`](https://github.com/mattpocock/skills/tree/main/skills/productivity/teach)
+- [`write-a-skill`](https://github.com/mattpocock/skills/tree/main/skills/productivity/write-a-skill)
+
+#### Misc
+
+- [`git-guardrails-claude-code`](https://github.com/mattpocock/skills/tree/main/skills/misc/git-guardrails-claude-code)
+- [`migrate-to-shoehorn`](https://github.com/mattpocock/skills/tree/main/skills/misc/migrate-to-shoehorn)
+- [`scaffold-exercises`](https://github.com/mattpocock/skills/tree/main/skills/misc/scaffold-exercises)
+- [`setup-pre-commit`](https://github.com/mattpocock/skills/tree/main/skills/misc/setup-pre-commit)
+
+#### Personal
+
+- [`edit-article`](https://github.com/mattpocock/skills/tree/main/skills/personal/edit-article)
+- [`obsidian-vault`](https://github.com/mattpocock/skills/tree/main/skills/personal/obsidian-vault)
+
+### nextlevelbuilder/ui-ux-pro-max-skill
+
+#### UI/UX
+
+- [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) - Provide UI/UX design recommendations, visual review, color, typography, layout, and accessibility judgment.
+
+## Repository Skill Modules
+
+`Stable` means the skill is collected and ready as a regular trigger. `In Progress` means the skill is collected but its model, dependencies, or orchestration wording is still being refined.
+
+### In Progress
+
+- [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base) - Define Feishu/Lark as an agent-friendly structured fact source and set source-of-truth boundaries with local Markdown.
+- [Feishu Business Chain](skills/feishu-business-chain) - Manage Feishu-backed PRDs, business chains, rules, frontend/backend/end-to-end steps, vertical-slice tickets, defects, test batches, and evidence.
+- [Feishu UI Design System](skills/feishu-ui-design-system) - Manage Feishu-backed UI design system facts, including UI rules, tokens, components, page templates, HTML examples, screenshot evidence, and local mappings.
+- [Web Fullstack Dev](skills/web-fullstack-dev) - Work on Web-first full-stack business development across RuoYi backends, Vue3 admin, desktop Web/H5, native WeChat mini programs, shared packages, OpenAPI, Feishu business chains, and Feishu UI design systems.
+
+### Stable
+
+#### Agent Collaboration Rules
+
+- [Chinese Agent Rules](skills/chinese-agent-rules) - Keep agent communication, plans, user-facing docs, headings, and topic summaries in Chinese by default.
+
+#### Engineering Workflow And Safety
+
+- [Git Commit](skills/git-commit) - Guide atomic Git commits, staging checks, commit message conventions, confirmation templates, and small-step commit mode.
+- [Server Operation Guardrails](skills/server-operation-guardrails) - Apply remote-server safety rules for read-only inspection, confirmed changes, backups, secrets, TLS, rollback, and verification.
+
+#### Web Full Stack And Surfaces
+
+- [Web Structure](skills/web-structure) - Place Web, Vue, uni-app, H5, and mini-program frontend business logic into Feature, State, Feature API, Result, Surface, or Adapter responsibilities.
+- [UniApp Development](skills/uniapp-development) - Work on uni-app, uni-app x, DCloud, H5, app, and mini-program projects.
+- [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools) - Use official WeChat DevTools CLI, project-local automator APIs, native Mini Program structure, WXML/WXSS, generated mp-weixin output, and preview/upload safety workflows.
+
+#### RuoYi Project Families
+
+- [RuoYi Framework](skills/ruoyi-framework) - Work on classic RuoYi monolith projects with Spring Boot, Shiro, Thymeleaf, MyBatis XML, Druid, Quartz, and the built-in code generator.
+- [RuoYi Vue](skills/ruoyi-vue) - Work on RuoYi Vue2 front/back separated projects with Spring Security/JWT backends and Vue2/Element UI frontends.
+- [RuoYi Vue3](skills/ruoyi-vue3) - Work on standalone RuoYi Vue3 frontends with Vite, Element Plus, Pinia, dynamic routes, and permission directives.
+- [RuoYi Cloud](skills/ruoyi-cloud) - Work on RuoYi microservice projects with Gateway, Auth, Nacos, Feign, Redis, Sentinel, Seata, and multi-module services.
+- [RuoYi App](skills/ruoyi-app) - Work on RuoYi mobile app templates with uni-app Vue2, token login, request wrappers, navigation guards, and backend integration.
+
+#### Spring Backend Capabilities
+
+- [Spring Boot](skills/spring-boot) - Work on Spring Boot applications, configuration, starters, auto-configuration, Actuator, tests, packaging, and production readiness.
+- [Spring Cloud](skills/spring-cloud) - Work on Spring Cloud microservices, Gateway, Config, OpenFeign, LoadBalancer, circuit breakers, streams, contracts, and distributed integration.
+- [Spring Data](skills/spring-data) - Work on Spring Data repositories and persistence across JPA, JDBC, R2DBC, Redis, MongoDB, Elasticsearch, Neo4j, pagination, auditing, and projections.
+- [Spring Security](skills/spring-security) - Work on Spring Security authentication, authorization, CSRF, sessions, OAuth2, JWT resource servers, method security, passwords, and tests.
+
+#### Game Structure And Unity
+
+- [Game Structure](skills/game-structure) - Place gameplay logic into Module, Data, State, Rule, Ability, UseCase, Result, Surface, and Adapter responsibilities.
+- [Unity DOTween](skills/unity-dotween) - Implement, review, and debug lifecycle-safe Unity DOTween animation with reusable patterns and review checklists.
+- [Unity FishNet](skills/unity-fishnet) - Implement, review, and debug FishNet networking with local source checks, authority rules, SyncType guidance, and lifecycle patterns.
+- [Unity Odin](skills/unity-odin) - Work with Odin Inspector and Sirenix Serializer while preserving runtime/editor boundaries, common patterns, and review checks.
+- [Unity Steamworks.NET](skills/unity-steamworks-net) - Integrate and debug Steamworks.NET lifecycle, callbacks, native binaries, and service boundaries.
+- [Unity TapTap SDK](skills/unity-taptap-sdk) - Integrate and debug TapTap SDK modules, platform setup, PC validation, compliance, IAP, migrations, and release checklists.
+
+## Direct Skill Dependencies
+
+| Skill | Direct dependencies | Purpose |
+| --- | --- | --- |
+| [Feishu UI Design System](skills/feishu-ui-design-system) | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base), [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Set Feishu source-of-truth boundaries first, then apply UI/UX design advice, visual review, and accessibility judgment. |
+| [Feishu Business Chain](skills/feishu-business-chain) | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base) | Reuse Feishu source-of-truth boundaries while holding PRDs, business chains, rules, tickets, and evidence. |
+| [Web Fullstack Dev](skills/web-fullstack-dev) | [Feishu Business Chain](skills/feishu-business-chain), [Feishu UI Design System](skills/feishu-ui-design-system), [Web Structure](skills/web-structure), [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development), [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Orchestrate business facts, UI facts, frontend responsibility boundaries, surface tools, and UI/UX design intelligence. |
+| [Web Structure](skills/web-structure) | [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development) | Define frontend responsibility boundaries for surfaces without replacing Mini Program or uni-app tools. |
+| [Game Structure](skills/game-structure) | [Unity DOTween](skills/unity-dotween), [Unity FishNet](skills/unity-fishnet), [Unity Odin](skills/unity-odin), [Unity Steamworks.NET](skills/unity-steamworks-net), [Unity TapTap SDK](skills/unity-taptap-sdk) | Set gameplay responsibility boundaries first, then let Unity skills handle plugins, SDKs, animation, and networking. |
+
+## Core Collaboration Chains
+
+- Web full stack: Feishu business facts and UI facts flow into `web-fullstack-dev`, then frontend responsibility boundaries route work to Web/H5, Mini Program, or uni-app surface skills; the Feishu fact-source skills and Web orchestration skill are currently `In Progress`.
+- Feishu fact sources: `feishu-agent-knowledge-base` sets source-of-truth boundaries, while the business chain and UI design system hold business facts and visual facts.
+- RuoYi / Spring: identify the RuoYi project family first, then use Spring skills for focused backend capability questions.
+- Games: `game-structure` sets gameplay responsibility boundaries, and Unity skills handle concrete plugins, SDKs, and framework implementation.
+- Operations: use `server-operation-guardrails` before remote servers, production environments, or high-risk changes.
 
 ## Install
 
@@ -117,20 +167,11 @@ Install all skills into the local Codex skills directory:
 .\scripts\install.ps1
 ```
 
-Install one category:
-
-```powershell
-.\scripts\install.ps1 -Category game
-.\scripts\install.ps1 -Category web
-```
-
 Install one skill:
 
 ```powershell
 .\scripts\install.ps1 -Skill game-structure
 ```
-
-`install.ps1` is kept as the backward-compatible name for repository-to-global sync. Prefer `sync-to-global.ps1` for new routine usage.
 
 ## Validate
 
@@ -139,7 +180,3 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\validate-skills.ps
 ```
 
 Validation enforces skill names, frontmatter, non-empty descriptions, `SKILL.md` length, referenced files, README links, and generated-file exclusions.
-
-## Notes
-
-Unity `.meta` files are intentionally excluded. This repository packages Codex skills, not Unity assets.

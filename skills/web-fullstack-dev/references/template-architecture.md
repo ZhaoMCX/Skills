@@ -2,17 +2,17 @@
 
 ## 核心原则
 
-不追求一套 UI 跑三端。共享后端能力、接口契约、领域模型、设计 token 和纯工具函数；各端按平台特性独立实现。
+不追求一套 UI 跑多端。共享后端能力、接口契约、领域模型、设计 token 和纯工具函数；各端按平台特性独立实现。
 
 默认根目录直接使用业内常见名称：
 
 ```text
-server   后台服务器
-admin    后台管理端
-web      桌面网页端
-uniapp   移动统一工程
-packages 前端共享包
-docs     PRD、ADR、部署和 agent 文档
+server      后台服务器
+admin       后台管理端
+web         桌面 Web / 浏览器 H5
+miniprogram 原生微信小程序
+packages    前端共享包
+docs        ADR、部署和 agent 文档
 ```
 
 根目录是唯一 Git 仓库，不创建端内 `.git`。根目录提供 pnpm workspace 和统一脚本；`server/` 内保留独立 Maven 工程。
@@ -57,31 +57,30 @@ server/
 - 状态：Pinia。
 - 职责：内部 CRUD、权限、菜单、角色、字典、系统配置、业务数据维护。
 
-后台端不承担用户前台体验，不作为桌面 Web 或移动端页面基础。
+后台端不承担用户前台体验，不作为桌面 Web、H5 或小程序页面基础。
 
-## 桌面网页端
+## 桌面 Web / 浏览器 H5
 
 - 目录：`web/`
 - 框架：Vue3 + Vite + TypeScript。
-- 样式：设计 token + 自有组件。
+- 样式：飞书 UI 设计系统 + 本地 design tokens + 自有组件。
 - 接口：只调用 `/api/**` 用户公开 API。
-- 验收：Vitest 单测 + CodexApp Browser 桌面宽度视觉验收。
+- 验收：业务链步骤、前端逻辑测试、构建、CodexApp Browser 桌面和移动宽度视觉验收。
 
-## 移动统一工程
+## 原生微信小程序
 
-- 目录：`uniapp/`
-- 框架：uni-app + Vue3 + Vite + TypeScript。
-- H5：主要开发反馈、视觉验收和业务验收目标。
-- 微信小程序：由 `uniapp/dist/build/mp-weixin` 编译产物进入微信开发者工具。
-- App：保留 `manifest.json`、图标、权限和打包说明，不进入默认 CI 强制门槛。
-
-`uni.*` 平台能力只留在 `uniapp/` 内部适配层，不泄漏进 `packages/*`。
+- 目录：`miniprogram/`
+- 基线：原生微信小程序。
+- 锚点：`app.js`、`app.json`、`app.wxss`、`project.config.json`、`pages/`、`components/`。
+- 接口：只调用 `/api/**` 用户公开 API。
+- 设计：读取飞书 UI 设计系统、页面模板、HTML 视觉样例和截图证据。
+- 验收：微信开发者工具 CLI、`miniprogram-automator`、页面打开、文本断言、点击和截图。
 
 ## 共享包
 
 - `packages/contracts`：OpenAPI 契约类型入口。
 - `packages/api-client`：API client 和请求适配。
-- `packages/design-tokens`：跨端设计 token。
+- `packages/design-tokens`：本地实现 token 和飞书 UI 设计系统映射。
 - `packages/shared`：纯工具、常量、非 UI 业务辅助。
 
 共享包不放页面壳，不放平台 SDK，不放后台管理端专用 UI。
@@ -92,7 +91,7 @@ server/
 packages:
   - "admin"
   - "web"
-  - "uniapp"
+  - "miniprogram"
   - "packages/*"
 ```
 

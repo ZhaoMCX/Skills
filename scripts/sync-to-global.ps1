@@ -1,5 +1,4 @@
 param(
-    [string]$Category,
     [string]$Skill,
     [string]$Destination = "$env:USERPROFILE\.codex\skills"
 )
