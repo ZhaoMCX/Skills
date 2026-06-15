@@ -34,8 +34,6 @@ skills/<skill-name>/
 | 中文对话、计划和文档输出 | [Chinese Agent Rules](skills/chinese-agent-rules) |
 | Git 提交整理 | [Git Commit](skills/git-commit) |
 | 远程服务器或生产环境操作 | [Server Operation Guardrails](skills/server-operation-guardrails) |
-| 飞书业务事实、PRD、业务链和工单 | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base), [Feishu Business Chain](skills/feishu-business-chain) |
-| 飞书 UI 设计系统和视觉事实 | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base), [Feishu UI Design System](skills/feishu-ui-design-system) |
 | Web-first 全栈业务开发 | [Web Fullstack Dev](skills/web-fullstack-dev) |
 | Web、Vue、H5、uni-app、小程序职责边界 | [Web Structure](skills/web-structure) |
 | uni-app / DCloud / 多端项目 | [UniApp Development](skills/uniapp-development) |
@@ -89,16 +87,19 @@ skills/<skill-name>/
 
 - [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) - 用于 UI/UX 设计建议、视觉评审、颜色、字体、布局和可访问性判断。
 
+### larksuite/cli
+
+#### Feishu / Lark CLI
+
+- [`lark-cli`](https://github.com/larksuite/cli) / [`@larksuite/cli`](https://www.npmjs.com/package/@larksuite/cli) - 飞书/Lark 官方 Open Platform CLI，供 `lark-*` skills 操作飞书 Wiki、Base、云文档、消息、日程和其他开放平台资源。
+
 ## 本仓库技能模块
 
 `Stable` 表示已稳定收纳、可作为常规触发入口；`In Progress` 表示已收纳但仍在磨合模型、依赖关系或编排口径。
 
 ### In Progress
 
-- [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base) - 定义飞书/Lark 作为 agent 友好结构化事实源，并划定飞书与本地 Markdown 的事实归属边界。
-- [Feishu Business Chain](skills/feishu-business-chain) - 管理飞书中的 PRD、业务链、业务规则、前后端/端到端步骤、纵切片工单、缺陷、测试批次和证据。
-- [Feishu UI Design System](skills/feishu-ui-design-system) - 管理飞书中的 UI 设计系统事实，包括 UI 规则、token、组件、页面模板、HTML 样例、截图证据和本地实现映射。
-- [Web Fullstack Dev](skills/web-fullstack-dev) - 处理 Web-first 全栈业务开发，覆盖 RuoYi 后端、Vue3 后台、桌面 Web/H5、原生微信小程序、共享包、OpenAPI、飞书业务链和飞书 UI 设计系统。
+- [Web Fullstack Dev](skills/web-fullstack-dev) - 处理 Web-first 全栈模块开发，覆盖 RuoYi 后端、Vue3 后台、桌面 Web/H5、原生微信小程序、共享包、OpenAPI、PRD/issues/TDD 工作流和 web-structure 职责归位。
 
 ### Stable
 
@@ -109,6 +110,7 @@ skills/<skill-name>/
 #### 工程流程与安全
 
 - [Git Commit](skills/git-commit) - 指导原子化 Git 提交、暂存检查、提交信息规范、确认模板和小步提交模式。
+- [Setup Matt Pocock Skills Feishu](skills/setup-matt-pocock-skills-feishu) - 作为 `setup-matt-pocock-skills` 的飞书/Lark 伴随模式，记录用 Wiki、Base、`CONTEXT` 和 `ADR` 承载 issue tracker 与领域文档的本地配置约定。
 - [Server Operation Guardrails](skills/server-operation-guardrails) - 为远程服务器读检查、确认变更、备份、密钥、TLS、回滚和验证应用安全规则。
 
 #### Web 全栈与端侧
@@ -145,16 +147,13 @@ skills/<skill-name>/
 
 | 技能 | 直接依赖 | 依赖用途 |
 | --- | --- | --- |
-| [Feishu UI Design System](skills/feishu-ui-design-system) | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base), [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 先确定飞书事实源边界，再接收 UI/UX 设计建议、视觉评审和可访问性判断。 |
-| [Feishu Business Chain](skills/feishu-business-chain) | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base) | 复用飞书事实源边界，承载 PRD、业务链、规则、工单和证据。 |
-| [Web Fullstack Dev](skills/web-fullstack-dev) | [Feishu Business Chain](skills/feishu-business-chain), [Feishu UI Design System](skills/feishu-ui-design-system), [Web Structure](skills/web-structure), [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development), [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 编排业务事实、UI 事实、前端职责边界、端侧工具和 UI/UX 设计智能。 |
+| [Web Fullstack Dev](skills/web-fullstack-dev) | [Web Structure](skills/web-structure), [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development), [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 编排 PRD/issues/TDD 驱动的全栈模块开发、前端职责边界、端侧工具和 UI/UX 设计判断。 |
 | [Web Structure](skills/web-structure) | [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development) | 定义端侧业务逻辑职责边界，但不替代小程序或 uni-app 的端侧工具。 |
 | [Game Structure](skills/game-structure) | [Unity DOTween](skills/unity-dotween), [Unity FishNet](skills/unity-fishnet), [Unity Odin](skills/unity-odin), [Unity Steamworks.NET](skills/unity-steamworks-net), [Unity TapTap SDK](skills/unity-taptap-sdk) | 先定玩法职责边界，再由 Unity 专项技能承接插件、SDK、动画和联网实现。 |
 
 ## 核心协作链路
 
-- Web 全栈：飞书业务事实和 UI 事实进入 `web-fullstack-dev`，再按前端职责边界分配到 Web/H5、小程序或 uni-app 端侧技能；其中飞书事实源和 Web 编排技能当前属于 `In Progress`。
-- 飞书事实源：`feishu-agent-knowledge-base` 定事实源边界，业务链和 UI 设计系统分别承载业务事实与视觉事实。
+- Web 全栈：`to-prd`、`to-issues` 和 `tdd` 提供工程工作流主线；`web-fullstack-dev` 编排全栈模块交付；`web-structure` 负责前端业务职责归位。
 - RuoYi / Spring：先按若依项目族识别项目，再按 Spring 专项技能处理后端能力问题。
 - 游戏：`game-structure` 定玩法职责边界，Unity 专项技能承接具体插件、SDK 和框架实现。
 - 运维：远程服务器、生产环境或高风险变更先走 `server-operation-guardrails`。

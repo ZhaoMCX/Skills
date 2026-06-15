@@ -63,9 +63,9 @@ server/
 
 - 目录：`web/`
 - 框架：Vue3 + Vite + TypeScript。
-- 样式：飞书 UI 设计系统 + 本地 design tokens + 自有组件。
+- 样式：本地 design tokens + 自有组件，可结合 `ui-ux-pro-max` 做设计建议和视觉评审。
 - 接口：只调用 `/api/**` 用户公开 API。
-- 验收：业务链步骤、前端逻辑测试、构建、CodexApp Browser 桌面和移动宽度视觉验收。
+- 验收：PRD/issue acceptance criteria、前端逻辑测试、构建、CodexApp Browser 桌面和移动宽度检查。
 
 ## 原生微信小程序
 
@@ -73,14 +73,14 @@ server/
 - 基线：原生微信小程序。
 - 锚点：`app.js`、`app.json`、`app.wxss`、`project.config.json`、`pages/`、`components/`。
 - 接口：只调用 `/api/**` 用户公开 API。
-- 设计：读取飞书 UI 设计系统、页面模板、HTML 视觉样例和截图证据。
-- 验收：微信开发者工具 CLI、`miniprogram-automator`、页面打开、文本断言、点击和截图。
+- 设计：使用本地 design tokens、自有组件和 `ui-ux-pro-max` 评审结果。
+- 验收：微信开发者工具 CLI、`miniprogram-automator`、页面打开、文本断言、点击；截图只用于视觉风险。
 
 ## 共享包
 
 - `packages/contracts`：OpenAPI 契约类型入口。
 - `packages/api-client`：API client 和请求适配。
-- `packages/design-tokens`：本地实现 token 和飞书 UI 设计系统映射。
+- `packages/design-tokens`：本地 design token 实现。
 - `packages/shared`：纯工具、常量、非 UI 业务辅助。
 
 共享包不放页面壳，不放平台 SDK，不放后台管理端专用 UI。

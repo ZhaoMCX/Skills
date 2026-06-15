@@ -34,8 +34,6 @@ Common entry points:
 | Chinese conversation, plans, and user-facing docs | [Chinese Agent Rules](skills/chinese-agent-rules) |
 | Git commit preparation | [Git Commit](skills/git-commit) |
 | Remote servers or production operations | [Server Operation Guardrails](skills/server-operation-guardrails) |
-| Feishu business facts, PRDs, business chains, and tickets | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base), [Feishu Business Chain](skills/feishu-business-chain) |
-| Feishu UI design systems and visual facts | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base), [Feishu UI Design System](skills/feishu-ui-design-system) |
 | Web-first full-stack business development | [Web Fullstack Dev](skills/web-fullstack-dev) |
 | Web, Vue, H5, uni-app, and Mini Program responsibility boundaries | [Web Structure](skills/web-structure) |
 | uni-app / DCloud / multi-surface projects | [UniApp Development](skills/uniapp-development) |
@@ -89,16 +87,19 @@ These skills are not collected into this repository, but they are documented as 
 
 - [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) - Provide UI/UX design recommendations, visual review, color, typography, layout, and accessibility judgment.
 
+### larksuite/cli
+
+#### Feishu / Lark CLI
+
+- [`lark-cli`](https://github.com/larksuite/cli) / [`@larksuite/cli`](https://www.npmjs.com/package/@larksuite/cli) - Official Feishu/Lark Open Platform CLI used by `lark-*` skills for Wiki, Base, Docs, Messenger, Calendar, and other platform resources.
+
 ## Repository Skill Modules
 
 `Stable` means the skill is collected and ready as a regular trigger. `In Progress` means the skill is collected but its model, dependencies, or orchestration wording is still being refined.
 
 ### In Progress
 
-- [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base) - Define Feishu/Lark as an agent-friendly structured fact source and set source-of-truth boundaries with local Markdown.
-- [Feishu Business Chain](skills/feishu-business-chain) - Manage Feishu-backed PRDs, business chains, rules, frontend/backend/end-to-end steps, vertical-slice tickets, defects, test batches, and evidence.
-- [Feishu UI Design System](skills/feishu-ui-design-system) - Manage Feishu-backed UI design system facts, including UI rules, tokens, components, page templates, HTML examples, screenshot evidence, and local mappings.
-- [Web Fullstack Dev](skills/web-fullstack-dev) - Work on Web-first full-stack business development across RuoYi backends, Vue3 admin, desktop Web/H5, native WeChat mini programs, shared packages, OpenAPI, Feishu business chains, and Feishu UI design systems.
+- [Web Fullstack Dev](skills/web-fullstack-dev) - Work on Web-first full-stack module development across RuoYi backends, Vue3 admin, desktop Web/H5, native WeChat mini programs, shared packages, OpenAPI, PRD/issues/TDD workflows, and web-structure responsibility placement.
 
 ### Stable
 
@@ -109,6 +110,7 @@ These skills are not collected into this repository, but they are documented as 
 #### Engineering Workflow And Safety
 
 - [Git Commit](skills/git-commit) - Guide atomic Git commits, staging checks, commit message conventions, confirmation templates, and small-step commit mode.
+- [Setup Matt Pocock Skills Feishu](skills/setup-matt-pocock-skills-feishu) - Companion pattern for `setup-matt-pocock-skills` that records local conventions for using Feishu/Lark Wiki, Base, `CONTEXT`, and `ADR` as the issue tracker and domain-doc host.
 - [Server Operation Guardrails](skills/server-operation-guardrails) - Apply remote-server safety rules for read-only inspection, confirmed changes, backups, secrets, TLS, rollback, and verification.
 
 #### Web Full Stack And Surfaces
@@ -145,16 +147,13 @@ These skills are not collected into this repository, but they are documented as 
 
 | Skill | Direct dependencies | Purpose |
 | --- | --- | --- |
-| [Feishu UI Design System](skills/feishu-ui-design-system) | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base), [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Set Feishu source-of-truth boundaries first, then apply UI/UX design advice, visual review, and accessibility judgment. |
-| [Feishu Business Chain](skills/feishu-business-chain) | [Feishu Agent Knowledge Base](skills/feishu-agent-knowledge-base) | Reuse Feishu source-of-truth boundaries while holding PRDs, business chains, rules, tickets, and evidence. |
-| [Web Fullstack Dev](skills/web-fullstack-dev) | [Feishu Business Chain](skills/feishu-business-chain), [Feishu UI Design System](skills/feishu-ui-design-system), [Web Structure](skills/web-structure), [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development), [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Orchestrate business facts, UI facts, frontend responsibility boundaries, surface tools, and UI/UX design intelligence. |
+| [Web Fullstack Dev](skills/web-fullstack-dev) | [Web Structure](skills/web-structure), [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development), [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Orchestrate PRD/issues/TDD-driven full-stack module work, frontend responsibility boundaries, surface tools, and UI/UX design judgment. |
 | [Web Structure](skills/web-structure) | [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development) | Define frontend responsibility boundaries for surfaces without replacing Mini Program or uni-app tools. |
 | [Game Structure](skills/game-structure) | [Unity DOTween](skills/unity-dotween), [Unity FishNet](skills/unity-fishnet), [Unity Odin](skills/unity-odin), [Unity Steamworks.NET](skills/unity-steamworks-net), [Unity TapTap SDK](skills/unity-taptap-sdk) | Set gameplay responsibility boundaries first, then let Unity skills handle plugins, SDKs, animation, and networking. |
 
 ## Core Collaboration Chains
 
-- Web full stack: Feishu business facts and UI facts flow into `web-fullstack-dev`, then frontend responsibility boundaries route work to Web/H5, Mini Program, or uni-app surface skills; the Feishu fact-source skills and Web orchestration skill are currently `In Progress`.
-- Feishu fact sources: `feishu-agent-knowledge-base` sets source-of-truth boundaries, while the business chain and UI design system hold business facts and visual facts.
+- Web full stack: `to-prd`, `to-issues`, and `tdd` provide the engineering workflow; `web-fullstack-dev` orchestrates full-stack module delivery; `web-structure` places frontend business responsibilities.
 - RuoYi / Spring: identify the RuoYi project family first, then use Spring skills for focused backend capability questions.
 - Games: `game-structure` sets gameplay responsibility boundaries, and Unity skills handle concrete plugins, SDKs, and framework implementation.
 - Operations: use `server-operation-guardrails` before remote servers, production environments, or high-risk changes.
