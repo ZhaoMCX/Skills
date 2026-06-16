@@ -87,12 +87,6 @@ skills/<skill-name>/
 
 - [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) - 用于 UI/UX 设计建议、视觉评审、颜色、字体、布局和可访问性判断。
 
-### larksuite/cli
-
-#### Feishu / Lark CLI
-
-- [`lark-cli`](https://github.com/larksuite/cli) / [`@larksuite/cli`](https://www.npmjs.com/package/@larksuite/cli) - 飞书/Lark 官方 Open Platform CLI，供 `lark-*` skills 操作飞书 Wiki、Base、云文档、消息、日程和其他开放平台资源。
-
 ## 本仓库技能模块
 
 `Stable` 表示已稳定收纳、可作为常规触发入口；`In Progress` 表示已收纳但仍在磨合模型、依赖关系或编排口径。
@@ -110,7 +104,6 @@ skills/<skill-name>/
 #### 工程流程与安全
 
 - [Git Commit](skills/git-commit) - 指导原子化 Git 提交、暂存检查、提交信息规范、确认模板和小步提交模式。
-- [Setup Matt Pocock Skills Feishu](skills/setup-matt-pocock-skills-feishu) - 作为 `setup-matt-pocock-skills` 的飞书/Lark 伴随模式，记录用 Wiki、Base、`CONTEXT` 和 `ADR` 承载 issue tracker 与领域文档的本地配置约定。
 - [Server Operation Guardrails](skills/server-operation-guardrails) - 为远程服务器读检查、确认变更、备份、密钥、TLS、回滚和验证应用安全规则。
 
 #### Web 全栈与端侧

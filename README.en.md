@@ -87,12 +87,6 @@ These skills are not collected into this repository, but they are documented as 
 
 - [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) - Provide UI/UX design recommendations, visual review, color, typography, layout, and accessibility judgment.
 
-### larksuite/cli
-
-#### Feishu / Lark CLI
-
-- [`lark-cli`](https://github.com/larksuite/cli) / [`@larksuite/cli`](https://www.npmjs.com/package/@larksuite/cli) - Official Feishu/Lark Open Platform CLI used by `lark-*` skills for Wiki, Base, Docs, Messenger, Calendar, and other platform resources.
-
 ## Repository Skill Modules
 
 `Stable` means the skill is collected and ready as a regular trigger. `In Progress` means the skill is collected but its model, dependencies, or orchestration wording is still being refined.
@@ -110,7 +104,6 @@ These skills are not collected into this repository, but they are documented as 
 #### Engineering Workflow And Safety
 
 - [Git Commit](skills/git-commit) - Guide atomic Git commits, staging checks, commit message conventions, confirmation templates, and small-step commit mode.
-- [Setup Matt Pocock Skills Feishu](skills/setup-matt-pocock-skills-feishu) - Companion pattern for `setup-matt-pocock-skills` that records local conventions for using Feishu/Lark Wiki, Base, `CONTEXT`, and `ADR` as the issue tracker and domain-doc host.
 - [Server Operation Guardrails](skills/server-operation-guardrails) - Apply remote-server safety rules for read-only inspection, confirmed changes, backups, secrets, TLS, rollback, and verification.
 
 #### Web Full Stack And Surfaces
