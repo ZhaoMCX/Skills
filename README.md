@@ -40,7 +40,7 @@ skills/<skill-name>/
 | 原生微信小程序与微信开发者工具 | [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools) |
 | 若依项目族 | [RuoYi Framework](skills/ruoyi-framework), [RuoYi Vue](skills/ruoyi-vue), [RuoYi Vue3](skills/ruoyi-vue3), [RuoYi Cloud](skills/ruoyi-cloud), [RuoYi App](skills/ruoyi-app) |
 | Spring 后端专项 | [Spring Boot](skills/spring-boot), [Spring Cloud](skills/spring-cloud), [Spring Data](skills/spring-data), [Spring Security](skills/spring-security) |
-| 游戏职责边界和 Unity 专项 | [Game Structure](skills/game-structure), [Unity DOTween](skills/unity-dotween), [Unity FishNet](skills/unity-fishnet), [Unity Odin](skills/unity-odin), [Unity Steamworks.NET](skills/unity-steamworks-net), [Unity TapTap SDK](skills/unity-taptap-sdk) |
+| Unity 专项 | [Unity DOTween](skills/unity-dotween), [Unity FishNet](skills/unity-fishnet), [Unity Odin](skills/unity-odin), [Unity Steamworks.NET](skills/unity-steamworks-net), [Unity TapTap SDK](skills/unity-taptap-sdk) |
 
 ## 外部依赖技能
 
@@ -127,9 +127,8 @@ skills/<skill-name>/
 - [Spring Data](skills/spring-data) - 处理 Spring Data 仓库和持久化，覆盖 JPA、JDBC、R2DBC、Redis、MongoDB、Elasticsearch、Neo4j、分页、审计和投影。
 - [Spring Security](skills/spring-security) - 处理 Spring Security 认证、授权、CSRF、会话、OAuth2、JWT 资源服务、方法安全、密码和测试。
 
-#### 游戏结构与 Unity
+#### Unity 专项
 
-- [Game Structure](skills/game-structure) - 将玩法逻辑放入 Module、Data、State、Rule、Ability、UseCase、Result、Surface 和 Adapter 等职责边界。
 - [Unity DOTween](skills/unity-dotween) - 安全地实现、审查和调试生命周期清晰的 Unity DOTween 动画，并提供常用模式和检查清单。
 - [Unity FishNet](skills/unity-fishnet) - 基于本地包和源码检查实现、审查和调试 FishNet 网络功能，覆盖权限、SyncType 和生命周期模式。
 - [Unity Odin](skills/unity-odin) - 使用 Odin Inspector 和 Sirenix Serializer，并保持运行时/编辑器边界、常用模式和审查检查。
@@ -142,13 +141,12 @@ skills/<skill-name>/
 | --- | --- | --- |
 | [Web Fullstack Dev](skills/web-fullstack-dev) | [Web Structure](skills/web-structure), [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development), [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 编排 PRD/issues/TDD 驱动的全栈模块开发、前端职责边界、端侧工具和 UI/UX 设计判断。 |
 | [Web Structure](skills/web-structure) | [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development) | 定义端侧业务逻辑职责边界，但不替代小程序或 uni-app 的端侧工具。 |
-| [Game Structure](skills/game-structure) | [Unity DOTween](skills/unity-dotween), [Unity FishNet](skills/unity-fishnet), [Unity Odin](skills/unity-odin), [Unity Steamworks.NET](skills/unity-steamworks-net), [Unity TapTap SDK](skills/unity-taptap-sdk) | 先定玩法职责边界，再由 Unity 专项技能承接插件、SDK、动画和联网实现。 |
 
 ## 核心协作链路
 
 - Web 全栈：`to-prd`、`to-issues` 和 `tdd` 提供工程工作流主线；`web-fullstack-dev` 编排全栈模块交付；`web-structure` 负责前端业务职责归位。
 - RuoYi / Spring：先按若依项目族识别项目，再按 Spring 专项技能处理后端能力问题。
-- 游戏：`game-structure` 定玩法职责边界，Unity 专项技能承接具体插件、SDK 和框架实现。
+- Unity：按动画、联网、Inspector、平台 SDK 等具体需求选择对应 Unity 专项技能。
 - 运维：远程服务器、生产环境或高风险变更先走 `server-operation-guardrails`。
 
 ## 安装
@@ -162,7 +160,7 @@ skills/<skill-name>/
 安装一个技能：
 
 ```powershell
-.\scripts\install.ps1 -Skill game-structure
+.\scripts\install.ps1 -Skill unity-dotween
 ```
 
 ## 校验

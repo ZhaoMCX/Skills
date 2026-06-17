@@ -40,7 +40,7 @@ Common entry points:
 | Native WeChat Mini Programs and WeChat DevTools | [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools) |
 | RuoYi project families | [RuoYi Framework](skills/ruoyi-framework), [RuoYi Vue](skills/ruoyi-vue), [RuoYi Vue3](skills/ruoyi-vue3), [RuoYi Cloud](skills/ruoyi-cloud), [RuoYi App](skills/ruoyi-app) |
 | Spring backend concerns | [Spring Boot](skills/spring-boot), [Spring Cloud](skills/spring-cloud), [Spring Data](skills/spring-data), [Spring Security](skills/spring-security) |
-| Game responsibility boundaries and Unity concerns | [Game Structure](skills/game-structure), [Unity DOTween](skills/unity-dotween), [Unity FishNet](skills/unity-fishnet), [Unity Odin](skills/unity-odin), [Unity Steamworks.NET](skills/unity-steamworks-net), [Unity TapTap SDK](skills/unity-taptap-sdk) |
+| Unity concerns | [Unity DOTween](skills/unity-dotween), [Unity FishNet](skills/unity-fishnet), [Unity Odin](skills/unity-odin), [Unity Steamworks.NET](skills/unity-steamworks-net), [Unity TapTap SDK](skills/unity-taptap-sdk) |
 
 ## External Dependency Skills
 
@@ -127,9 +127,8 @@ These skills are not collected into this repository, but they are documented as 
 - [Spring Data](skills/spring-data) - Work on Spring Data repositories and persistence across JPA, JDBC, R2DBC, Redis, MongoDB, Elasticsearch, Neo4j, pagination, auditing, and projections.
 - [Spring Security](skills/spring-security) - Work on Spring Security authentication, authorization, CSRF, sessions, OAuth2, JWT resource servers, method security, passwords, and tests.
 
-#### Game Structure And Unity
+#### Unity Concerns
 
-- [Game Structure](skills/game-structure) - Place gameplay logic into Module, Data, State, Rule, Ability, UseCase, Result, Surface, and Adapter responsibilities.
 - [Unity DOTween](skills/unity-dotween) - Implement, review, and debug lifecycle-safe Unity DOTween animation with reusable patterns and review checklists.
 - [Unity FishNet](skills/unity-fishnet) - Implement, review, and debug FishNet networking with local source checks, authority rules, SyncType guidance, and lifecycle patterns.
 - [Unity Odin](skills/unity-odin) - Work with Odin Inspector and Sirenix Serializer while preserving runtime/editor boundaries, common patterns, and review checks.
@@ -142,13 +141,12 @@ These skills are not collected into this repository, but they are documented as 
 | --- | --- | --- |
 | [Web Fullstack Dev](skills/web-fullstack-dev) | [Web Structure](skills/web-structure), [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development), [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Orchestrate PRD/issues/TDD-driven full-stack module work, frontend responsibility boundaries, surface tools, and UI/UX design judgment. |
 | [Web Structure](skills/web-structure) | [WeChat Mini Program DevTools](skills/wechat-miniprogram-devtools), [UniApp Development](skills/uniapp-development) | Define frontend responsibility boundaries for surfaces without replacing Mini Program or uni-app tools. |
-| [Game Structure](skills/game-structure) | [Unity DOTween](skills/unity-dotween), [Unity FishNet](skills/unity-fishnet), [Unity Odin](skills/unity-odin), [Unity Steamworks.NET](skills/unity-steamworks-net), [Unity TapTap SDK](skills/unity-taptap-sdk) | Set gameplay responsibility boundaries first, then let Unity skills handle plugins, SDKs, animation, and networking. |
 
 ## Core Collaboration Chains
 
 - Web full stack: `to-prd`, `to-issues`, and `tdd` provide the engineering workflow; `web-fullstack-dev` orchestrates full-stack module delivery; `web-structure` places frontend business responsibilities.
 - RuoYi / Spring: identify the RuoYi project family first, then use Spring skills for focused backend capability questions.
-- Games: `game-structure` sets gameplay responsibility boundaries, and Unity skills handle concrete plugins, SDKs, and framework implementation.
+- Unity: choose the matching Unity skill for animation, networking, Inspector, or platform SDK needs.
 - Operations: use `server-operation-guardrails` before remote servers, production environments, or high-risk changes.
 
 ## Install
@@ -162,7 +160,7 @@ Install all skills into the local Codex skills directory:
 Install one skill:
 
 ```powershell
-.\scripts\install.ps1 -Skill game-structure
+.\scripts\install.ps1 -Skill unity-dotween
 ```
 
 ## Validate
